@@ -1,0 +1,27 @@
+#intro nav ul li.one {
+    background-color: rgb(144, 255, 127);
+}
+
+article {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+article div {
+    float: right;
+    text-align: center;
+    display: inline;
+    margin-right: 10px;
+}
+
+article div.inputDate {
+    float: left;
+}
+
+form.option {
+    float: right;
+}
+
+input {
+    font-size: 20px;
+}

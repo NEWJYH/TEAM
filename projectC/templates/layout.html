@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', path='/layout.css') }}" rel="stylesheet">
+    <title>소카우넷</title>
+    <style>
+    </style>
+    {% block style %}{% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <header id="intro">
+            <nav id="navigation">
+                <ul>
+                    <li class="one"><a href="/">메인</a></li>
+                    <li class="two"><a href="/1">정보</a></li>
+                    <li class="three"><a href="/2">영상</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main role="main" id="main">
+            {% block main %}{% endblock %}
+        </main>
+        <footer></footer>
+    </div>
+</body>
+{% block script %}{% endblock %}
+
+</html>
