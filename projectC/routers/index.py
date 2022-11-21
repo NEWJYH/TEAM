@@ -1,13 +1,15 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Response , Request
-import schemas, database, models
-from sqlalchemy.orm import Session
-from typing import List
-
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from repository import index
+from typing import List
 
-from datetime import date, timedelta
+from fastapi import  Request
+import schemas
+from LOG import log
+
 import random
+from datetime import date, timedelta
 
 router = APIRouter(
     prefix="/index",
@@ -16,12 +18,50 @@ router = APIRouter(
 templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    today = date.today()
-    defaultStart = today - timedelta(29)
-    dayLabel = list(range(1, (today - defaultStart).days + 1))
-    randomlist = [random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1),]
-    return templates.TemplateResponse("main.j2", context={'request':request, 'today':today, 'defaultStart':defaultStart, 'dayLabel':dayLabel, 'randomlist':randomlist})
+def get_test(request: Request):
+    context = index.get_test()
+    context['request'] = request
+    log.infod(context)
+    return templates.TemplateResponse("main.j2", context)
+
+@router.post('/post', response_class=HTMLResponse, status_code=status.HTTP_202_ACCEPTED)
+def post(request: schemas.index_post):
+    # context = {}
+    # request.defaultStart = request.today-timedelta(29)
+    # randomlist = [random.choices(range(100, 200), k=(request.today - request.defaultStart).days+1), random.choices(range(100, 200), k=(request.today - request.defaultStart).days+1), random.choices(range(100, 200), k=(request.today - request.defaultStart).days+1), random.choices(range(100, 200), k=(request.today - request.defaultStart).days+1), random.choices(range(100, 200), k=(request.today - request.defaultStart).days+1)]
+    # false = False
+    # test = [{
+    #     'data': randomlist[0],
+    #     'label': "1번 방",
+    #     'borderColor': "#3e95cd",
+    #     'fill': false
+    # }, {
+    #     'data': randomlist[1],
+    #     'label': "2번 방",
+    #     'borderColor': "#8e5ea2",
+    #     'fill': false
+    # }, {
+    #     'data': randomlist[2],
+    #     'label': "3번 방",
+    #     'borderColor': "#3cba9f",
+    #     'fill': false
+    # }, {
+    #     'data': randomlist[3],
+    #     'label': "4번 방",
+    #     'borderColor': "#e8c3b9",
+    #     'fill': false
+    # }, {
+    #     'data': randomlist[4],
+    #     'label': "5번 방",
+    #     'borderColor': "#c45850",
+    #     'fill': false
+    # }
+    # ]
+    # context['today'] = request.today
+    # context['defaultStart'] = request.defaultStart
+    # context['randomlist'] = randomlist
+    # context['request'] = request
+    return request.json()
 
 
 
