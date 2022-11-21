@@ -1,5 +1,3 @@
-<scripts src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></scripts>
-
 const randomlist = {{ randomlist }}
 /*
 중간 기간 계산 함수 
