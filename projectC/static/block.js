@@ -1,3 +1,6 @@
+<scripts src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></scripts>
+
+const randomlist = {{ randomlist }}
 /*
 중간 기간 계산 함수 
 시작 날짜와 종료 날짜를 입력으로 받아
@@ -17,6 +20,55 @@ function getDateRangeData(param1, param2) {  //param1은 시작일, param2는 �
     }
     return res_day;
 }
+
+const testDataset = [{
+    data: randomlist[0],
+    label: "1번 방",
+    borderColor: "#3e95cd",
+    fill: false
+}, {
+    data: randomlist[1],
+    label: "2번 방",
+    borderColor: "#8e5ea2",
+    fill: false
+}, {
+    data: randomlist[2],
+    label: "3번 방",
+    borderColor: "#3cba9f",
+    fill: false
+}, {
+    data: randomlist[3],
+    label: "4번 방",
+    borderColor: "#e8c3b9",
+    fill: false
+}, {
+    data: randomlist[4],
+    label: "5번 방",
+    borderColor: "#c45850",
+    fill: false
+}
+]
+
+let myChart = new Chart(document.getElementById("chartOne"), {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: testDataset
+    },
+    options: {
+        scales: {
+            x: {
+                type: 'time',
+                time: {
+                    unit: 'day'
+                }
+            }
+        },
+        animation: {
+            duration: 0
+        }
+    }
+});
 
 /* 기간 제출시 실행 함수
 기간 입력으로부터 값을 받아와서 중간 기간 계산 함수를 통해
