@@ -2,7 +2,8 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans KR@400', sans-serif;
+    font-weight: 400;
     text-align: center;
 }
 
@@ -43,19 +44,30 @@ li {
 
 #intro nav ul li {
     float: left;
-    width: 33.33333333%;
     height: 100%;
-    text-align: center;
-
-    transition: all 0.2s;
 }
 
-#intro nav ul li:hover {
-    background-color: rgb(144, 255, 127);
+#intro nav ul li.one {
+    width: 50%;
+}
+
+#intro nav ul li.one a{
+    float: left;
+    margin-left: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 30px;
+}
+
+#intro nav ul li.two {
+    width: 25%;
+}
+
+#intro nav ul li.three {
+    width: 25%;
 }
 
 #intro nav ul li a {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     display: block;
     line-height: 80px;

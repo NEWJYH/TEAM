@@ -5,10 +5,12 @@
 {% block main %}
 <article class="one">
     <div class="inputDate">
-        <input type="date" id="startDate" value="{{ defaultStart }}" max="{{ today }}">
-        ~
-        <input type="date" id="endDate" value="{{ today }}" max="{{ today }}">
-        <button id="submit" onClick="doSubmit()">확인</button>
+        <form>
+            <input type="date" id="startDate" value="{{ defaultStart }}" max="{{ today }}">
+            ~
+            <input type="date" id="endDate" value="{{ today }}" max="{{ today }}">
+            <button type="button" id="submit" onClick="doSubmit()">확인</button>
+        </form>
     </div>
     <div>
         <input type="radio" id="24h" name="activity" value="24h">
