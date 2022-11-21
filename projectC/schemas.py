@@ -1,13 +1,11 @@
 from pydantic import BaseModel
 # from typing import List, Optional
 # from datetime import date, timedelta
-import datetime
+from datetime import date, timedelta
 
-# class request_item(BaseModel):
-#     today : datetime.date
-#     defaultStart : datetime.date
-#     dayLabel : list
-#     randomlist : dict
+class index_post(BaseModel):
+    today : date
+    defaultStart : date
     
-#     class Config():
-#         orm_mode = True
+    class Config():
+        orm_mode = True
