@@ -26,40 +26,12 @@
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
-    const randomlist = {{ randomlist }}
 
-    const testDataset = [{
-        data: randomlist[0],
-        label: "1번 방",
-        borderColor: "#3e95cd",
-        fill: false
-    }, {
-        data: randomlist[1],
-        label: "2번 방",
-        borderColor: "#8e5ea2",
-        fill: false
-    }, {
-        data: randomlist[2],
-        label: "3번 방",
-        borderColor: "#3cba9f",
-        fill: false
-    }, {
-        data: randomlist[3],
-        label: "4번 방",
-        borderColor: "#e8c3b9",
-        fill: false
-    }, {
-        data: randomlist[4],
-        label: "5번 방",
-        borderColor: "#c45850",
-        fill: false
-    }
-    ]
     let myChart = new Chart(document.getElementById("chartOne"), {
         type: 'line',
         data: {
             labels: [],
-            datasets: testDataset
+            datasets: []
         },
         options: {
             scales: {

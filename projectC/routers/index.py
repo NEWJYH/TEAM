@@ -23,5 +23,11 @@ async def index(request: Request):
     randomlist = [random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1),]
     return templates.TemplateResponse("main.j2", context={'request':request, 'today':today, 'defaultStart':defaultStart, 'dayLabel':dayLabel, 'randomlist':randomlist})
 
+@router.post('/post', response_class=HTMLResponse, status_code=status.HTTP_202_ACCEPTED)
+async def post(request: Request):
+    context = {}
+    context['request'] = request
+    context['dada'] = 'dadaad'
+    return context
 
 
