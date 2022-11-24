@@ -1,0 +1,55 @@
+article {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+article div {
+    text-align: center;
+}
+input {
+    font-size: 20px;
+}
+
+
+/* 방 선택 */
+.selectRoom {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+}
+
+
+/* 시간 단위 선택 */
+.unitOfTime {
+    width: 100%;
+}
+.unitOfTime div {
+    display: inline;
+}
+
+
+/* 기간 입력 */
+.inputDate {
+    margin-top: 15px;
+    width: 100%;
+}
+.inputDate form {
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+}
+#selectStartTime {
+    display: none;
+}
+#selectEndTime {
+    display: none;
+}
+
+/* 데이터 종류 선택 */
+.dataType {
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+}
+.dataType div {
+    display: inline;
+}

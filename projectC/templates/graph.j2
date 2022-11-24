@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block style %}
+<link href="{{ url_for('static', path='/graph.css') }}" rel="stylesheet">
+{% endblock %}
+{% block main %}
+<article class="one">
+    <div class="selectRoom">
+        <select id="roomNum">
+            <option value="1">1번 방</option>
+            <option value="2">2번 방</option>
+            <option value="3">3번 방</option>
+        </select>
+    </div>
+    <div class="inputDate">
+        <div class="unitOfTime">
+            <div>
+                <input type="radio" name="unit" id="day" value="day" onchange="changeUnitOfTime()" checked>
+                <label for="day">일</label>
+            </div>
+            <div>
+                <input type="radio" name="unit" id="hour" value="hour" onchange="changeUnitOfTime()">
+                <label for="hour">시간</label>
+            </div>
+        </div>
+        <form>
+            <input type="date" id="startDate" value="" max="" onchange="limitEndDate()">
+            <div id="selectStartTime">
+                <select id="startTime">
+                    {% for i in range(0, 24) %}
+                    <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                    {% endfor %}
+                </select>
+            </div>
+            ~
+            <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate()">
+            <div id="selectEndTime">
+                <select id="endTime">
+                    {% for i in range(0, 24) %}
+                    <option id="{{i}}" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" id="hidden" value=""></input>
+            <button type="button" id="submit" onClick="doSubmit()">확인</button>
+        </form>
+    </div>
+    <div class="dataType">
+        <div>
+            <input type="radio" name="dataType" id="food" value="food" checked>
+            <label for="food">식사</label>
+        </div>
+        <div>
+            <input type="radio" name="dataType" id="activity" value="activity">
+            <label for="activity">활동</label>
+        </div>
+    </div>
+    <canvas id="chartOne"></canvas>
+</article>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript">
+    let myChart = new Chart(document.getElementById("chartOne"), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }
+            },
+            animation: {
+                duration: 0
+            }
+        }
+    });
+</script>
+<script src="{{ url_for('static', path='graph.js') }}"></script>
+{% endblock %}

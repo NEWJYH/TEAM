@@ -7,7 +7,7 @@ from fastapi import  Request
 from LOG import log
 
 router = APIRouter(
-    prefix="/index",
+    prefix="/graph",
 )
 
 templates = Jinja2Templates(directory="templates")
