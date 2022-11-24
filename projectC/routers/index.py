@@ -22,10 +22,7 @@ def get_test(request: Request):
     context = index.get_test()
     context['request'] = request
     log.infod(context)
-    today = date.today()
-    defaultStart = today - timedelta(29)
-    randomlist = [random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1), random.choices(range(100, 200), k=(today - defaultStart).days+1),]
-    return templates.TemplateResponse("graph.j2", context={'request':request, 'today':today, 'defaultStart':defaultStart, 'randomlist':randomlist})
+    return templates.TemplateResponse("graph.j2", context={'request':request})
 
 @router.post('/post', response_class=HTMLResponse, status_code=status.HTTP_202_ACCEPTED)
 def post(request: schemas.index_post):
