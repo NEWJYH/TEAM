@@ -4,22 +4,55 @@
 {% endblock %}
 {% block main %}
 <article class="one">
+    <div class="selectRoom">
+        <select id="roomNum">
+            <option value="1">1번 방</option>
+            <option value="2">2번 방</option>
+            <option value="3">3번 방</option>
+        </select>
+    </div>
     <div class="inputDate">
+        <div class="unitOfTime">
+            <div>
+                <input type="radio" name="unit" id="day" value="day" onchange="changeUnitOfTime()" checked>
+                <label for="day">일</label>
+            </div>
+            <div>
+                <input type="radio" name="unit" id="hour" value="hour" onchange="changeUnitOfTime()">
+                <label for="hour">시간</label>
+            </div>
+        </div>
         <form>
-            <input type="date" id="startDate" value="{{ defaultStart }}" max="{{ today }}">
+            <input type="date" id="startDate" value="" max="" onchange="limitEndDate()">
+            <div id="selectStartTime">
+                <select id="startTime">
+                    {% for i in range(0, 24) %}
+                    <option value="{{i}}"> {{i}} </option>
+                    {% endfor %}
+                </select>
+            </div>
             ~
-            <input type="date" id="endDate" value="{{ today }}" max="{{ today }}">
+            <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate()">
+            <div id="selectEndTime">
+                <select id="endTime">
+                    {% for i in range(0, 24) %}
+                    <option id="{{i}}" value="{{i}}"> {{i}} </option>
+                    {% endfor %}
+                </select>
+            </div>
             <input type="hidden" id="hidden" value=""></input>
             <button type="button" id="submit" onClick="doSubmit()">확인</button>
         </form>
     </div>
-    <div>
-        <input type="radio" id="24h" name="activity" value="24h">
-        <label for="24h">24시간 평균</label>
-    </div>
-    <div>
-        <input type="radio" id="default" name="activity" value="default" checked>
-        <label for="default">기본</label>
+    <div class="dataType">
+        <div>
+            <input type="radio" name="dataType" id="food" value="food" checked>
+            <label for="food">식사</label>
+        </div>
+        <div>
+            <input type="radio" name="dataType" id="activity" value="activity">
+            <label for="activity">활동</label>
+        </div>
     </div>
     <canvas id="chartOne"></canvas>
 </article>
