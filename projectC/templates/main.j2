@@ -5,10 +5,12 @@
 {% block main %}
 <article class="one">
     <div class="inputDate">
+        <form>
         <input type="date" id="startDate" value="{{ defaultStart }}" max="{{ today }}">
         ~
         <input type="date" id="endDate" value="{{ today }}" max="{{ today }}">
-        <button id="submit" onClick="doSubmit()">확인</button>
+        <button type="" id="submit" onClick="doSubmit()">확인</button>
+        </form>
     </div>
     <div>
         <input type="radio" id="24h" name="activity" value="24h">
@@ -23,41 +25,47 @@
 {% endblock %}
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
 <script type="text/javascript">
     const randomlist = {{ randomlist }}
+    
+    const testDataset = {{ (testDataset) }}
+    
 
-    const testDataset = [{
-        data: randomlist[0],
-        label: "1번 방",
-        borderColor: "#3e95cd",
-        fill: false
-    }, {
-        data: randomlist[1],
-        label: "2번 방",
-        borderColor: "#8e5ea2",
-        fill: false
-    }, {
-        data: randomlist[2],
-        label: "3번 방",
-        borderColor: "#3cba9f",
-        fill: false
-    }, {
-        data: randomlist[3],
-        label: "4번 방",
-        borderColor: "#e8c3b9",
-        fill: false
-    }, {
-        data: randomlist[4],
-        label: "5번 방",
-        borderColor: "#c45850",
+    function dataConnect () => {
+    const testDa = [];
+	var colorNames = Object.keys(window.chartColors);
+	// 새로운 데이터셋 세팅 
+	var newData = {
+        data: null,
+        label: null,
+        borderColor: '',
         fill: false
     }
-    ]
+
+	for (let index = 0; index < testDataset.length; index++) {
+		// 데이터 세팅 
+		var settingData = JSON.parse(JSON.stringify(newData));
+		// 배경
+		settingData.data = randomlist[index]['data'];
+        console.log(randomlist[index]['data']);
+
+		// 선색
+		settingData.borderColor = chartColors[colorNames[index + 2]];
+		// 라벨
+		settingData.label = testDataset[index]['label'];
+        console.log(testDataset[index]['label']);
+        testDa.push(settingData)
+	}
+
+    return testDa
+});
+
     let myChart = new Chart(document.getElementById("chartOne"), {
         type: 'line',
         data: {
             labels: [],
-            datasets: testDataset
+            datasets: dataConnect()
         },
         options: {
             scales: {

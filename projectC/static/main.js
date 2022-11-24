@@ -24,11 +24,60 @@ function getDateRangeData(param1, param2) {  //param1은 시작일, param2는 �
 차트의 라벨값을 해당 어레이로 변경 후 차트 업데이트
 */
 function doSubmit() {
-    let startDate = document.getElementById('startDate').value;
-    let endDate = document.getElementById('endDate').value;
-    let middleDate = getDateRangeData(startDate, endDate)
-    myChart.data.labels = middleDate
-    myChart.update();
+    let startDate = document.getElementById('startDate').value; // 시작 날짜
+    let endDate = document.getElementById('endDate').value; // 마지막 날짜
+    let middleDate = getDateRangeData(startDate, endDate) // 이건 날짜 범위를 구하기 위한 함수 
+    myChart.data.labels = middleDate // 그래프 라벨을 그려주기 위함
+    myChart.update(); // 그래프 업데이트
     myChart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
 }
 doSubmit()
+
+
+
+// var colorNames = Object.keys(window.chartColors);
+// // chartColor는 아래 차트 옵션에 정의되어 있음
+// // 데이터셋 추가 버튼 
+// document.getElementById('addDataset').addEventListener('click', function () {
+// 	var colorNames = Object.keys(window.chartColors);
+// 	// 새로운 데이터셋 세팅 
+// 	var newData = {
+// 		// 라벨 
+// 		label: 'Dataset',
+// 		// 꼭지점
+// 		backgroundColor: '',
+// 		// 라인색 
+// 		borderColor: '',
+// 		data: [],
+// 	};
+
+// 	var fill = [
+// 		'end',
+// 		'start', 
+// 		'origin', 
+// 		false 
+// 	];
+
+// 	for (let index = 0; index < 4; index++) {
+// 		// 데이터 세팅 
+// 		var settingData = JSON.parse(JSON.stringify(newData));
+// 		// 배경
+// 		settingData.backgroundColor = chartColors[colorNames[index + 1]];
+// 		// 선색
+// 		settingData.borderColor = chartColors[colorNames[index + 2]];
+// 		// 라벨
+// 		settingData.label = 'new Data line' + (index + 1) + '/ Fill=' + fill[index];
+// 		// 채우기 옵션
+// 		settingData.fill = fill[index];
+// 		// 데이터 채우기 
+// 		for(var i = 0; i < Chart.instances[0].config.data.datasets[0].data.length; i++){
+// 			settingData.data.push(randomScalingFactor());
+// 		}
+// 		// 데이터 반영 
+// 		Chart.instances[index].data.datasets.push(settingData);
+// 		// 라인 차트 업데이트 
+// 		Chart.instances[index].update();
+// 	}
+// });
+
+//
