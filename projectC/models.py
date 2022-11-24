@@ -13,7 +13,7 @@ class TrackerLog(Base):
     # 순번
     idx = Column(Integer, primary_key=True, autoincrement=True)
     # 등록시간
-    time = Column(DateTime(timezone=True))
+    time = Column(DateTime(timezone=True), default=datetime.now)
     # 영상원본프레임
     origin_frame = Column(Integer)
     # 디텍션영상프레임
@@ -22,6 +22,8 @@ class TrackerLog(Base):
     start_frame = Column(Integer)
     # 트레커아이디
     track_id = Column(Integer)
+    # score
+    score = Column(Float)
     # tl
     xmin = Column(Integer)
     ymin = Column(Integer)
@@ -38,12 +40,13 @@ class TrackerLog(Base):
 # 소정보
 class Cow(Base):
     __tablename__="cow"
+    idx = Column(Integer, primary_key=True, autoincrement=True)
     # 소 개체가 프라이머리키로 되어있음
-    track_id = Column(Integer, primary_key=True)
+    track_id = Column(Integer)
     # cctv 번호
-    cctv_num = Column(Integer)
+    cctv_num = Column(Integer, default=3)
     # 사육장 
-    farm_num = Column(Integer)
+    farm_num = Column(Integer, default=3)
     # 마지막 기록시간
     time =  Column(DateTime(timezone=True), default=datetime.now)
 
@@ -54,10 +57,10 @@ class Manage(Base):
     __tablename__="manage"
     # 순번
     idx = Column(Integer, primary_key=True, autoincrement=True)
-    # 소개체 번호
-    track_id = Column(Integer)
     # 등록 시간
     time =  Column(DateTime(timezone=True), default=datetime.now)
+    # 소개체 번호
+    track_id = Column(Integer)
     # 시간별 식사량
     meal_hour = Column(Integer)
     # 일별 식사량
