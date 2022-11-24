@@ -21,7 +21,6 @@ document.getElementById('endDate').setAttribute('min', document.getElementById('
 */
 function changeUnitOfTime() {
     const today = new Date();
-    const forStartDate = new Date();
     const forCheckTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
     const checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
@@ -195,21 +194,17 @@ function createDataForChartUse() {
         });
     });
 
+    // 선 색상
+    const lineColor = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
+
     // 임시 데이터 어레이의 데이터를 차트에 보낼 형식으로 만든다
     let dataToSendToChart = [];
     for (i = 0; i < endCount; i++) {
-        // 랜덤 색상 생성 
-        // 지금은 비슷한 색상으로 나올 때가 있기 때문에 나중에 고정 색상 어레이 만들어서 거기서 뽑아올 예정
-        let RGB_1 = Math.floor(Math.random() * (255 + 1))
-        let RGB_2 = Math.floor(Math.random() * (255 + 1))
-        let RGB_3 = Math.floor(Math.random() * (255 + 1))
-        let strRGBA = 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ',0.5)'
-
         dataToSendToChart.push(
             {
                 data: dataBeforeSendingToChart[i],
                 label: i + 1,
-                borderColor: strRGBA,
+                borderColor: lineColor[i],
                 fill: false
             }
         )

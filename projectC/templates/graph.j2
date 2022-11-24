@@ -27,7 +27,7 @@
             <div id="selectStartTime">
                 <select id="startTime">
                     {% for i in range(0, 24) %}
-                    <option value="{{i}}"> {{i}} </option>
+                    <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
                     {% endfor %}
                 </select>
             </div>
@@ -36,7 +36,7 @@
             <div id="selectEndTime">
                 <select id="endTime">
                     {% for i in range(0, 24) %}
-                    <option id="{{i}}" value="{{i}}"> {{i}} </option>
+                    <option id="{{i}}" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
                     {% endfor %}
                 </select>
             </div>
