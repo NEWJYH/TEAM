@@ -8,87 +8,126 @@ const forDefault = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + to
 const forStartDefault = lastWeek.getFullYear() + '-' + (lastWeek.getMonth() + 1) + '-' + lastWeek.getDate()
 // 기간 인풋 기본값 설정
 document.getElementById('endDate').value = forDefault
+document.getElementById('endDate2').value = forDefault
 document.getElementById('startDate').value = forStartDefault
+document.getElementById('startDate2').value = forStartDefault
 // 기간 인풋의 최대 최소값 설정
 document.getElementById('endDate').setAttribute('max', forDefault)
+document.getElementById('endDate2').setAttribute('max', forDefault)
 document.getElementById('startDate').setAttribute('max', forDefault)
+document.getElementById('startDate2').setAttribute('max', forDefault)
 document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
+document.getElementById('endDate2').setAttribute('min', document.getElementById('startDate2').value)
 
 /*
 시간 단위 선택 변경시 실행 함수
 시간 선택 메뉴 시각화 여부 결정을 결정하고
 시작 날짜의 기본값을 오늘로 설정
 */
-function changeUnitOfTime() {
+function changeUnitOfTime(i) {
     const today = new Date();
     const forCheckTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
-    const checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
-    const startTimeArea = document.getElementById('selectStartTime');
-    const endTimeArea = document.getElementById('selectEndTime');
+    let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
+    let startTimeArea = document.getElementById('selectStartTime');
+    let endTimeArea = document.getElementById('selectEndTime');
+    let startDateInput = document.getElementById('startDate');
+    let endDateInput = document.getElementById('endDate');
+    let endTimeForToday = document.getElementById(today.getHours());
+    let twentyThree = document.getElementById(23);
+
+    if (i == 1) { } else if (i == 2) {
+        checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
+        startTimeArea = document.getElementById('selectStartTime2');
+        endTimeArea = document.getElementById('selectEndTime2');
+        startDateInput = document.getElementById('startDate2');
+        endDateInput = document.getElementById('endDate2');
+        endTimeForToday = document.getElementById(today.getHours() + '_2');
+        twentyThree = document.getElementById('23_2');
+    }
+
+
+
     if (checkUnitOfTime === 'hour') {
         startTimeArea.style.display = 'inline';
         endTimeArea.style.display = 'inline';
-        let dateInput = document.getElementById('startDate')
-        dateInput.value = document.getElementById('endDate').value
+        startDateInput.value = endDateInput.value
     } else {
         startTimeArea.style.display = 'none';
         endTimeArea.style.display = 'none';
-        const endInputDate = document.getElementById("endDate").value
+        const endInputDate = endDateInput.value
         const timeToDayInput = new Date();
         timeToDayInput.setFullYear(endInputDate.substr(0, 4))
         timeToDayInput.setMonth(endInputDate.substr(5, 2) - 1)
         timeToDayInput.setDate(endInputDate.substr(8, 2))
         timeToDayInput.setDate(timeToDayInput.getDate() - 7)
-        document.getElementById('startDate').value = timeToDayInput.getFullYear() + '-' + (timeToDayInput.getMonth() + 1) + '-' + timeToDayInput.getDate()
+        startDateInput.value = timeToDayInput.getFullYear() + '-' + (timeToDayInput.getMonth() + 1) + '-' + timeToDayInput.getDate()
     }
 
-    if (document.getElementById("endDate").value == forCheckTime) {
-        const now = new Date();
-        const nowtime = document.getElementById(now.getHours())
-        nowtime.setAttribute('selected', 'selected')
+    if (endDateInput.value == forCheckTime) {
+        endTimeForToday.setAttribute('selected', 'selected')
     } else {
-        const twentyThree = document.getElementById(23)
         twentyThree.setAttribute('selected', 'selected')
     }
-    document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
+    endDateInput.setAttribute('min', startDateInput.value)
 }
 
 // 끝 기간 밸류 변경 시 시작 기간 제한
-function limitStartDate() {
-    document.getElementById('startDate').setAttribute('max', document.getElementById('endDate').value)
+function limitStartDate(i) {
+    if (i == 1) {
+        document.getElementById('startDate').setAttribute('max', document.getElementById('endDate').value)
+    } else if (i == 2) {
+        document.getElementById('startDate2').setAttribute('max', document.getElementById('endDate2').value)
+    }
 }
 
 // 시작 기간 밸류 변경 시 끝 기간 제한
-function limitEndDate() {
-    document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
+function limitEndDate(i) {
+    if (i == 1) {
+        document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
+    } else if (i == 2) {
+        document.getElementById('endDate2').setAttribute('min', document.getElementById('startDate2').value)
+    }
 }
 
 /*
 시간 단위 시간 선택 시 보낼 기간 값에 시간 붙이기 
 */
-function addTimeToDate() {
-    const checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
-    let startHour = '';
-    let endHour = '';
+function addTimeToDate(i) {
+    let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
+    let startHourValue = document.getElementById('startTime').value;
+    let endHourValue = document.getElementById('endTime').value;
+    let startDateInput = document.getElementById('startDate');
+    let endDateInput = document.getElementById('endDate');
+
+    if (i == 1) { } else if (i == 2) {
+        checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
+        startTimeArea = document.getElementById('selectStartTime2');
+        endTimeArea = document.getElementById('selectEndTime2');
+        startDateInput = document.getElementById('startDate2');
+        endDateInput = document.getElementById('endDate2');
+        endTimeForToday = document.getElementById(today.getHours() + '_2');
+        twentyThree = document.getElementById('23_2');
+        startHourValue = document.getElementById('startTime2').value;
+        endHourValue = document.getElementById('endTime2').value;
+    }
+
     let startDateTime = '';
     let endDateTime = '';
     if (checkUnitOfTime === 'hour') {
-        startHour = document.getElementById('startTime').value;
-        endHour = document.getElementById('endTime').value;
-        if (parseInt(startHour) < 10) {
-            startDateTime = document.getElementById('startDate').value + ' 0' + startHour + ':00';
+        if (parseInt(startHourValue) < 10) {
+            startDateTime = startDateInput.value + ' 0' + startHourValue + ':00';
         } else {
-            startDateTime = document.getElementById('startDate').value + ' ' + startHour + ':00';
+            startDateTime = startDateInput.value + ' ' + startHourValue + ':00';
         }
-        if (parseInt(endHour) < 10) {
-            endDateTime = document.getElementById('endDate').value + ' 0' + endHour + ':00';
+        if (parseInt(endHourValue) < 10) {
+            endDateTime = endDateInput.value + ' 0' + endHourValue + ':00';
         } else {
-            endDateTime = document.getElementById('endDate').value + ' ' + endHour + ':00';
+            endDateTime = endDateInput.value + ' ' + endHourValue + ':00';
         }
     } else {
-        startDateTime = document.getElementById('startDate').value;
-        endDateTime = document.getElementById('endDate').value
+        startDateTime = startDateInput.value;
+        endDateTime = endDateInput.value
     }
     const timeArray = [startDateTime, endDateTime]
     return timeArray
@@ -99,11 +138,14 @@ function addTimeToDate() {
 시작 날짜와 종료 날짜를 입력으로 받아
 시작 날짜와 종료 날짜를 포함한 중간 날짜 어레이를 반환
 */
-function getDateRangeData(param1, param2) {  //param1은 시작일, param2는 종료일이다.
+function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는 종료일이다.
+    let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
+    if (i == 1) { } else if (i == 2) {
+        checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
+    }
     const resDay = [];
     let startDay = new Date(param1);
     let endDay = new Date(param2);
-    const checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
     if (checkUnitOfTime === 'hour') {
         while (startDay.getTime() <= endDay.getTime()) {
             let month = (startDay.getMonth() + 1);
@@ -152,7 +194,14 @@ function sendAndReceiveData(postData) {
 소 마리수를 for문을 통해 가져온 뒤
 해당 수만큼 차트에 넣을 데이터를 차트용 데이터셋에 푸쉬
 */
-function createDataForChartUse() {
+function createDataForChartUse(i) {
+    let dataType = '';
+    if (i == 1) {
+        dataType = 'food';
+    } else if (i == 2) {
+        dataType = 'active';
+    }
+
     let postDataValue = JSON.parse(document.getElementById('hidden').value)
     // key값이 'data'인 데이터의 value를 변수에 담는다
     let dataByDate = postDataValue.data
@@ -188,7 +237,7 @@ function createDataForChartUse() {
 
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
-            dataBeforeSendingToChart[count].push(dailyData[key]['food'])
+            dataBeforeSendingToChart[count].push(dailyData[key][dataType])
             count += 1;
         });
     });
@@ -214,8 +263,8 @@ function createDataForChartUse() {
 /* 
 그래프 관련 값 변경 시 실행 함수
 */
-function doSubmit() {
-    const dateArray = addTimeToDate()
+function doSubmit(i) {
+    const dateArray = addTimeToDate(i)
     const startDateTime = dateArray[0]
     const endDateTime = dateArray[1]
 
@@ -224,21 +273,24 @@ function doSubmit() {
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
     const postData = JSON.stringify({ 'startDate': startDateTime, 'endDate': endDateTime, 'roomNum': roomNum });
     // 중간 기간 계산 함수
-    const middleDate = getDateRangeData(startDateTime, endDateTime);
+    const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
     // 데이터 전송
     sendAndReceiveData(postData);
     // 차트에 넣을 데이터
-    const chartData = createDataForChartUse();
+    const chartData = createDataForChartUse(i);
 
+    let chart = foodChart
+    if (i == 1) { } else if (i == 2) {
+        chart = activeChart
+    }
     // 차트 업데이트
     // x축 라벨
-    myChart.data.labels = middleDate
+    chart.data.labels = middleDate
     // 데이터 셋
-    myChart.data.datasets = chartData
-    myChart.update();
-    myChart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
-
-
+    chart.data.datasets = chartData
+    chart.update();
+    chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
 }
-doSubmit()
+doSubmit(1)
+doSubmit(2)

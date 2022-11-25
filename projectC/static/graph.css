@@ -43,6 +43,12 @@ input {
 #selectEndTime {
     display: none;
 }
+#selectStartTime2 {
+    display: none;
+}
+#selectEndTime2 {
+    display: none;
+}
 
 /* 데이터 종류 선택 */
 .dataType {
