@@ -18,7 +18,7 @@ def get_test(request: Request ):
     context = index.get_test()
     context['request'] = request
     # log.infod(request)
-    return templates.TemplateResponse("main.j2", context)
+    return templates.TemplateResponse("graph.j2", context)
 
 
 

@@ -101,7 +101,6 @@ function addTimeToDate() {
 */
 function getDateRangeData(param1, param2) {  //param1은 시작일, param2는 종료일이다.
     const resDay = [];
-    const resDayIncludeYear = [];
     let startDay = new Date(param1);
     let endDay = new Date(param2);
     const checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
@@ -125,7 +124,6 @@ function getDateRangeData(param1, param2) {  //param1은 시작일, param2는 �
             month = month < 10 ? '0' + month : month;
             let day = startDay.getDate();
             day = day < 10 ? '0' + day : day;
-            resDayIncludeYear.push(startDay.getFullYear() + '-' + month + '-' + day);
             resDay.push(month + '-' + day);
             startDay.setDate(startDay.getDate() + 1);
         }
@@ -141,7 +139,7 @@ function sendAndReceiveData(postData) {
     // XHR 객체 생성
     const xhr = new XMLHttpRequest();
     // 열기 메소드
-    xhr.open('GET', 'http://127.0.0.1:5500/testdata.json', false);
+    xhr.open('GET', 'http://127.0.0.1:5500/projectC/testdata.json', false);
     xhr.onload = function () {
         // console.log('READYSTATE', xhr.readyState);
         document.getElementById('hidden').value = xhr.responseText;
@@ -182,6 +180,7 @@ function createDataForChartUse() {
         dataBeforeSendingToChart.push([])
     }
 
+    // console.log(dataByDate)
     // 날짜별로 되어있는 데이터를 소ID별로 분류해 임시 데이터 어레이에 푸쉬
     keys.forEach((key) => {
         let count = 0;

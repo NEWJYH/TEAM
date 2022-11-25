@@ -48,7 +48,7 @@ li {
 }
 
 #intro nav ul li.one {
-    width: 55%;
+    width: 50%;
 }
 
 #intro nav ul li.one a{
@@ -60,17 +60,17 @@ li {
 }
 
 #intro nav ul li.two {
-    width: 22.5%;
+    width: 25%;
     white-space:nowrap;
 }
 
 #intro nav ul li.three {
-    width: 22.5%;
+    width: 25%;
     white-space:nowrap;
 }
 
 #intro nav ul li a {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     display: block;
     line-height: 80px;
