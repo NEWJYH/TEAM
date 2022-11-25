@@ -2,11 +2,14 @@ from fastapi import APIRouter, Depends, status, HTTPException, Response
 # 프레임워크 기준은 working dir 이기 때문에 from .. 필요없음
 import schemas, database, models
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, func
+from sqlalchemy import and_
 from typing import List
 
 from fastapi import  Request
 from datetime import datetime, date
+
+import threading 
+import time
 
 # import pandas as pd
 # import time
@@ -104,10 +107,6 @@ def post_Manage(request:schemas.Manage, db:Session = Depends(database.get_db)):
     db.refresh(new_Manage)
     return new_Manage
 
-# 자동 post 
-def post_Auto_Manage(db:Session = Depends(database.get_db)):
-    print("hi")
-    
 
 # @router.get('/getall_manage')
 # def getall_Manage(db:Session = Depends(database.get_db)):

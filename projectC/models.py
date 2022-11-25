@@ -73,3 +73,14 @@ class Manage(Base):
     distance_hour = Column(Integer)
     # 일별 이동시간
     distance_day = Column(Integer)
+
+
+# trackerlog 순회를 위함 
+class Log(Base):
+    __tablename__="log"
+    # 순번 
+    idx = Column(Integer, primary_key=True, autoincrement=True)
+    # trackerlog 마지막 idx
+    track_idx = Column(Integer)
+
+
