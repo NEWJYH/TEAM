@@ -6,4 +6,4 @@ def info(*args):
 def infod(classtype, **kwargs):
     print(classtype)
     for key, value in kwargs.items():
-        print(f'key : value')
+        print(f' {key} : {value} ')

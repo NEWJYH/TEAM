@@ -8,12 +8,6 @@ from typing import List
 from fastapi import  Request
 from datetime import datetime, date
 
-import threading 
-import time
-
-# import pandas as pd
-# import time
-
 router = APIRouter(
     prefix="/db",
     tags=['CRUD']
@@ -125,3 +119,7 @@ def get_Manage(request:schemas.Option, db:Session=Depends(database.get_db)):
     return manage
 
 
+@router.get("/getall_manage")
+def get_Manage( db:Session=Depends(database.get_db)):
+    manage = db.query(models.Manage).all()
+    return manage

@@ -2,8 +2,6 @@ from database import SessionLocal, engine
 import models
 import datetime
 from sqlalchemy import and_ 
-# 집계함수 사용
-from sqlalchemy.sql import func
 
 db = SessionLocal()
 
@@ -30,7 +28,7 @@ class BackgroundTasks(threading.Thread):
         except:
             pass
         
-        print(type(log))
+        # print(type(log))
         if not log :
             startindex = 1
             # 마지막 인덱스 쿼리 완료된 시간을 찾음
@@ -88,9 +86,7 @@ class BackgroundTasks(threading.Thread):
                 db.commit()
                 db.refresh(newmanage)
             
-            # manage.filter(func.sum()) 
             print("injection Size : ", len(manage))
-            # aggregate sum and Cal by sqlalchemy
             newlog = models.Log(
                 track_idx = endindex
             )
@@ -103,7 +99,6 @@ class BackgroundTasks(threading.Thread):
 
     def run(self,*args,**kwargs):
         flag = True 
-
         while True:
             self.set_time()
             if self.curtime.tm_sec == 0 and flag and not self.queryflag:
