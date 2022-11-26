@@ -101,19 +101,8 @@ class BackgroundTasks(threading.Thread):
         flag = True 
         while True:
             self.set_time()
-<<<<<<< HEAD
             if self.curtime.tm_sec == 0 and flag and not self.queryflag:
                 flag = False
                 print(self.Auto_Manage())
             elif self.curtime.tm_sec == 59:
                 flag = True
-=======
-            if a == True:
-                if self.curtime.tm_sec == 0:
-                    a = False
-                    # print(self.curtime)
-                    # print('this')
-            if a == False:
-                if self.curtime.tm_sec == 5:
-                    a = True
->>>>>>> develop
