@@ -2,11 +2,8 @@ from fastapi import FastAPI, Depends
 from routers import index, CRUD
 from fastapi.staticfiles import StaticFiles
 from database import engine
-import models
-
+import models, database
 from schedule import schedule
-from routers.CRUD import post_Auto_Manage
-import database 
 from sqlalchemy.orm import Session
 
 app = FastAPI()
@@ -29,6 +26,11 @@ app.mount("/static", StaticFiles(directory="static") ,name="static")
 app.include_router(index.router)
 app.include_router(CRUD.router)
 
-# schedule 
+
+# from sqlalchemy import and_
+
 t = schedule.BackgroundTasks()
 t.start()
+
+
+

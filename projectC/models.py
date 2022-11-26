@@ -63,13 +63,17 @@ class Manage(Base):
     track_id = Column(Integer)
     # 시간별 식사량
     meal_hour = Column(Integer)
-    # 일별 식사량
-    meal_day = Column(Integer)
     # 시간별 음수량
     water_hour = Column(Integer)
-    # 일별 음수량
-    water_day = Column(Integer)
     # 시간별 이동시간
     distance_hour = Column(Integer)
-    # 일별 이동시간
-    distance_day = Column(Integer)
+
+# trackerlog 순회를 위함 
+class Log(Base):
+    __tablename__="log"
+    # 순번 
+    idx = Column(Integer, primary_key=True, autoincrement=True)
+    # trackerlog 마지막 idx
+    track_idx = Column(Integer)
+
+

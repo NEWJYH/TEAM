@@ -18,7 +18,7 @@ DATABASE = DB['database']
 
 DB_URL =f"mysql+pymysql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}?charset=utf8"
 
-engine = create_engine(DB_URL,  encoding='utf-8', echo=True)
+engine = create_engine(DB_URL,  encoding='utf-8', echo=False)
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
