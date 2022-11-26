@@ -18,7 +18,7 @@ class BackgroundTasks(threading.Thread):
         self.curtime = time.localtime()
 
     # 자동 인젝션
-    def Auto_Manage(self):
+    def Auto_Manage_Min(self):
         # 로그에서 찾음 () 인덱스
         # 마지막 인덱스를 찾음
         message = "Error"
