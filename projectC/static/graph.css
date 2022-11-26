@@ -11,7 +11,7 @@ input {
 
 
 /* 방 선택 */
-.selectRoom {
+.selectCCTV {
     margin: 0 auto;
     display: block;
     width: 100%;
@@ -41,6 +41,12 @@ input {
     display: none;
 }
 #selectEndTime {
+    display: none;
+}
+#selectStartTime2 {
+    display: none;
+}
+#selectEndTime2 {
     display: none;
 }
 
