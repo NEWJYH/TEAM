@@ -4,8 +4,8 @@
 {% endblock %}
 {% block main %}
 <article class="one">
-    <div class="selectRoom">
-        <select id="roomNum">
+    <div class="selectCCTV">
+        <select id="CCTVNum" onchange="changeCCTVNum()">
             <option value="1">1번 CCTV</option>
             <option value="2">2번 CCTV</option>
             <option value="3">3번 CCTV</option>
@@ -14,16 +14,16 @@
     <div class="inputDate">
         <div class="unitOfTime">
             <div>
-                <input type="radio" name="unit" id="day" value="day" onchange="changeUnitOfTime()" checked>
+                <input type="radio" name="unit" id="day" value="day" onchange="changeUnitOfTime(1)" checked>
                 <label for="day">일</label>
             </div>
             <div>
-                <input type="radio" name="unit" id="hour" value="hour" onchange="changeUnitOfTime()">
+                <input type="radio" name="unit" id="hour" value="hour" onchange="changeUnitOfTime(1)">
                 <label for="hour">시간</label>
             </div>
         </div>
         <form>
-            <input type="date" id="startDate" value="" max="" onchange="limitEndDate()">
+            <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)">
             <div id="selectStartTime">
                 <select id="startTime">
                     {% for i in range(0, 24) %}
@@ -32,7 +32,7 @@
                 </select>
             </div>
             ~
-            <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate()">
+            <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)">
             <div id="selectEndTime">
                 <select id="endTime">
                     {% for i in range(0, 24) %}
@@ -41,26 +41,73 @@
                 </select>
             </div>
             <input type="hidden" id="hidden" value=""></input>
-            <button type="button" id="submit" onClick="doSubmit()">확인</button>
+            <button type="button" id="submit" onClick="doSubmit(1)">확인</button>
         </form>
     </div>
-    <div class="dataType">
-        <div>
-            <input type="radio" name="dataType" id="food" value="food" checked>
-            <label for="food">식사</label>
-        </div>
-        <div>
-            <input type="radio" name="dataType" id="activity" value="activity">
-            <label for="activity">활동</label>
-        </div>
-    </div>
     <canvas id="chartOne"></canvas>
+</article>
+
+<article class="two">
+    <div class="inputDate">
+        <div class="unitOfTime">
+            <div>
+                <input type="radio" name="unit2" id="day2" value="day" onchange="changeUnitOfTime(2)" checked>
+                <label for="day">일</label>
+            </div>
+            <div>
+                <input type="radio" name="unit2" id="hour2" value="hour" onchange="changeUnitOfTime(2)">
+                <label for="hour">시간</label>
+            </div>
+        </div>
+        <form>
+            <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)">
+            <div id="selectStartTime2">
+                <select id="startTime2">
+                    {% for i in range(0, 24) %}
+                    <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                    {% endfor %}
+                </select>
+            </div>
+            ~
+            <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)">
+            <div id="selectEndTime2">
+                <select id="endTime2">
+                    {% for i in range(0, 24) %}
+                    <option id="{{i}}_2" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" id="hidden2" value=""></input>
+            <button type="button" id="submit" onClick="doSubmit(2)">확인</button>
+        </form>
+    </div>
+    <canvas id="chartTwo"></canvas>
 </article>
 {% endblock %}
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
-    let myChart = new Chart(document.getElementById("chartOne"), {
+    let foodChart = new Chart(document.getElementById("chartOne"), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }
+            },
+            animation: {
+                duration: 0
+            }
+        }
+    });
+    let activeChart = new Chart(document.getElementById("chartTwo"), {
         type: 'line',
         data: {
             labels: [],
