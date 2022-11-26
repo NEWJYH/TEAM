@@ -1,28 +1,31 @@
-const today = new Date();
+/** input 태그 디폴트 설정하는 함수 */
+function defaultOption() {
+    const today = new Date();
+    const lastWeek = new Date();
+    lastWeek.setDate(today.getDate() - 7)
 
-const lastWeek = new Date();
-lastWeek.setDate(today.getDate() - 7)
+    // 오늘과 지난주를 기간 인풋에 넣을 수 있는 형태로 만듦
+    const forDefault = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const forStartDefault = lastWeek.getFullYear() + '-' + (lastWeek.getMonth() + 1) + '-' + lastWeek.getDate()
+    // 기간 인풋 기본값 설정
+    document.getElementById('endDate').value = forDefault
+    document.getElementById('endDate2').value = forDefault
+    document.getElementById('startDate').value = forStartDefault
+    document.getElementById('startDate2').value = forStartDefault
+    // 기간 인풋의 최대 최소값 설정
+    document.getElementById('endDate').setAttribute('max', forDefault)
+    document.getElementById('endDate2').setAttribute('max', forDefault)
+    document.getElementById('startDate').setAttribute('max', forDefault)
+    document.getElementById('startDate2').setAttribute('max', forDefault)
+    document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
+    document.getElementById('endDate2').setAttribute('min', document.getElementById('startDate2').value)
+}
+defaultOption()
 
-// 오늘과 지난주를 기간 인풋에 넣을 수 있는 형태로 만듦
-const forDefault = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-const forStartDefault = lastWeek.getFullYear() + '-' + (lastWeek.getMonth() + 1) + '-' + lastWeek.getDate()
-// 기간 인풋 기본값 설정
-document.getElementById('endDate').value = forDefault
-document.getElementById('endDate2').value = forDefault
-document.getElementById('startDate').value = forStartDefault
-document.getElementById('startDate2').value = forStartDefault
-// 기간 인풋의 최대 최소값 설정
-document.getElementById('endDate').setAttribute('max', forDefault)
-document.getElementById('endDate2').setAttribute('max', forDefault)
-document.getElementById('startDate').setAttribute('max', forDefault)
-document.getElementById('startDate2').setAttribute('max', forDefault)
-document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
-document.getElementById('endDate2').setAttribute('min', document.getElementById('startDate2').value)
-
-/*
-시간 단위 선택 변경시 실행 함수
-시간 선택 메뉴 시각화 여부 결정을 결정하고
-시작 날짜의 기본값을 오늘로 설정
+/**
+input name='unit' or 'unit2' 변경시               
+시간 선택 메뉴 시각화 여부를 변경하고                    
+input id='startDate' or 'startDate2'의 기본값 변경하는 함수
 */
 function changeUnitOfTime(i) {
     const today = new Date();
@@ -72,7 +75,7 @@ function changeUnitOfTime(i) {
     endDateInput.setAttribute('min', startDateInput.value)
 }
 
-// 끝 기간 밸류 변경 시 시작 기간 제한
+/** input id='endDate' or 'endDate2' 변경 시 시작 기간 제한하는 함수 */
 function limitStartDate(i) {
     if (i == 1) {
         document.getElementById('startDate').setAttribute('max', document.getElementById('endDate').value)
@@ -81,7 +84,10 @@ function limitStartDate(i) {
     }
 }
 
-// 시작 기간 밸류 변경 시 끝 기간 제한
+/** 
+ * input id='startDate' or 'startDate2' 변경 시        
+ * 끝 기간 제한하는 함수 
+*/
 function limitEndDate(i) {
     if (i == 1) {
         document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
@@ -90,10 +96,12 @@ function limitEndDate(i) {
     }
 }
 
-/*
-시간 단위 시간 선택 시 보낼 기간 값에 시간 붙이기 
+/**
+시간 단위 선택 시 날짜 str에 시간을 붙여주는 함수
 */
 function addTimeToDate(i) {
+    const today = new Date();
+
     let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
     let startHourValue = document.getElementById('startTime').value;
     let endHourValue = document.getElementById('endTime').value;
@@ -102,14 +110,10 @@ function addTimeToDate(i) {
 
     if (i == 1) { } else if (i == 2) {
         checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
-        startTimeArea = document.getElementById('selectStartTime2');
-        endTimeArea = document.getElementById('selectEndTime2');
-        startDateInput = document.getElementById('startDate2');
-        endDateInput = document.getElementById('endDate2');
-        endTimeForToday = document.getElementById(today.getHours() + '_2');
-        twentyThree = document.getElementById('23_2');
         startHourValue = document.getElementById('startTime2').value;
         endHourValue = document.getElementById('endTime2').value;
+        startDateInput = document.getElementById('startDate2');
+        endDateInput = document.getElementById('endDate2');
     }
 
     let startDateTime = '';
@@ -133,10 +137,10 @@ function addTimeToDate(i) {
     return timeArray
 }
 
-/*
+/**
 중간 기간 계산 함수 
-시작 날짜와 종료 날짜를 입력으로 받아
-시작 날짜와 종료 날짜를 포함한 중간 날짜 어레이를 반환
+시작 기간과 종료 기간을 입력으로 받아 
+중간 기간 어레이를 반환
 */
 function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는 종료일이다.
     let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
@@ -173,8 +177,8 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
     return resDay;
 }
 
-/* 
-보낼 데이터를 입력으로 받고
+/**
+보낼 데이터를 입력으로 받고,
 해당 데이터를 보내서 받아온 데이터를 히든 태그의 value에 저장 
 */
 function sendAndReceiveData(postData) {
@@ -189,7 +193,7 @@ function sendAndReceiveData(postData) {
     xhr.send();
 }
 
-/*
+/**
 히든 태그의 밸류값을 JSON형태로 가져와
 소 마리수를 for문을 통해 가져온 뒤
 해당 수만큼 차트에 넣을 데이터를 차트용 데이터셋에 푸쉬
@@ -251,7 +255,7 @@ function createDataForChartUse(i) {
         dataToSendToChart.push(
             {
                 data: dataBeforeSendingToChart[i],
-                label: i + 1,
+                label: i + 1 + '번 소',
                 borderColor: lineColor[i],
                 fill: false
             }
@@ -260,8 +264,8 @@ function createDataForChartUse(i) {
     return dataToSendToChart
 }
 
-/* 
-그래프 관련 값 변경 시 실행 함수
+/**
+선택 사항 제출 시 실행 함수
 */
 function doSubmit(i) {
     const dateArray = addTimeToDate(i)
@@ -269,7 +273,7 @@ function doSubmit(i) {
     const endDateTime = dateArray[1]
 
     // 방 번호
-    const roomNum = document.getElementById('roomNum').value;
+    const roomNum = document.getElementById('CCTVNum').value;
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
     const postData = JSON.stringify({ 'startDate': startDateTime, 'endDate': endDateTime, 'roomNum': roomNum });
     // 중간 기간 계산 함수
@@ -294,3 +298,16 @@ function doSubmit(i) {
 }
 doSubmit(1)
 doSubmit(2)
+
+/** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */
+function changeCCTVNum() {
+    defaultOption()
+    document.getElementById('selectStartTime').style.display = 'none';
+    document.getElementById('selectEndTime').style.display = 'none';
+    document.getElementById('selectStartTime2').style.display = 'none';
+    document.getElementById('selectEndTime2').style.display = 'none';
+    changeUnitOfTime(1)
+    changeUnitOfTime(2)
+    doSubmit(1)
+    doSubmit(2)
+}

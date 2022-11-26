@@ -4,8 +4,8 @@
 {% endblock %}
 {% block main %}
 <article class="one">
-    <div class="selectRoom">
-        <select id="roomNum">
+    <div class="selectCCTV">
+        <select id="CCTVNum" onchange="changeCCTVNum()">
             <option value="1">1번 CCTV</option>
             <option value="2">2번 CCTV</option>
             <option value="3">3번 CCTV</option>
@@ -51,11 +51,11 @@
     <div class="inputDate">
         <div class="unitOfTime">
             <div>
-                <input type="radio" name="unit2" id="day" value="day" onchange="changeUnitOfTime(2)" checked>
+                <input type="radio" name="unit2" id="day2" value="day" onchange="changeUnitOfTime(2)" checked>
                 <label for="day">일</label>
             </div>
             <div>
-                <input type="radio" name="unit2" id="hour" value="hour" onchange="changeUnitOfTime(2)">
+                <input type="radio" name="unit2" id="hour2" value="hour" onchange="changeUnitOfTime(2)">
                 <label for="hour">시간</label>
             </div>
         </div>

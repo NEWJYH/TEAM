@@ -20,8 +20,8 @@ class BackgroundTasks(threading.Thread):
             if a == True:
                 if self.curtime.tm_sec == 0:
                     a = False
-                    print(self.curtime)
-                    print('this')
+                    # print(self.curtime)
+                    # print('this')
             if a == False:
                 if self.curtime.tm_sec == 5:
                     a = True
