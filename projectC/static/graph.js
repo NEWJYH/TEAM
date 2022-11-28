@@ -97,7 +97,9 @@ function limitEndDate(i) {
 }
 
 /**
-시간 단위 선택 시 날짜 str에 시간을 붙여주는 함수
+일 단위 선택일 경우 기간만 가져오고        
+시간 단위 선택일 경우 기간에 시간을 붙여서 가져와           
+시작 기간과 끝 기간을 어레이로 반환하는 함수
 */
 function addTimeToDate(i) {
     const today = new Date();
@@ -186,12 +188,13 @@ function sendAndReceiveData(postData) {
     // XHR 객체 생성
     // const xhr = new XMLHttpRequest();
     // 열기 메소드
-    // xhr.open('GET', 'http://127.0.0.1:5500/projectC/testdata.json', false);
-    // xhr.onload = function () {
-    //     // console.log('READYSTATE', xhr.readyState);
-    //     document.getElementById('hidden').value = xhr.responseText;
-    // }
-    // xhr.send(postData);
+    xhr.open('POST', '/graph/post', false);
+    xhr.onload = function () {
+        // console.log('READYSTATE', xhr.readyState);
+        document.getElementById('hidden').value = xhr.responseText;
+    }
+    xhr.send(postData);
+    console.log(postData);
 }
 
 /**
@@ -207,7 +210,8 @@ function createDataForChartUse(i) {
         dataType = 'active';
     }
 
-    let postDataValue = JSON.parse(document.getElementById('hidden').value)
+    // let postDataValue = JSON.parse(document.getElementById('hidden').value)
+    let postDataValue = JSON.parse(document.getElementById('testDataset').value)
     // key값이 'data'인 데이터의 value를 변수에 담는다
     let dataByDate = postDataValue.data
     // key값 추출
@@ -276,7 +280,7 @@ function doSubmit(i) {
     // 방 번호
     const roomNum = document.getElementById('CCTVNum').value;
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const postData = JSON.stringify({ 'startDate': startDateTime, 'endDate': endDateTime, 'roomNum': roomNum });
+    const postData = JSON.stringify({ 'startday': startDateTime, 'endday': endDateTime, 'cctvnum': parseInt(roomNum) });
     // 중간 기간 계산 함수
     const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
