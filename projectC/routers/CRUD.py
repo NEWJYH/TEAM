@@ -36,9 +36,11 @@ def post_TrackerLog(request: schemas.trackerLog, db:Session = Depends(database.g
     return new_log
 
 # test injection
+# import pandas as pd
+# import time
 # @router.post("/testpost")
 # def post_test_trackerLog(db:Session = Depends(database.get_db)):   
-#     df = pd.read_csv('time_edit.csv')
+#     df = pd.read_csv('test_22112616.csv')
 #     for index in range(len(df)):
 #         request = df.loc[index, :].to_dict()
 #         test_log =  models.TrackerLog(
@@ -85,21 +87,21 @@ def getall_Cow(db:Session = Depends(database.get_db)):
 
 # ----------------------------------------------------------------
 # 소관리내역 테이블
-@router.post('/post_manage')
-def post_Manage(request:schemas.Manage, db:Session = Depends(database.get_db)):
-    new_Manage = models.Manage(
-        track_id = request.track_id,
-        meal_hour = request.meal_hour,
-        meal_day = request.meal_day,
-        water_hour = request.water_hour,
-        water_day = request.water_day,
-        distance_hour = request.distance_hour,
-        distance_day = request.distance_day
-    )
-    db.add(new_Manage)
-    db.commit()
-    db.refresh(new_Manage)
-    return new_Manage
+# @router.post('/post_manage')
+# def post_Manage(request:schemas.Manage, db:Session = Depends(database.get_db)):
+#     new_Manage = models.Manage(
+#         track_id = request.track_id,
+#         meal_hour = request.meal_hour,
+#         meal_day = request.meal_day,
+#         water_hour = request.water_hour,
+#         water_day = request.water_day,
+#         distance_hour = request.distance_hour,
+#         distance_day = request.distance_day
+#     )
+#     db.add(new_Manage)
+#     db.commit()
+#     db.refresh(new_Manage)
+#     return new_Manage
 
 
 # @router.get('/getall_manage')

@@ -60,3 +60,10 @@ class showManage(Manage):
 class Option(BaseModel):
     starttime: str
     endtime : str
+
+
+# form data , web
+class Form(BaseModel):
+    startday : str
+    endday : str
+    cctvnum : int
