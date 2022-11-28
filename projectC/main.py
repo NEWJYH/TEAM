@@ -29,8 +29,8 @@ app.include_router(CRUD.router)
 
 # from sqlalchemy import and_
 
-t = schedule.BackgroundTasks()
-t.start()
+# t = schedule.BackgroundTasks()
+# t.start()
 
 
 

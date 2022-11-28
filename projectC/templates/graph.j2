@@ -40,7 +40,6 @@
                     {% endfor %}
                 </select>
             </div>
-            <input type="hidden" id="hidden" value=""></input>
             <button type="button" id="submit" onClick="doSubmit(1)">확인</button>
         </form>
     </div>
@@ -83,6 +82,8 @@
     </div>
     <canvas id="chartTwo"></canvas>
 </article>
+<input type="hidden" id="hidden" value="">
+<input type="hidden" id="testDataset" value="{{ testDataset }}">
 {% endblock %}
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
