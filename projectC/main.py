@@ -27,7 +27,7 @@ app.include_router(index.router)
 app.include_router(CRUD.router)
 app.include_router(live.router)
 
-# from sqlalchemy import and_
+
 
 # t = schedule.BackgroundTasks()
 # t.start()

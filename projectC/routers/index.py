@@ -31,8 +31,9 @@ router = APIRouter(
 templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
-def get_test(request: Request ):
+def get_test(request: Request):
     print('get 호출')
+    # print('postdata', postData)
     context = {}
     testDataset = {
     "startDate": "2022-10-23",
@@ -220,15 +221,14 @@ def get_test(request: Request ):
     testDataset = json.dumps(testDataset)
     context['testDataset'] = testDataset
     context['request'] = request
-    # print(f'{request['startDate']}')
-    # print(f'{request['endDate']}')
-
-    # log.infod(request)
     return templates.TemplateResponse("graph.j2", context)
 
 
 
-@router.post("/post")
-async def create_item(form: Form):
+@router.post('/post')
+def get_test(form: schemas.Form):
+    print('post 호출')
     print(form)
+
     return form
+
