@@ -286,7 +286,7 @@ function doSubmit(i) {
 
     // 데이터 전송
     console.log(postData);
-    // sendAndReceiveData(postData);
+    sendAndReceiveData(postData);
     // 차트에 넣을 데이터
     const chartData = createDataForChartUse(i);
 
