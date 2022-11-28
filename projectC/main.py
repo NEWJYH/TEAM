@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends
-from routers import index, CRUD
+from routers import index, CRUD, live
 from fastapi.staticfiles import StaticFiles
 from database import engine
 import models, database
@@ -25,12 +25,12 @@ app.mount("/static", StaticFiles(directory="static") ,name="static")
 # Router
 app.include_router(index.router)
 app.include_router(CRUD.router)
-
+app.include_router(live.router)
 
 # from sqlalchemy import and_
 
-t = schedule.BackgroundTasks()
-t.start()
+# t = schedule.BackgroundTasks()
+# t.start()
 
 
 

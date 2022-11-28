@@ -62,11 +62,18 @@ class Manage(Base):
     # 소개체 번호
     track_id = Column(Integer)
     # 시간별 식사량
+    meal_min = Column(Integer)
+    # 시간별 음수량
+    water_min= Column(Integer)
+    # 시간별 이동시간
+    distance_min = Column(Integer)
+    # 시간별 식사량
     meal_hour = Column(Integer)
     # 시간별 음수량
-    water_hour = Column(Integer)
+    water_hour= Column(Integer)
     # 시간별 이동시간
     distance_hour = Column(Integer)
+    
 
 # trackerlog 순회를 위함 
 class Log(Base):
@@ -75,5 +82,7 @@ class Log(Base):
     idx = Column(Integer, primary_key=True, autoincrement=True)
     # trackerlog 마지막 idx
     track_idx = Column(Integer)
+    # manage 마지막 idx
+    manage_idx = Column(Integer)
 
 

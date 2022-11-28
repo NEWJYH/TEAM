@@ -182,15 +182,16 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 해당 데이터를 보내서 받아온 데이터를 히든 태그의 value에 저장 
 */
 function sendAndReceiveData(postData) {
+
     // XHR 객체 생성
-    const xhr = new XMLHttpRequest();
+    // const xhr = new XMLHttpRequest();
     // 열기 메소드
-    xhr.open('GET', 'http://127.0.0.1:5500/projectC/testdata.json', false);
-    xhr.onload = function () {
-        // console.log('READYSTATE', xhr.readyState);
-        document.getElementById('hidden').value = xhr.responseText;
-    }
-    xhr.send();
+    // xhr.open('GET', 'http://127.0.0.1:5500/projectC/testdata.json', false);
+    // xhr.onload = function () {
+    //     // console.log('READYSTATE', xhr.readyState);
+    //     document.getElementById('hidden').value = xhr.responseText;
+    // }
+    // xhr.send(postData);
 }
 
 /**
@@ -280,7 +281,8 @@ function doSubmit(i) {
     const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
     // 데이터 전송
-    sendAndReceiveData(postData);
+    console.log(postData);
+    // sendAndReceiveData(postData);
     // 차트에 넣을 데이터
     const chartData = createDataForChartUse(i);
 
