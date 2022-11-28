@@ -189,10 +189,13 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 */
 function sendAndReceiveData(postData) {
     xhr = new XMLHttpRequest();
+    let saveValue = document.getElementById('hidden')
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             var data = xhr.responseText;
             var obj = data;
+            // console.log(obj)
+            saveValue.value = obj
             console.log(obj)
         }
     };
@@ -214,63 +217,64 @@ function createDataForChartUse(i) {
         dataType = 'active';
     }
 
-    // let postDataValue = JSON.parse(document.getElementById('hidden').value)
-    let postDataValue = JSON.parse(document.getElementById('testDataset').value)
+    let postDataValue = document.getElementById('hidden').value
+    // let postDataValue = JSON.parse(document.getElementById('testDataset').value)
     // key값이 'data'인 데이터의 value를 변수에 담는다
-    let dataByDate = postDataValue.data
-    // key값 추출
-    let keys = Object.keys(dataByDate);
+    console.log(postDataValue);
+    // let dataByDate = postDataValue.data
+    // // key값 추출
+    // let keys = Object.keys(dataByDate);
 
-    // 소 마리 수 추출
-    let endCount = 0;
-    keys.forEach((key) => {
-        let count = 0;
-        let dailyData = dataByDate[key]
-        let dailyDataKeys = Object.keys(dailyData);
-        dailyDataKeys.forEach((key) => {
-            count += 1;
-        });
-        if (endCount < count) {
-            endCount = count;
-        }
-    });
+    // // 소 마리 수 추출
+    // let endCount = 0;
+    // keys.forEach((key) => {
+    //     let count = 0;
+    //     let dailyData = dataByDate[key]
+    //     let dailyDataKeys = Object.keys(dailyData);
+    //     dailyDataKeys.forEach((key) => {
+    //         count += 1;
+    //     });
+    //     if (endCount < count) {
+    //         endCount = count;
+    //     }
+    // });
 
-    // 데이터를 차트에 보내기 전에 임시로 담아놓을 데이터 어레이
-    let dataBeforeSendingToChart = [];
-    // 임시 데이터 어레이 안에 소 마리수 만큼의 어레이 생성 
-    for (i = 0; i < endCount; i++) {
-        dataBeforeSendingToChart.push([])
-    }
+    // // 데이터를 차트에 보내기 전에 임시로 담아놓을 데이터 어레이
+    // let dataBeforeSendingToChart = [];
+    // // 임시 데이터 어레이 안에 소 마리수 만큼의 어레이 생성 
+    // for (i = 0; i < endCount; i++) {
+    //     dataBeforeSendingToChart.push([])
+    // }
 
-    // console.log(dataByDate)
-    // 날짜별로 되어있는 데이터를 소ID별로 분류해 임시 데이터 어레이에 푸쉬
-    keys.forEach((key) => {
-        let count = 0;
-        let dailyData = dataByDate[key]
+    // // console.log(dataByDate)
+    // // 날짜별로 되어있는 데이터를 소ID별로 분류해 임시 데이터 어레이에 푸쉬
+    // keys.forEach((key) => {
+    //     let count = 0;
+    //     let dailyData = dataByDate[key]
 
-        let dailyDataKeys = Object.keys(dailyData);
-        dailyDataKeys.forEach((key) => {
-            dataBeforeSendingToChart[count].push(dailyData[key][dataType])
-            count += 1;
-        });
-    });
+    //     let dailyDataKeys = Object.keys(dailyData);
+    //     dailyDataKeys.forEach((key) => {
+    //         dataBeforeSendingToChart[count].push(dailyData[key][dataType])
+    //         count += 1;
+    //     });
+    // });
 
-    // 선 색상
-    const lineColor = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
+    // // 선 색상
+    // const lineColor = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
 
-    // 임시 데이터 어레이의 데이터를 차트에 보낼 형식으로 만든다
-    let dataToSendToChart = [];
-    for (i = 0; i < endCount; i++) {
-        dataToSendToChart.push(
-            {
-                data: dataBeforeSendingToChart[i],
-                label: i + 1 + '번 소',
-                borderColor: lineColor[i],
-                fill: false
-            }
-        )
-    }
-    return dataToSendToChart
+    // // 임시 데이터 어레이의 데이터를 차트에 보낼 형식으로 만든다
+    // let dataToSendToChart = [];
+    // for (i = 0; i < endCount; i++) {
+    //     dataToSendToChart.push(
+    //         {
+    //             data: dataBeforeSendingToChart[i],
+    //             label: i + 1 + '번 소',
+    //             borderColor: lineColor[i],
+    //             fill: false
+    //         }
+    //     )
+    // }
+    // return dataToSendToChart
 }
 
 /**
@@ -300,19 +304,19 @@ function doSubmit(i) {
     // console.log(postData);
     sendAndReceiveData(postData);
     // 차트에 넣을 데이터
-    const chartData = createDataForChartUse(i);
+    // const chartData = createDataForChartUse(i);
 
-    let chart = foodChart
-    if (i == 1) { } else if (i == 2) {
-        chart = activeChart
-    }
-    // 차트 업데이트
-    // x축 라벨
-    chart.data.labels = middleDate
-    // 데이터 셋
-    chart.data.datasets = chartData
-    chart.update();
-    chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
+    // let chart = foodChart
+    // if (i == 1) { } else if (i == 2) {
+    //     chart = activeChart
+    // }
+    // // 차트 업데이트
+    // // x축 라벨
+    // chart.data.labels = middleDate
+    // // 데이터 셋
+    // chart.data.datasets = chartData
+    // chart.update();
+    // chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
 }
 // doSubmit(1)
 // doSubmit(2)
