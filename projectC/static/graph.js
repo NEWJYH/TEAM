@@ -118,24 +118,29 @@ function addTimeToDate(i) {
         endDateInput = document.getElementById('endDate2');
     }
 
-    let startDateTime = '';
-    let endDateTime = '';
+    const startDate = startDateInput.value;
+    const endDate = endDateInput.value;
+
+    let startTime = '';
+    let endTime = '';
+    let unit = 0;
+
     if (checkUnitOfTime === 'hour') {
         if (parseInt(startHourValue) < 10) {
-            startDateTime = startDateInput.value + ' 0' + startHourValue + ':00';
+            startTime = '0' + startHourValue + ':00';
         } else {
-            startDateTime = startDateInput.value + ' ' + startHourValue + ':00';
+            startTime = startHourValue + ':00';
         }
         if (parseInt(endHourValue) < 10) {
-            endDateTime = endDateInput.value + ' 0' + endHourValue + ':00';
+            endTime = '0' + endHourValue + ':00';
         } else {
-            endDateTime = endDateInput.value + ' ' + endHourValue + ':00';
+            endTime = endHourValue + ':00';
         }
+        unit = 1;
     } else {
-        startDateTime = startDateInput.value;
-        endDateTime = endDateInput.value
+        unit = 0;
     }
-    const timeArray = [startDateTime, endDateTime]
+    const timeArray = [unit, startDate, startTime, endDate, endTime]
     return timeArray
 }
 
@@ -274,19 +279,26 @@ function createDataForChartUse(i) {
 */
 function doSubmit(i) {
     const dateArray = addTimeToDate(i)
-    const startDateTime = dateArray[0]
-    const endDateTime = dateArray[1]
 
     // 방 번호
     const roomNum = document.getElementById('CCTVNum').value;
+
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const data = { startday: startDateTime, endday: endDateTime, cctvnum: parseInt(roomNum) }
+    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(roomNum) }
+    console.log(data)
     const postData = JSON.stringify(data);
+
     // 중간 기간 계산 함수
+    let startDateTime = dateArray[1];
+    let endDateTime = dateArray[3];
+    if (dateArray[0] == 1) {
+        startDateTime = dateArray[1] + ' ' + dateArray[2];
+        endDateTime = dateArray[3] + ' ' + dateArray[4];
+    }
     const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
     // 데이터 전송
-    console.log(postData);
+    // console.log(postData);
     sendAndReceiveData(postData);
     // 차트에 넣을 데이터
     const chartData = createDataForChartUse(i);
@@ -303,8 +315,8 @@ function doSubmit(i) {
     chart.update();
     chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
 }
-doSubmit(1)
-doSubmit(2)
+// doSubmit(1)
+// doSubmit(2)
 
 /** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */
 function changeCCTVNum() {
