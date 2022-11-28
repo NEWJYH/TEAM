@@ -185,16 +185,16 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 */
 function sendAndReceiveData(postData) {
 
-    // XHR 객체 생성
-    // const xhr = new XMLHttpRequest();
-    // 열기 메소드
-    xhr.open('POST', '/graph/post', false);
-    xhr.onload = function () {
-        // console.log('READYSTATE', xhr.readyState);
-        document.getElementById('hidden').value = xhr.responseText;
-    }
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            var data = xhr.responseText;
+            var obj = data;
+            console.log(obj)
+        }
+    };
+    xhr.open("POST", "/graph/post");
     xhr.send(postData);
-    console.log(postData);
 }
 
 /**
@@ -280,7 +280,8 @@ function doSubmit(i) {
     // 방 번호
     const roomNum = document.getElementById('CCTVNum').value;
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const postData = JSON.stringify({ 'startday': startDateTime, 'endday': endDateTime, 'cctvnum': parseInt(roomNum) });
+    const data = { startday: startDateTime, endday: endDateTime, cctvnum: parseInt(roomNum) }
+    const postData = JSON.stringify(data);
     // 중간 기간 계산 함수
     const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
@@ -302,8 +303,8 @@ function doSubmit(i) {
     chart.update();
     chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
 }
-doSubmit(1)
-doSubmit(2)
+// doSubmit(1)
+// doSubmit(2)
 
 /** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */
 function changeCCTVNum() {

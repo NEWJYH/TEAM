@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status, HTTPException, Response, Request
+from fastapi import APIRouter, Depends, status, HTTPException, Response, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
@@ -18,6 +18,11 @@ import json
 import json
 
 from pydantic import BaseModel 
+
+class Form(BaseModel):
+    startday : str
+    endday : str
+    cctvnum : int
 
 router = APIRouter(
     prefix="/graph"
@@ -223,11 +228,11 @@ def get_test(request: Request ):
 
 
 
-# @router.post('/post')
-# def create_city(Item: Item):
-#     context = {}
-#     context['Item'] = Item
-#     print('post호출')
-#     return context
+@router.post('/post')
+def create_city(request: Request):
+    context = {}
+    print('post호출됨')
+    context['1'] = 1
+    return context
 
 
