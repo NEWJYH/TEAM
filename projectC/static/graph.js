@@ -280,7 +280,7 @@ function doSubmit(i) {
     // 방 번호
     const roomNum = document.getElementById('CCTVNum').value;
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const postData = JSON.stringify({ 'startDate': startDateTime, 'endDate': endDateTime, 'roomNum': roomNum });
+    const postData = JSON.stringify({ 'startday': startDateTime, 'endday': endDateTime, 'cctvnum': parseInt(roomNum) });
     // 중간 기간 계산 함수
     const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
