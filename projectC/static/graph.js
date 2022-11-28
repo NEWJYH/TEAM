@@ -283,7 +283,7 @@ function doSubmit(i) {
     const roomNum = document.getElementById('CCTVNum').value;
 
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const data = { 0: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(roomNum) }
+    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(roomNum) }
     console.log(data)
     const postData = JSON.stringify(data);
 
