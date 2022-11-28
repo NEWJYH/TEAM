@@ -20,8 +20,11 @@ import json
 from pydantic import BaseModel 
 
 class Form(BaseModel):
+    formtype : int
     startday : str
+    starttime : str
     endday : str
+    endtime : str
     cctvnum : int
 
 router = APIRouter(
