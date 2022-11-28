@@ -8,7 +8,7 @@ from sqlalchemy import and_
 
 
 import models
-import database
+import database, schemas
 
 from datetime import date, timedelta
 import random
@@ -232,5 +232,3 @@ def get_test(request: Request ):
 async def create_item(form: Form):
     print(form)
     return form
-
-
