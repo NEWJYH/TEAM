@@ -11,6 +11,7 @@
             <option value="3">3번 CCTV</option>
         </select>
     </div>
+    식사량
     <div class="inputDate">
         <div class="unitOfTime">
             <div>
@@ -47,6 +48,7 @@
 </article>
 
 <article class="two">
+    활동량
     <div class="inputDate">
         <div class="unitOfTime">
             <div>
@@ -82,6 +84,44 @@
     </div>
     <canvas id="chartTwo"></canvas>
 </article>
+
+<article class="three">
+    음수량
+    <div class="inputDate">
+        <div class="unitOfTime">
+            <div>
+                <input type="radio" name="unit3" id="day3" value="day" onchange="changeUnitOfTime(3)" checked>
+                <label for="day">일</label>
+            </div>
+            <div>
+                <input type="radio" name="unit3" id="hour3" value="hour" onchange="changeUnitOfTime(3)">
+                <label for="hour">시간</label>
+            </div>
+        </div>
+        <form>
+            <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)">
+            <div id="selectStartTime3">
+                <select id="startTime3">
+                    {% for i in range(0, 24) %}
+                    <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                    {% endfor %}
+                </select>
+            </div>
+            ~
+            <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)">
+            <div id="selectEndTime3">
+                <select id="endTime3">
+                    {% for i in range(0, 24) %}
+                    <option id="{{i}}_3" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" id="hidden3" value="">
+            <button type="button" id="submit" onClick="doSubmit(3)">확인</button>
+        </form>
+    </div>
+    <canvas id="chartThree"></canvas>
+</article>
 <input type="hidden" id="hidden" value="">
 <input type="hidden" id="testDataset" value="{{ testDataset }}">
 {% endblock %}
@@ -109,6 +149,26 @@
         }
     });
     let activeChart = new Chart(document.getElementById("chartTwo"), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }
+            },
+            animation: {
+                duration: 0
+            }
+        }
+    });
+    let waterChart = new Chart(document.getElementById("chartThree"), {
         type: 'line',
         data: {
             labels: [],
