@@ -184,7 +184,6 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 해당 데이터를 보내서 받아온 데이터를 히든 태그의 value에 저장 
 */
 function sendAndReceiveData(postData) {
-
     xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
@@ -194,6 +193,7 @@ function sendAndReceiveData(postData) {
         }
     };
     xhr.open("POST", "/graph/post");
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(postData);
 }
 

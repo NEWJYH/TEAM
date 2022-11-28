@@ -228,11 +228,9 @@ def get_test(request: Request ):
 
 
 
-@router.post('/post')
-def create_city(request: Request):
-    context = {}
-    print('post호출됨')
-    context['1'] = 1
-    return context
+@router.post("/post")
+async def create_item(form: Form):
+    print(form)
+    return form
 
 
