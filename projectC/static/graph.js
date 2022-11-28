@@ -304,7 +304,7 @@ function doSubmit(i) {
     // console.log(postData);
     sendAndReceiveData(postData);
     // 차트에 넣을 데이터
-    // const chartData = createDataForChartUse(i);
+    const chartData = createDataForChartUse(i);
 
     // let chart = foodChart
     // if (i == 1) { } else if (i == 2) {
