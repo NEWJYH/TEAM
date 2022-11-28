@@ -28,7 +28,6 @@ app.include_router(CRUD.router)
 app.include_router(live.router)
 
 
-
 # t = schedule.BackgroundTasks()
 # t.start()
 

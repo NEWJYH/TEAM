@@ -178,6 +178,7 @@ class BackgroundTasks(threading.Thread):
         hourflag = True 
         while True:
             self.set_time()
+
             if self.curtime.tm_sec == 0 and flag and not self.queryflag:
                 flag = False
                 print(self.Auto_Manage_Min())

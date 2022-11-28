@@ -64,6 +64,9 @@ class Option(BaseModel):
 
 # form data , web
 class Form(BaseModel):
+    formtype : int
     startday : str
+    starttime : str
     endday : str
+    endtime : str
     cctvnum : int
