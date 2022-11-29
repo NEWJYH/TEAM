@@ -48,10 +48,10 @@ class BackgroundTasks(threading.Thread):
             endtime = starttime + datetime.timedelta(minutes=1)
             # 시작 시작과 끝시간을 찾음
             endindex =db.query(models.TrackerLog).filter(models.TrackerLog.time <= endtime).order_by(models.TrackerLog.idx.desc()).first().idx
-            print(f"Injection start time : {starttime}")
-            print(f"Injection start TrackerLog index : {startindex}")
-            print(f"Injection  end  TrackerLog index : {endindex}")
-            print(f"Injection  end  time : {endtime}")
+            print(f"Min Injection start time : {starttime}")
+            print(f"Min Injection start TrackerLog index : {startindex}")
+            print(f"Min Injection  end  TrackerLog index : {endindex}")
+            print(f"Min Injection  end  time : {endtime}")
             # 1분 동안 Tackerlog를 불러왔음 Query Obejct
             manage = db.query(models.TrackerLog).filter(and_(models.TrackerLog.idx >= startindex), and_(models.TrackerLog.idx <= endindex)).all()
             
@@ -102,6 +102,9 @@ class BackgroundTasks(threading.Thread):
         log = None
         try:
             log = db.query(models.Log).order_by(models.Log.manage_idx.desc()).first().manage_idx
+            print("Min Injection required")
+            if log == None:
+                return "Min Injection required"
         except:
             pass
         
@@ -125,10 +128,10 @@ class BackgroundTasks(threading.Thread):
             endtime = starttime + datetime.timedelta(hours=1)
             # 시작 시작과 끝시간을 찾음
             endindex =db.query(models.Manage).filter(models.Manage.time <= endtime).order_by(models.Manage.idx.desc()).first().idx
-            print(f"Injection start time : {starttime}")
-            print(f"Injection start TrackerLog index : {startindex}")
-            print(f"Injection  end  TrackerLog index : {endindex}")
-            print(f"Injection  end  time : {endtime}")
+            print(f"Hour Injection start time : {starttime}")
+            print(f"Hour Injection start TrackerLog index : {startindex}")
+            print(f"Hour Injection  end  TrackerLog index : {endindex}")
+            print(f"Hour Injection  end  time : {endtime}")
             # 1분 동안 Tackerlog를 불러왔음 Query Obejct
             manage = db.query(models.Manage).filter(and_(models.Manage.idx >= startindex), and_(models.Manage.idx <= endindex)).all()
             
@@ -178,8 +181,7 @@ class BackgroundTasks(threading.Thread):
         hourflag = True 
         while True:
             self.set_time()
-
-            if self.curtime.tm_sec == 0 and flag and not self.queryflag:
+            if  flag and not self.queryflag:
                 flag = False
                 print(self.Auto_Manage_Min())
             elif self.curtime.tm_sec == 59:
@@ -189,3 +191,4 @@ class BackgroundTasks(threading.Thread):
                 flag = False
                 hourflag = False
                 print(self.Auto_Manage_hour())
+                hourflag = True

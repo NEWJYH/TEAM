@@ -41,6 +41,7 @@ def post_TrackerLog(request: schemas.trackerLog, db:Session = Depends(database.g
 # @router.post("/testpost")
 # def post_test_trackerLog(db:Session = Depends(database.get_db)):   
 #     df = pd.read_csv('test_22112616.csv')
+#     cnt = 0
 #     for index in range(len(df)):
 #         request = df.loc[index, :].to_dict()
 #         test_log =  models.TrackerLog(
@@ -58,6 +59,8 @@ def post_TrackerLog(request: schemas.trackerLog, db:Session = Depends(database.g
 #             meal = request['meal'],
 #             water = request['water']    
 #         )
+#         print(cnt)
+#         cnt += 1
 #         db.add(test_log)
 #         db.commit()
 #         db.refresh(test_log)
