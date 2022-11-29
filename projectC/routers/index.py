@@ -236,7 +236,6 @@ def get_test(form: schemas.Form,  db:Session=Depends(database.get_db)):
     print('input')
     print('startday : ', startday)
     print('endday : ', endday)
-    # print('cctvnum :', cctvnum)
     try:
         check = db.query(models.Manage).filter(models.Manage.time.contains(startday)).first().idx
     except:
@@ -245,7 +244,7 @@ def get_test(form: schemas.Form,  db:Session=Depends(database.get_db)):
         print('data null ')
         print('startday : ', startday)
         print('endday : ', endday)
-
+    # 쿼리 날짜 확인
     if startday == endday:
         manage = db.query(models.Manage).filter(models.Manage.time.contains(startday)).all()
     else:
@@ -267,7 +266,6 @@ def get_test(form: schemas.Form,  db:Session=Depends(database.get_db)):
         cnt += 1
         if  day not in Dataset['data'].keys(): 
             Dataset['data'][day] = {}
-        print('day', day)
         obj= { str(x.track_id) : {
                 'food': x.meal_hour,
                 'active': x.distance_hour,
@@ -275,7 +273,6 @@ def get_test(form: schemas.Form,  db:Session=Depends(database.get_db)):
                 }
         }
         objlist.append(obj)
-    print(objlist)
     Dataset['data'] = objlist
     print("Dataset", Dataset)
     return json.dumps(Dataset)
