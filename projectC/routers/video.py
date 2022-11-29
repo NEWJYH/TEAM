@@ -23,7 +23,7 @@ router = APIRouter(
 templates = Jinja2Templates(directory="templates")
 
 CHUNK_SIZE = 1024*1024
-video_path = Path("video/detect/ch3_rtsp.mp4")
+video_path = Path("./video/detect/cowfarmB_ch1_2022072519_003.mp4")
 
 
 @router.get("/")
@@ -33,7 +33,10 @@ async def read_root(request: Request):
 
 @router.get("/video")
 async def video_endpoint(range: str = Header(None)):
+    print('응답이 왔어요')
+    print(range)
     start, end = range.replace("bytes=", "").split("-")
+    # print(start, end)
     start = int(start)
     end = int(end) if end else start + CHUNK_SIZE
     with open(video_path, "rb") as video:
