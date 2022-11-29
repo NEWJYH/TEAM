@@ -265,14 +265,14 @@ function createDataForChartUse(i, param2) {
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
             let cowID = Object.keys(dailyData[key]);
-            let pushData = {[cowID[0]]: dailyData[key][cowID]}
+            let pushData = { [cowID[0]]: dailyData[key][cowID][dataType] }
             // console.log(pushData)
             dataBeforeSendingToChart[count].push(pushData)
             count += 1;
         });
     });
     // console.log(dataBeforeSendingToChart)
-    
+
     // 선 색상
     const lineColor = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
 
@@ -282,7 +282,7 @@ function createDataForChartUse(i, param2) {
         let cowIDKeys = Object.keys(dataBeforeSendingToChart[i][0]);
         dataToSendToChart.push(
             {
-                data: [dataBeforeSendingToChart[i][0][cowIDKeys][dataType]],
+                data: [dataBeforeSendingToChart[i][0][cowIDKeys]],
                 label: cowIDKeys[0],
                 borderColor: '#1f77b4',
                 fill: false
@@ -311,7 +311,6 @@ function sendAndReceiveData(i, postData, middleDate) {
             } else if (i == 3) {
                 chart = waterChart
             }
-            console.log(chartData)
             // 차트 업데이트
             // x축 라벨
             chart.data.labels = middleDate
@@ -337,7 +336,7 @@ function doSubmit(i) {
 
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
     const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(roomNum) }
-    console.log(data)
+    // console.log(data)
     const postData = JSON.stringify(data);
 
     // 중간 기간 계산 함수
@@ -353,8 +352,6 @@ function doSubmit(i) {
     // console.log(postData);
     sendAndReceiveData(i, postData, middleDate);
 }
-// doSubmit(1)
-// doSubmit(2)
 
 /** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */
 function changeCCTVNum() {
