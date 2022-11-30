@@ -304,7 +304,7 @@ def get_test(form: schemas.Form):
             objlist.append({key.split()[1]:value})
             
     Dataset['data'] = objlist
-    print(Dataset)
+    # print(Dataset)
     # print(Dataset)
     return json.dumps(Dataset)
     # print('post 호출')
