@@ -10,15 +10,24 @@ function defaultOption() {
     // 기간 인풋 기본값 설정
     document.getElementById('endDate').value = forDefault
     document.getElementById('endDate2').value = forDefault
+    document.getElementById('endDate3').value = forDefault
+
     document.getElementById('startDate').value = forStartDefault
     document.getElementById('startDate2').value = forStartDefault
+    document.getElementById('startDate3').value = forStartDefault
+
     // 기간 인풋의 최대 최소값 설정
     document.getElementById('endDate').setAttribute('max', forDefault)
     document.getElementById('endDate2').setAttribute('max', forDefault)
+    document.getElementById('endDate3').setAttribute('max', forDefault)
+
     document.getElementById('startDate').setAttribute('max', forDefault)
     document.getElementById('startDate2').setAttribute('max', forDefault)
+    document.getElementById('startDate3').setAttribute('max', forDefault)
+
     document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
     document.getElementById('endDate2').setAttribute('min', document.getElementById('startDate2').value)
+    document.getElementById('endDate3').setAttribute('min', document.getElementById('startDate3').value)
 }
 defaultOption()
 
@@ -47,6 +56,14 @@ function changeUnitOfTime(i) {
         endDateInput = document.getElementById('endDate2');
         endTimeForToday = document.getElementById(today.getHours() + '_2');
         twentyThree = document.getElementById('23_2');
+    } else if (i == 3) {
+        checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
+        startTimeArea = document.getElementById('selectStartTime3');
+        endTimeArea = document.getElementById('selectEndTime3');
+        startDateInput = document.getElementById('startDate3');
+        endDateInput = document.getElementById('endDate3');
+        endTimeForToday = document.getElementById(today.getHours() + '_3');
+        twentyThree = document.getElementById('23_3');
     }
 
 
@@ -81,6 +98,8 @@ function limitStartDate(i) {
         document.getElementById('startDate').setAttribute('max', document.getElementById('endDate').value)
     } else if (i == 2) {
         document.getElementById('startDate2').setAttribute('max', document.getElementById('endDate2').value)
+    } else if (i == 3) {
+        document.getElementById('startDate3').setAttribute('max', document.getElementById('endDate3').value)
     }
 }
 
@@ -93,13 +112,14 @@ function limitEndDate(i) {
         document.getElementById('endDate').setAttribute('min', document.getElementById('startDate').value)
     } else if (i == 2) {
         document.getElementById('endDate2').setAttribute('min', document.getElementById('startDate2').value)
+    } else if (i == 3) {
+        document.getElementById('endDate3').setAttribute('min', document.getElementById('startDate3').value)
     }
 }
 
 /**
-일 단위 선택일 경우 기간만 가져오고        
-시간 단위 선택일 경우 기간에 시간을 붙여서 가져와           
-시작 기간과 끝 기간을 어레이로 반환하는 함수
+기간 입력과 시간 입력 값을 가져와    
+어레이에 '단위', '시작 날짜', '시작 시간', '종료 날짜', '종료 시간'을 담는 함수
 */
 function addTimeToDate(i) {
     const today = new Date();
@@ -116,6 +136,12 @@ function addTimeToDate(i) {
         endHourValue = document.getElementById('endTime2').value;
         startDateInput = document.getElementById('startDate2');
         endDateInput = document.getElementById('endDate2');
+    } else if (i == 3) {
+        checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
+        startHourValue = document.getElementById('startTime3').value;
+        endHourValue = document.getElementById('endTime3').value;
+        startDateInput = document.getElementById('startDate3');
+        endDateInput = document.getElementById('endDate3');
     }
 
     const startDate = startDateInput.value;
@@ -153,6 +179,8 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
     let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
     if (i == 1) { } else if (i == 2) {
         checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
+    } else if (i == 3) {
+        checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
     }
     const resDay = [];
     let startDay = new Date(param1);
@@ -185,43 +213,28 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 }
 
 /**
-보낼 데이터를 입력으로 받고,
-해당 데이터를 보내서 받아온 데이터를 히든 태그의 value에 저장 
-*/
-function sendAndReceiveData(postData) {
-    xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            var data = xhr.responseText;
-            var obj = data;
-            console.log(obj)
-        }
-    };
-    xhr.open("POST", "/graph/post");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(postData);
-}
-
-/**
 히든 태그의 밸류값을 JSON형태로 가져와
 소 마리수를 for문을 통해 가져온 뒤
 해당 수만큼 차트에 넣을 데이터를 차트용 데이터셋에 푸쉬
 */
-function createDataForChartUse(i) {
+function createDataForChartUse(i, param2) {
     let dataType = '';
     if (i == 1) {
         dataType = 'food';
     } else if (i == 2) {
         dataType = 'active';
+    } else if (i == 3) {
+        dataType = 'water';
     }
 
-    // let postDataValue = JSON.parse(document.getElementById('hidden').value)
-    let postDataValue = JSON.parse(document.getElementById('testDataset').value)
+    let postDataValue = JSON.parse(param2)
+    // console.log(postDataValue)
     // key값이 'data'인 데이터의 value를 변수에 담는다
-    let dataByDate = postDataValue.data
+    let dataByDate = { '2022-11-26': postDataValue.data }
+    // console.log(dataByDate)
     // key값 추출
     let keys = Object.keys(dataByDate);
-
+    // console.log(keys)
     // 소 마리 수 추출
     let endCount = 0;
     keys.forEach((key) => {
@@ -251,10 +264,14 @@ function createDataForChartUse(i) {
 
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
-            dataBeforeSendingToChart[count].push(dailyData[key][dataType])
+            let cowID = Object.keys(dailyData[key]);
+            let pushData = { [cowID[0]]: dailyData[key][cowID][dataType] }
+            // console.log(pushData)
+            dataBeforeSendingToChart[count].push(pushData)
             count += 1;
         });
     });
+    // console.log(dataBeforeSendingToChart)
 
     // 선 색상
     const lineColor = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
@@ -262,16 +279,50 @@ function createDataForChartUse(i) {
     // 임시 데이터 어레이의 데이터를 차트에 보낼 형식으로 만든다
     let dataToSendToChart = [];
     for (i = 0; i < endCount; i++) {
+        let cowIDKeys = Object.keys(dataBeforeSendingToChart[i][0]);
         dataToSendToChart.push(
             {
-                data: dataBeforeSendingToChart[i],
-                label: i + 1 + '번 소',
-                borderColor: lineColor[i],
+                data: [dataBeforeSendingToChart[i][0][cowIDKeys]],
+                label: cowIDKeys[0],
+                borderColor: '#1f77b4',
                 fill: false
             }
         )
     }
+    // console.log(dataToSendToChart);
     return dataToSendToChart
+}
+
+/**
+보낼 데이터를 입력으로 받고,
+해당 데이터를 보내서 받아온 데이터를 히든 태그의 value에 저장 
+*/
+function sendAndReceiveData(i, postData, middleDate) {
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            let data = JSON.parse(xhr.responseText);
+            // 차트에 넣을 데이터
+            const chartData = createDataForChartUse(i, data);
+
+            let chart = foodChart
+            if (i == 1) { } else if (i == 2) {
+                chart = activeChart
+            } else if (i == 3) {
+                chart = waterChart
+            }
+            // 차트 업데이트
+            // x축 라벨
+            chart.data.labels = middleDate
+            // 데이터 셋
+            chart.data.datasets = chartData
+            chart.update();
+            chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
+        }
+    };
+    xhr.open("POST", "/graph/post");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(postData);
 }
 
 /**
@@ -285,7 +336,7 @@ function doSubmit(i) {
 
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
     const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(roomNum) }
-    console.log(data)
+    // console.log(data)
     const postData = JSON.stringify(data);
 
     // 중간 기간 계산 함수
@@ -299,34 +350,22 @@ function doSubmit(i) {
 
     // 데이터 전송
     // console.log(postData);
-    sendAndReceiveData(postData);
-    // 차트에 넣을 데이터
-    const chartData = createDataForChartUse(i);
-
-    let chart = foodChart
-    if (i == 1) { } else if (i == 2) {
-        chart = activeChart
-    }
-    // 차트 업데이트
-    // x축 라벨
-    chart.data.labels = middleDate
-    // 데이터 셋
-    chart.data.datasets = chartData
-    chart.update();
-    chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
+    sendAndReceiveData(i, postData, middleDate);
 }
-// doSubmit(1)
-// doSubmit(2)
 
 /** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */
 function changeCCTVNum() {
-    defaultOption()
-    document.getElementById('selectStartTime').style.display = 'none';
-    document.getElementById('selectEndTime').style.display = 'none';
-    document.getElementById('selectStartTime2').style.display = 'none';
-    document.getElementById('selectEndTime2').style.display = 'none';
-    changeUnitOfTime(1)
-    changeUnitOfTime(2)
-    doSubmit(1)
-    doSubmit(2)
+    // defaultOption()
+    // document.getElementById('selectStartTime').style.display = 'none';
+    // document.getElementById('selectEndTime').style.display = 'none';
+    // document.getElementById('selectStartTime2').style.display = 'none';
+    // document.getElementById('selectEndTime2').style.display = 'none';
+    // document.getElementById('selectStartTime3').style.display = 'none';
+    // document.getElementById('selectEndTime3').style.display = 'none';
+    // changeUnitOfTime(1)
+    // changeUnitOfTime(2)
+    // changeUnitOfTime(3)
+    // // doSubmit(1)
+    // // doSubmit(2)
+    // // doSubmit(3)
 }
