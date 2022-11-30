@@ -1,20 +1,11 @@
-from fastapi import APIRouter, Depends, status, HTTPException, Response , Request
+from fastapi import APIRouter, Response , Request
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-# from repository import index
-
 
 from pathlib import Path
-from fastapi import FastAPI
 from fastapi import Request, Response
 from fastapi import Header
 from fastapi.templating import Jinja2Templates
-
-
 from fastapi import  Request
-
-from stream.stream import get_stream_video
-from fastapi.responses import StreamingResponse
 
 router = APIRouter(
     prefix="/video"
@@ -23,12 +14,12 @@ router = APIRouter(
 templates = Jinja2Templates(directory="templates")
 
 CHUNK_SIZE = 1024*1024
-video_path = Path("video/detect/ch3_rtsp.mp4")
+video_path = Path("video/map/test2.mp4")
 
 
 @router.get("/")
 async def read_root(request: Request):
-    return templates.TemplateResponse("test.html", context={"request": request})
+    return templates.TemplateResponse("test.htm", context={"request": request})
 
 
 @router.get("/video")
@@ -39,14 +30,42 @@ async def video_endpoint(range: str = Header(None)):
     with open(video_path, "rb") as video:
         video.seek(start)
         data = video.read(end - start)
+        
         filesize = str(video_path.stat().st_size)
         headers = {
             'Content-Range': f'bytes {str(start)}-{str(end)}/{filesize}',
             'Accept-Ranges': 'bytes'
         }
+        
         return Response(data, status_code=206, headers=headers, media_type="video/mp4")
 
 
+# if "chrome" in request.headers.get("sec-ch-ua", "NO_MATCH").lower():
+        #     data = video.read()
+        # else:
+        #     data = video.read(end - start)
+
+# headers = {
+        #     'Content-Range': f'bytes {str(start)}-{str(end)}/{filesize}',
+        #     'Accept-Ranges': 'bytes'
+        # }
 
 
-
+# @router.get("/video")
+# async def video_endpoint(range: str = Header(None)):
+#     start, end = range.replace("bytes=", "").split("-")
+#     start = int(start)
+#     end = int(end) if end else start + CHUNK_SIZE
+#     with open(video_path, "rb") as video:
+#         video.seek(start)
+#         data = video.read(end - start)
+#         filesize = video_path.stat().st_size
+        
+#         if end >= filesize:
+#             end = filesize - 1
+        
+#         headers = {
+#             'Content-Range': f'bytes {str(start)}-{str(end)}/{str(filesize)}',
+#             'Accept-Ranges': 'bytes'
+#         }
+#         return Response(data, status_code=206, headers=headers, media_type="video/mp4")
