@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block style %}
-<link href="{{ url_for('static', path='/graph.css') }}" rel="stylesheet">
+<link href="/static/graph.css" rel="stylesheet">
 {% endblock %}
 {% block main %}
 <article class="one">
@@ -189,5 +189,5 @@
         }
     });
 </script>
-<script src="{{ url_for('static', path='graph.js') }}"></script>
+<script src="/static/graph.js"></script>
 {% endblock %}
