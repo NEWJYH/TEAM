@@ -293,14 +293,19 @@ def get_test(form: schemas.Form):
         "8": {"meal_hour": 0, "water_hour": 0, "distance_hour": 1523}
     }
 }
-    
+
     if formtype == 1:
         starttime = form.starttime
         endtime = form.endtime
-    
-    for key, value in testdata.items():
-        print(key, value)
-
+        objlist = []
+        Dataset = {'data': {}}
+        idx = -1
+        for key, value in testdata.items():
+            objlist.append({key.split()[1]:value})
+            
+    Dataset['data'] = objlist
+    print(Dataset)
+    # print(Dataset)
     return json.dumps(Dataset)
     # print('post 호출')
     # formtype = form.formtype
@@ -343,7 +348,7 @@ def get_test(form: schemas.Form):
     #     day =str(date(x.time.year, x.time.month, x.time.day))
     #     cnt += 1
     #     if  day not in Dataset['data'].keys(): 
-    #         Dataset['data'][day] = {}
+    #Dataset['data'][day] = {}         
     #     obj= { str(x.track_id) : {
     #             'food': x.meal_hour,
     #             'active': x.distance_hour,
