@@ -218,19 +218,36 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 해당 수만큼 차트에 넣을 데이터를 차트용 데이터셋에 푸쉬
 */
 function createDataForChartUse(i, param2) {
-    let dataType = '';
-    if (i == 1) {
-        dataType = 'food';
-    } else if (i == 2) {
-        dataType = 'active';
+    let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
+    if (i == 1) { } else if (i == 2) {
+        checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
     } else if (i == 3) {
-        dataType = 'water';
+        checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
     }
+    let dataType = '';
+    if (checkUnitOfTime === 'hour') {
+        if (i == 1) {
+            dataType = 'meal_hour';
+        } else if (i == 2) {
+            dataType = 'distance_hour';
+        } else if (i == 3) {
+            dataType = 'water_hour';
+        }
+    } else {
+        if (i == 1) {
+            dataType = 'meal';
+        } else if (i == 2) {
+            dataType = 'distance';
+        } else if (i == 3) {
+            dataType = 'water';
+        }
+    }
+
 
     let postDataValue = JSON.parse(param2)
     // console.log(postDataValue)
     // key값이 'data'인 데이터의 value를 변수에 담는다
-    let dataByDate = { '2022-11-26': postDataValue.data }
+    let dataByDate = postDataValue.data
     // console.log(dataByDate)
     // key값 추출
     let keys = Object.keys(dataByDate);
@@ -240,14 +257,21 @@ function createDataForChartUse(i, param2) {
     keys.forEach((key) => {
         let count = 0;
         let dailyData = dataByDate[key]
+        // console.log(dailyData)
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
-            count += 1;
+            let unitdata = dailyData[key];
+            let unitdataKeys = Object.keys(unitdata);
+            unitdataKeys.forEach((key) => {
+                count += 1;
+                // console.log(unitdata[key])
+                if (endCount < count) {
+                    endCount = count;
+                }
+            });
         });
-        if (endCount < count) {
-            endCount = count;
-        }
     });
+    // console.log(endCount)
 
     // 데이터를 차트에 보내기 전에 임시로 담아놓을 데이터 어레이
     let dataBeforeSendingToChart = [];
@@ -256,22 +280,28 @@ function createDataForChartUse(i, param2) {
         dataBeforeSendingToChart.push([])
     }
 
+    let IDArray = [];
+
     // console.log(dataByDate)
     // 날짜별로 되어있는 데이터를 소ID별로 분류해 임시 데이터 어레이에 푸쉬
     keys.forEach((key) => {
         let count = 0;
         let dailyData = dataByDate[key]
-
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
+            // console.log(dailyData[key])
             let cowID = Object.keys(dailyData[key]);
-            let pushData = { [cowID[0]]: dailyData[key][cowID][dataType] }
-            // console.log(pushData)
-            dataBeforeSendingToChart[count].push(pushData)
-            count += 1;
+            cowID.forEach((id) => {
+                // console.log(dailyData[key][id])
+                let pushData = dailyData[key][id][dataType]
+                // console.log(pushData)
+                dataBeforeSendingToChart[count].push(pushData)
+                IDArray.push(id)
+                count += 1;
+            });
         });
     });
-    // console.log(dataBeforeSendingToChart)
+    // console.log(dataBeforeSendingToChart[0])
 
     // 선 색상
     const lineColor = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
@@ -279,12 +309,11 @@ function createDataForChartUse(i, param2) {
     // 임시 데이터 어레이의 데이터를 차트에 보낼 형식으로 만든다
     let dataToSendToChart = [];
     for (i = 0; i < endCount; i++) {
-        let cowIDKeys = Object.keys(dataBeforeSendingToChart[i][0]);
         dataToSendToChart.push(
             {
-                data: [dataBeforeSendingToChart[i][0][cowIDKeys]],
-                label: cowIDKeys[0],
-                borderColor: '#1f77b4',
+                data: dataBeforeSendingToChart[i],
+                label: IDArray[i] + '번 소',
+                borderColor: lineColor[i],
                 fill: false
             }
         )

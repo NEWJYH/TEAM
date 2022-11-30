@@ -5,4 +5,4 @@ test_22112616.csv
 time_edit.csv
 testdata.json
 *video
-data_handle.ipynb
+__pycache__
