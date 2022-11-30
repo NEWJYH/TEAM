@@ -100,10 +100,11 @@ class BackgroundTasks(threading.Thread):
     def Auto_Manage_hour(self):
         message = "Error"
         log = None
+        minflag = True
         try:
             log = db.query(models.Log).order_by(models.Log.manage_idx.desc()).first().manage_idx
-            print("Min Injection required")
             if log == None:
+                print("Min Injection required")
                 return "Min Injection required"
         except:
             pass
@@ -112,7 +113,12 @@ class BackgroundTasks(threading.Thread):
         if not log :
             startindex = 1
             # 마지막 인덱스 쿼리 완료된 시간을 찾음
-            starttime = db.query(models.Manage).get(startindex).time
+            try:
+                starttime = db.query(models.Manage).get(startindex).time
+            except:
+                return "Min Injection required"
+            if starttime == None:
+                return "Min Injection required"
         # 다음 
         else:
             # 첫 인덱스가 아니라면 마지막 인덱스 +1 부터 찾음

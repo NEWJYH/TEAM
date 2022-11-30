@@ -86,3 +86,16 @@ class Log(Base):
     manage_idx = Column(Integer)
 
 
+# class Testhour(Base):
+#     __tablename__='test'
+#     # 순번
+#     idx = Column(Integer, primary_key=True, autoincrement=True)
+#     time =  Column(DateTime(timezone=True), default=datetime.now)
+#     track_id = Column(Integer)
+#     meal_hour = Column(Integer)
+#     water_hour = Column(Integer)
+#     distance_hour = Column(Integer)
+
+
+# class TestDay(Base):
+    # 순번
