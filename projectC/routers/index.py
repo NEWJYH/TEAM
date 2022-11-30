@@ -19,6 +19,14 @@ import json
 
 from pydantic import BaseModel 
 
+class Form(BaseModel):
+    formtype : int
+    startday : str
+    starttime : str
+    endday : str
+    endtime : str
+    cctvnum : int
+
 router = APIRouter(
     prefix="/graph"
 )
@@ -31,7 +39,6 @@ def get_test(request: Request):
     context = {}
 
     context['request'] = request
-
     return templates.TemplateResponse("graph.j2", context)
 
 
