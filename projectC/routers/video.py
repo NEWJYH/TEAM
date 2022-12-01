@@ -15,7 +15,7 @@ templates = Jinja2Templates(directory="templates")
 
 CHUNK_SIZE = 1024*1024
 # video_path = Path("test_sample.webm")
-mapvideo_path = Path("test.webm")
+mapvideo_path = Path("video/detect/testvideo.webm")
 
 
 @router.get("/")

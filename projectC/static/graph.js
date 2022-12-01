@@ -3,10 +3,19 @@ function defaultOption() {
     const today = new Date();
     const lastWeek = new Date();
     lastWeek.setDate(today.getDate() - 7)
-
     // 오늘과 지난주를 기간 인풋에 넣을 수 있는 형태로 만듦
-    const forDefault = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    const forStartDefault = lastWeek.getFullYear() + '-' + (lastWeek.getMonth() + 1) + '-' + lastWeek.getDate()
+    let day = today.getDate()
+    day = day < 10 ? '0' + day : day;
+    let lastWeekDay = lastWeek.getDate()
+    lastWeekDay = lastWeekDay < 10 ? '0' + lastWeekDay : lastWeekDay
+
+    let month = today.getMonth() + 1
+    month = month < 10 ? '0' + month : month;
+    let lastWeekMonth = lastWeek.getMonth() + 1
+    lastWeekMonth = lastWeekMonth < 10 ? '0' + lastWeekMonth : lastWeekMonth
+
+    const forDefault = today.getFullYear() + '-' + month + '-' + day;
+    const forStartDefault = lastWeek.getFullYear() + '-' + lastWeekMonth + '-' + lastWeekDay;
     // 기간 인풋 기본값 설정
     document.getElementById('endDate').value = forDefault
     document.getElementById('endDate2').value = forDefault
@@ -38,7 +47,12 @@ input id='startDate' or 'startDate2'의 기본값 변경하는 함수
 */
 function changeUnitOfTime(i) {
     const today = new Date();
-    const forCheckTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+
+    let day = today.getDate()
+    day = day < 10 ? '0' + day : day;
+    let month = today.getMonth() + 1
+    month = month < 10 ? '0' + month : month;
+    const forCheckTime = today.getFullYear() + '-' + month + '-' + day;
 
     let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
     let startTimeArea = document.getElementById('selectStartTime');
@@ -81,7 +95,13 @@ function changeUnitOfTime(i) {
         timeToDayInput.setMonth(endInputDate.substr(5, 2) - 1)
         timeToDayInput.setDate(endInputDate.substr(8, 2))
         timeToDayInput.setDate(timeToDayInput.getDate() - 7)
-        startDateInput.value = timeToDayInput.getFullYear() + '-' + (timeToDayInput.getMonth() + 1) + '-' + timeToDayInput.getDate()
+
+        let day = timeToDayInput.getDate()
+        day = day < 10 ? '0' + day : day;
+        let month = timeToDayInput.getMonth() + 1
+        month = month < 10 ? '0' + month : month;
+
+        startDateInput.value = timeToDayInput.getFullYear() + '-' + month + '-' + day
     }
 
     if (endDateInput.value == forCheckTime) {
@@ -379,7 +399,7 @@ function doSubmit(i) {
 
     // 데이터 전송
     // console.log(postData);
-    sendAndReceiveData(i, postData, middleDate);
+    // sendAndReceiveData(i, postData, middleDate);
 }
 
 /** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */

@@ -51,7 +51,7 @@ li {
     width: 50%;
 }
 
-#intro nav ul li.one a{
+#intro nav ul li.one a {
     float: left;
     margin-left: 10px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -61,16 +61,16 @@ li {
 
 #intro nav ul li.two {
     width: 25%;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
 #intro nav ul li.three {
     width: 25%;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
 #intro nav ul li a {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     display: block;
     line-height: 80px;
@@ -81,3 +81,13 @@ li {
     background-color: rgb(250, 250, 250);
     ;
 } */
+
+@media (max-width: 400px) {
+    #intro nav ul li.one a {
+        font-size: 27px;
+    }
+
+    #intro nav ul li a {
+        font-size: 12px;
+    }
+}
