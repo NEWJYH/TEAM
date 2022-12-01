@@ -5,16 +5,16 @@ from fastapi.staticfiles import StaticFiles
 from database import engine
 import models, database
 from schedule import schedule
-from sqlalchemy.orm import Session
+# from sqlalchemy.orm import Session
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=['http://127.0.0.1:8000'],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=['http://127.0.0.1:8000'],
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 # DB
 models.Base.metadata.create_all(engine)
