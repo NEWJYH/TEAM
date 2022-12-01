@@ -6,3 +6,4 @@ time_edit.csv
 testdata.json
 *video
 __pycache__
+*data_handle.ipynb
