@@ -1,0 +1,24 @@
+article {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+article div {
+    text-align: center;
+}
+
+.selectCCTV {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+}
+#cctv {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+#map {
+    background-color: black;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
