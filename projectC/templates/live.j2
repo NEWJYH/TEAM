@@ -1,7 +1,24 @@
 {% extends "layout.html" %}
 {% block style %}
+<link href="/static/live.css" rel="stylesheet">
 {% endblock %}
 {% block main %}
+<article class="cctvContent">
+    <div class="selectCCTV">
+        <select id="CCTVNum" onchange="changeCCTVNum()">
+            <option value="1">1번 CCTV</option>
+            <option value="2">2번 CCTV</option>
+            <option value="3">3번 CCTV</option>
+        </select>
+    </div>
+    <div id="cctv">
+        <img id="cctvImg" src="{{ url_for('stream_video') }}" width="100%">
+    </div>
+    <div id="map">
+        <img id="mapImg" src="/static/img/1.png" width="100%">
+    </div>
+</article>
 {% endblock %}
 {% block script %}
+<script src="/static/live.js"></script>
 {% endblock %}
