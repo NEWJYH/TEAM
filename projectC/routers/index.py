@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status, HTTPException, Response, Request, Form
+from fastapi import APIRouter, Depends, status, HTTPException, Response, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
@@ -30,7 +30,6 @@ templates = Jinja2Templates(directory="templates")
 def get_test(request: Request):
     print('get 호출')
     context = {}
-
     context['request'] = request
     return templates.TemplateResponse("graph.j2", context)
 
@@ -292,7 +291,6 @@ def get_test(form: schemas.Form):
         endtime = form.endtime
         objlist = []
         Dataset = {'data': {}}
-        idx = -1
         for key, value in testdata.items():
             objlist.append({key.split()[1]:value})
             

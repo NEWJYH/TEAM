@@ -1,4 +1,4 @@
-from database import SessionLocal, engine
+from database import SessionLocal
 import models
 import datetime
 from sqlalchemy import and_ 

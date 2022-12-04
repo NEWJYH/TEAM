@@ -2,9 +2,7 @@
 {% block style %}
 {% endblock %}
 {% block main %}
-{# {{ url_for('static', path='testvideo.webm') }} #}
-{# <video src="/video/video" width="500" height="300" controls autoplay muted>
-</video> #}
+        {# <video src="http://192.168.70.209:9875/cow" width="500" height="300" controls="" autoplay="" muted=""> </video> #}
 <img src="{{ url_for('stream_video') }}" width="100%">
 {% endblock %}
 {% block script %}

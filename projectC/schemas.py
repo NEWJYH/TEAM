@@ -1,8 +1,10 @@
+# 통신데이터 형식으로 Django schemas와 같음
+# json converter
+
 from pydantic import BaseModel
 # from typing import List, Optional
 # from datetime import date, timedelta
 from datetime import date, timedelta, datetime
-
 
 class index_post(BaseModel):
     today : date
@@ -23,7 +25,6 @@ class trackerLog(BaseModel):
     distance : int
     meal : bool
     water : bool
-    
 
 class Cow(BaseModel):
     track_id : int
@@ -42,7 +43,6 @@ class Manage(BaseModel):
 class AutoSaveManage(Manage):
     class Config():
         orm_mode = True
-
 
 class showTrackLog(trackerLog):
     class Config():
