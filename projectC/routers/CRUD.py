@@ -1,11 +1,10 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Response
-# 프레임워크 기준은 working dir 이기 때문에 from .. 필요없음
 import schemas, database, models
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
-from typing import List
+# from typing import List
 
-from fastapi import  Request
+# from fastapi import  Request
 from datetime import datetime, date
 
 router = APIRouter(
@@ -15,52 +14,46 @@ router = APIRouter(
 
 # ---------------------------------------------------------
 # 트래커 로그 테이블에 입력하기
-@router.post("/post_trackerlog")
-def post_TrackerLog(request: schemas.trackerLog, db:Session = Depends(database.get_db)):
-    new_log = models.TrackerLog(
-        origin_frame = request.origin_frame,
-        frame = request.frame,
-        score = request.score,
-        start_frame = request.start_frame,
-        track_id = request.track_id,
-        xmin = request.xmin,
-        ymin = request.ymin,
-        xmax = request.xmax,
-        ymax = request.ymax,
-        distance = request.distance,
-        meal = request.meal,
-        water = request.water)    
-    db.add(new_log)
-    db.commit()
-    db.refresh(new_log)
-    return new_log
+# @router.post("/post_trackerlog")
+# def post_TrackerLog(request: schemas.trackerLog, db:Session = Depends(database.get_db)):
+#     new_log = models.TrackerLog(
+#         origin_frame = request.origin_frame,
+#         frame = request.frame,
+#         score = request.score,
+#         start_frame = request.start_frame,
+#         track_id = request.track_id,
+#         xmin = request.xmin,
+#         ymin = request.ymin,
+#         xmax = request.xmax,
+#         ymax = request.ymax,
+#         distance = request.distance,
+#         meal = request.meal,
+#         water = request.water)    
+#     db.add(new_log)
+#     db.commit()
+#     db.refresh(new_log)
+#     return new_log
 
 # test injection
 # import pandas as pd
 # import time
+# # projectC\trash\data.csv
 # @router.post("/testpost")
 # def post_test_trackerLog(db:Session = Depends(database.get_db)):   
-#     df = pd.read_csv('test_22112616.csv')
-#     cnt = 0
+#     df = pd.read_csv('trash\data.csv')
 #     for index in range(len(df)):
 #         request = df.loc[index, :].to_dict()
 #         test_log =  models.TrackerLog(
 #             time = request['time'],
-#             score = request['score'],
-#             origin_frame = request['origin_frame'],
+#             cctv_num = int(request['ch'][-1]),
 #             frame = request['frame'],
-#             start_frame = request['start_frame'],
-#             track_id = request['track_id'],
-#             xmin = request['xmin'],
-#             ymin = request['ymin'],
-#             xmax = request['xmax'],
-#             ymax = request['ymax'],
+#             track_id = request['cow_id'],
+#             xc = request['xc'],
+#             xy = request['xy'],
 #             distance = request['distance'],
 #             meal = request['meal'],
-#             water = request['water']    
-#         )
-#         print(cnt)
-#         cnt += 1
+#             water = request['water'])
+#         print(index)
 #         db.add(test_log)
 #         db.commit()
 #         db.refresh(test_log)
