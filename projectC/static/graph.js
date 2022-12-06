@@ -245,23 +245,14 @@ function createDataForChartUse(i, param2) {
         checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
     }
     let dataType = '';
-    if (checkUnitOfTime === 'hour') {
-        if (i == 1) {
-            dataType = 'meal_hour';
-        } else if (i == 2) {
-            dataType = 'distance_hour';
-        } else if (i == 3) {
-            dataType = 'water_hour';
-        }
-    } else {
-        if (i == 1) {
-            dataType = 'meal';
-        } else if (i == 2) {
-            dataType = 'distance';
-        } else if (i == 3) {
-            dataType = 'water';
-        }
+    if (i == 1) {
+        dataType = 'meal';
+    } else if (i == 2) {
+        dataType = 'distance';
+    } else if (i == 3) {
+        dataType = 'water';
     }
+
 
 
     let postDataValue = JSON.parse(param2)
@@ -381,10 +372,10 @@ function doSubmit(i) {
     const dateArray = addTimeToDate(i)
 
     // 방 번호
-    const roomNum = document.getElementById('CCTVNum').value;
+    const cctvNum = document.querySelector('input[name="cctvNum"]:checked').value;
 
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(roomNum) }
+    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(cctvNum) }
     // console.log(data)
     const postData = JSON.stringify(data);
 
@@ -399,11 +390,24 @@ function doSubmit(i) {
 
     // 데이터 전송
     // console.log(postData);
-    // sendAndReceiveData(i, postData, middleDate);
+    sendAndReceiveData(i, postData, middleDate);
+}
+doSubmit(1)
+doSubmit(2)
+doSubmit(3)
+
+function changeVisible() {
+    let style = document.getElementById('cctvListFrame')
+    // console.log(window.getComputedStyle(style).display)
+    // console.log(confirmVisible)
+    if (window.getComputedStyle(style).display == 'none') {
+        document.getElementById('cctvListFrame').setAttribute('style', 'display: block;')
+    } else {
+        document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
+    }
 }
 
-/** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */
-function changeCCTVNum() {
+function changeCCTV(i) {
     // defaultOption()
     // document.getElementById('selectStartTime').style.display = 'none';
     // document.getElementById('selectEndTime').style.display = 'none';
@@ -417,4 +421,7 @@ function changeCCTVNum() {
     // // doSubmit(1)
     // // doSubmit(2)
     // // doSubmit(3)
+    cctvNum = i + 1
+    document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
+    document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
 }

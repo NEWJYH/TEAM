@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', path='/favicon_io/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', path='/favicon_io/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', path='/favicon_io/favicon-16x16.png') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet">
@@ -22,8 +26,8 @@
             <nav id="navigation">
                 <ul>
                     <li class="one"><a href="/graph">SoCowNet</a></li>
-                    <li class="two"><a href="/graph">한우 생체 분석</a></li>
-                    <li class="three"><a href="/live">실시간 모니터링</a></li>
+                    <li class="two"><a href="/graph">한우DB</a></li>
+                    <li class="three"><a href="/live">모니터링</a></li>
                 </ul>
             </nav>
         </header>
