@@ -6,10 +6,89 @@ article div {
     text-align: center;
 }
 
-.selectCCTV {
-    margin: 0 auto;
+/* 방 선택 */
+#defaultCCTV label {
     display: block;
     width: 100%;
+    height: 100%
+}
+
+#cctv1 {
+    height: 35px;
+}
+
+#cctv2 {
+    height: 35px;
+}
+
+#cctv3 {
+    height: 35px;
+}
+
+#cctvBtn1 {
+    display: none;
+}
+
+#cctvBtn2 {
+    display: none;
+}
+
+#cctvBtn3 {
+    display: none;
+}
+
+#cctvList label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+#cctvMenu {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 15px;
+    background-color: rgb(74, 146, 44);
+}
+
+#defaultCCTV {
+    height: 100%;
+    line-height: 50px;
+}
+
+#cctvLabel {
+    display: block;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+#defaultText {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: white;
+    display: inline;
+}
+
+#arrow {
+    display: inline;
+    float: right;
+}
+
+#cctvListFrame {
+    display: none;
+    width: 100%;
+    background-color: white;
+    border-radius: 15px;
+    border: 0.1px solid whitesmoke;
+    box-shadow: 0 4px 5px 0 #00000026;
+    z-index: 3;
+    margin-top: 2px;
+    position: absolute;
 }
 #cctv {
     width: 95%;
@@ -17,7 +96,11 @@ article div {
     margin-top: 10px;
 }
 #map {
-    background-color: black;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+#mapCanvas {
     width: 95%;
     margin: 0 auto;
     margin-top: 20px;
