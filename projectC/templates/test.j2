@@ -3,7 +3,30 @@
 {% endblock %}
 {% block main %}
         {# <video src="http://192.168.70.209:9875/cow" width="500" height="300" controls="" autoplay="" muted=""> </video> #}
-<img src="{{ url_for('stream_video') }}" width="100%">
+
+
+<div>
+        <img src="{{ url_for('stream_video') }}" width="100%">
+</div>
+
+
+<div>
+        <img src="{{ url_for('stream_video2') }}" width="100%">
+</div>
+
+{# 
+<video controls 
+        width="250" 
+        autoplay 
+        src="{{url_for('static', path='video/detect/ch3_rtsp.mp4')}}" 
+        type="video/mp4">
+        {# <source src="{{ url_for('stream_video') }}" type="video/mp4" autoplay controls> #}
+        {# <source src="{{url_for('static', path='video/detect/ch3_rtsp.mp4')}}" 
+                type="video/mp4" > #}
+        Your browser does not support the video tag.
+        {# <source src="static/video/detect/ch3_rtsp.mp4" type="'video/mp4" autoplay controls> #}
+</video> #}
+
 {% endblock %}
 {% block script %}
 {% endblock %}

@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 
 from database import engine
 from schedule import schedule
-from routers import index, CRUD, cv_live, video
+from routers import index, CRUD, live
 import models
 
 app = FastAPI()
@@ -13,11 +13,11 @@ models.Base.metadata.create_all(engine)
 
 # Static 
 app.mount("/static", StaticFiles(directory="static") , name="static")
+
 # Router
 app.include_router(index.router)
 app.include_router(CRUD.router)
-app.include_router(cv_live.router)
-app.include_router(video.router)
+app.include_router(live.router)
 
 t = schedule.BackgroundTasks()
 t.start()
@@ -29,4 +29,4 @@ t.start()
 #     allow_origins=['http://127.0.0.1:8000'],
 #     allow_methods=["*"],
 #     allow_headers=["*"],
-# )
+# ) 

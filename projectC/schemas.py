@@ -2,8 +2,6 @@
 # json converter
 
 from pydantic import BaseModel
-# from typing import List, Optional
-# from datetime import date, timedelta
 from datetime import date, timedelta, datetime
 
 class index_post(BaseModel):
@@ -12,16 +10,14 @@ class index_post(BaseModel):
     class Config():
         orm_mode = True
 
+# trackerLog테이블처리 할 시리얼라이저
 class trackerLog(BaseModel):
-    origin_frame : int
+    time : datetime
+    cctv_num : int
     frame : int
-    start_frame : int
     track_id : int
-    score : float
-    xmin : int
-    ymin : int
-    xmax : int
-    ymax : int
+    xc : int
+    xy : int
     distance : int
     meal : bool
     water : bool

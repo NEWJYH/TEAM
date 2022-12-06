@@ -12,12 +12,15 @@ class BackgroundTasks(threading.Thread):
     def __init__(self):
         super().__init__()
         self.curtime = None
-        self.queryflag = False
-
+        # min
+        self.minqueryflag = False
+        # hour
+        self.hourqueryflag = False
+    # 시간 자동화 기능
     def set_time(self):
         self.curtime = time.localtime()
 
-    # 자동 인젝션
+    # 자동 인젝션 분
     def Auto_Manage_Min(self):
         # 로그에서 찾음 () 인덱스
         # 마지막 인덱스를 찾음
@@ -28,7 +31,6 @@ class BackgroundTasks(threading.Thread):
         except:
             pass
         
-        # print(type(log))
         if not log :
             startindex = 1
             # 마지막 인덱스 쿼리 완료된 시간을 찾음
@@ -41,10 +43,10 @@ class BackgroundTasks(threading.Thread):
                 starttime = db.query(models.TrackerLog).get(startindex).time
             except:
                 #여기 걸리면 쿼리할것이 없다는 것이다.
-                self.queryflag = True
+                self.minqueryflag = True
                 message ='TrackerLog is empty'
                 return f" Auto Manage Min Injection fail {message}"
-        if self.queryflag == False:
+        if self.minqueryflag == False:
             endtime = starttime + datetime.timedelta(minutes=1)
             # 시작 시작과 끝시간을 찾음
             endindex =db.query(models.TrackerLog).filter(models.TrackerLog.time <= endtime).order_by(models.TrackerLog.idx.desc()).first().idx
@@ -61,9 +63,11 @@ class BackgroundTasks(threading.Thread):
                 meal = 1 if qo.meal == True else 0
                 water = 1 if qo.water == True else 0
                 distance = qo.distance
+                cctvnum = qo.cctv_num
                 time = qo.time
                 if qo.track_id not in qodict:
                     qodict[qo.track_id] = {
+                        "cctv_num" : cctvnum,
                         "meal_min" : meal,
                         "water_min" : water,
                         "distance_min" : distance
@@ -77,6 +81,7 @@ class BackgroundTasks(threading.Thread):
                 # 여기서 Manage Table에 인젝션
                 newmanage = models.Manage(
                     time = endtime,
+                    cctv_num = value['cctv_num'],
                     track_id = key,
                     meal_min = value['meal_min'],
                     water_min = value['water_min'],
@@ -93,23 +98,17 @@ class BackgroundTasks(threading.Thread):
             db.add(newlog)
             db.commit()
             db.refresh(newlog)
-
             return 'Auto Manage Min Injection Success'
+
 
     # 시간마다 자동으로 올려줌 
     def Auto_Manage_hour(self):
         message = "Error"
         log = None
-        minflag = True
         try:
             log = db.query(models.Log).order_by(models.Log.manage_idx.desc()).first().manage_idx
-            if log == None:
-                print("Min Injection required")
-                return "Min Injection required"
         except:
             pass
-        
-        # print(type(log))
         if not log :
             startindex = 1
             # 마지막 인덱스 쿼리 완료된 시간을 찾음
@@ -125,31 +124,41 @@ class BackgroundTasks(threading.Thread):
             startindex = log + 1 
             try:
                 starttime = db.query(models.Manage).get(startindex).time
+                self.hourqueryflag = False
             except:
                 #여기 걸리면 쿼리할것이 없다는 것이다.
-                self.queryflag = True
+                self.hourqueryflag = True
                 message ='TrackerLog is empty'
                 return f" Auto Manage Hour Injection fail {message}"
-        if self.queryflag == False:
+        
+        if not self.hourqueryflag :
             endtime = starttime + datetime.timedelta(hours=1)
             # 시작 시작과 끝시간을 찾음
-            endindex =db.query(models.Manage).filter(models.Manage.time <= endtime).order_by(models.Manage.idx.desc()).first().idx
+            endindex =db.query(models.Manage).filter(
+                                                    and_(models.Manage.time <= endtime),
+                                                    and_(models.Manage.meal_min != None)
+                                                    ).order_by(models.Manage.idx.desc()).first().idx
             print(f"Hour Injection start time : {starttime}")
             print(f"Hour Injection start TrackerLog index : {startindex}")
             print(f"Hour Injection  end  TrackerLog index : {endindex}")
             print(f"Hour Injection  end  time : {endtime}")
             # 1분 동안 Tackerlog를 불러왔음 Query Obejct
-            manage = db.query(models.Manage).filter(and_(models.Manage.idx >= startindex), and_(models.Manage.idx <= endindex)).all()
+            manage = db.query(models.Manage).filter(and_(models.Manage.idx >= startindex), 
+                                                    and_(models.Manage.idx <= endindex),
+                                                    and_(models.Manage.meal_min != None)).all()
             
             # 빈 객체에 저장하기 위함
             qodict = {}
             for qo in manage:
                 # manage table min++ -> manage table hour
                 meal = qo.meal_min
+                print(qo.idx, meal)
                 water = qo.water_min
                 distance = qo.distance_min
+                cctvnum = qo.cctv_num
                 if qo.track_id not in qodict:
                     qodict[qo.track_id] = {
+                        "cctv_num" : cctvnum,
                         "meal_hour" : meal,
                         "water_hour" : water,
                         "distance_hour" : distance
@@ -164,9 +173,10 @@ class BackgroundTasks(threading.Thread):
                 newmanage = models.Manage(
                     time = endtime,
                     track_id = key,
+                    cctv_num = value['cctv_num'],
                     meal_hour = value['meal_hour'],
                     water_hour = value['water_hour'],
-                    distance_hour = value['distance_hour']
+                    distance_hour = value['distance_hour'],
                 )    
                 db.add(newmanage)
                 db.commit()
@@ -187,14 +197,15 @@ class BackgroundTasks(threading.Thread):
         hourflag = True 
         while True:
             self.set_time()
-            if  flag and not self.queryflag:
+            if  flag and self.curtime.tm_sec == 0 :
                 flag = False
                 print(self.Auto_Manage_Min())
-            elif self.curtime.tm_sec == 59:
+            if self.curtime.tm_sec == 59:
                 flag = True
-
+            
             if hourflag and self.curtime.tm_min == 0 and self.curtime.tm_sec== 0:
                 flag = False
-                hourflag = False
                 print(self.Auto_Manage_hour())
+                hourflag = False
+            if self.curtime.tm_min == 1:
                 hourflag = True
