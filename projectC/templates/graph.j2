@@ -1,126 +1,160 @@
 {% extends "layout.html" %}
 {% block style %}
-<link href="/static/graph.css" rel="stylesheet">
+<link href="{{ url_for('static', path='graph.css')}}" rel="stylesheet">
 {% endblock %}
 {% block main %}
-<article class="one">
-    <div class="selectCCTV">
-        <select id="CCTVNum" onchange="changeCCTVNum()">
-            <option value="1">1번 CCTV</option>
-            <option value="2">2번 CCTV</option>
-            <option value="3">3번 CCTV</option>
-        </select>
-    </div>
-    식사량
-    <div class="inputDate">
-        <div class="unitOfTime">
-            <div>
-                <input type="radio" name="unit" id="day" value="day" onchange="changeUnitOfTime(1)" checked>
-                <label for="day">일</label>
-            </div>
-            <div>
-                <input type="radio" name="unit" id="hour" value="hour" onchange="changeUnitOfTime(1)">
-                <label for="hour">시간</label>
-            </div>
+<article id="one">
+    <div id="cctvMenu">
+        <div id="defaultCCTV">
+            <label id="cctvLabel">
+                <input type="checkbox" id="checkVisible" onchange="changeVisible()" style="display: none;">
+                <p id="defaultText">1번 CCTV</p>
+                <img id="arrow" src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
+            </label>
         </div>
-        <form>
-            <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)">
-            <div id="selectStartTime">
-                <select id="startTime">
-                    {% for i in range(0, 24) %}
-                    <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
-                    {% endfor %}
-                </select>
-            </div>
-            ~
-            <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)">
-            <div id="selectEndTime">
-                <select id="endTime">
-                    {% for i in range(0, 24) %}
-                    <option id="{{i}}" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="button" id="submit" onClick="doSubmit(1)">확인</button>
-        </form>
+        <div id="cctvListFrame">
+            <ul id="cctvList">
+                <li id="cctv1">
+                    <label>
+                        <input type="radio" name="cctvNum" id="cctvBtn1" value="1" onchange="changeCCTV(0)" checked>
+                        1번 CCTV
+                    </label>
+                </li>
+                <li id="cctv2">
+                    <label>
+                        <input type="radio" name="cctvNum" id="cctvBtn2" onchange="changeCCTV(1)" value="2">
+                        2번 CCTV
+                    </label>
+                </li>
+                <li id="cctv3">
+                    <label>
+                        <input type="radio" name="cctvNum" id="cctvBtn3" onchange="changeCCTV(2)" value="3">
+                        3번 CCTV
+                    </label>
+                </li>
+            </ul>
+        </div>
     </div>
-    <canvas id="chartOne"></canvas>
+    <div class="chartFrame">
+        <img id="chartImg" src="{{ url_for('static', path='/img/outline_bar_chart_white_24dp.png') }}">
+        <p>식사량</p>
+        <div class="inputDate">
+            <div class="unitOfTime">
+                <div>
+                    <input type="radio" name="unit" id="day" value="day" onchange="changeUnitOfTime(1)" checked>
+                    <label for="day">일</label>
+                </div>
+                <div>
+                    <input type="radio" name="unit" id="hour" value="hour" onchange="changeUnitOfTime(1)">
+                    <label for="hour">시간</label>
+                </div>
+            </div>
+            <form>
+                <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)">
+                <div id="selectStartTime">
+                    <select id="startTime">
+                        {% for i in range(0, 24) %}
+                        <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                ~
+                <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)">
+                <div id="selectEndTime">
+                    <select id="endTime">
+                        {% for i in range(0, 24) %}
+                        <option id="{{i}}" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="button" id="submit" onClick="doSubmit(1)">확인</button>
+            </form>
+        </div>
+        <canvas id="chartOne"></canvas>
+    </div>
 </article>
 
-<article class="two">
-    활동량
-    <div class="inputDate">
-        <div class="unitOfTime">
-            <div>
-                <input type="radio" name="unit2" id="day2" value="day" onchange="changeUnitOfTime(2)" checked>
-                <label for="day">일</label>
+<article id="two">
+    <div class="chartFrame">
+        <img id="chartImg" src="{{ url_for('static', path='/img/outline_bar_chart_white_24dp.png') }}">
+        <p>활동량</p>
+        <div class="inputDate">
+            <div class="unitOfTime">
+                <div>
+                    <input type="radio" name="unit2" id="day2" value="day" onchange="changeUnitOfTime(2)" checked>
+                    <label for="day">일</label>
+                </div>
+                <div>
+                    <input type="radio" name="unit2" id="hour2" value="hour" onchange="changeUnitOfTime(2)">
+                    <label for="hour">시간</label>
+                </div>
             </div>
-            <div>
-                <input type="radio" name="unit2" id="hour2" value="hour" onchange="changeUnitOfTime(2)">
-                <label for="hour">시간</label>
-            </div>
+            <form>
+                <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)">
+                <div id="selectStartTime2">
+                    <select id="startTime2">
+                        {% for i in range(0, 24) %}
+                        <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                ~
+                <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)">
+                <div id="selectEndTime2">
+                    <select id="endTime2">
+                        {% for i in range(0, 24) %}
+                        <option id="{{i}}_2" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" id="hidden2" value=""></input>
+                <button type="button" id="submit" onClick="doSubmit(2)">확인</button>
+            </form>
         </div>
-        <form>
-            <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)">
-            <div id="selectStartTime2">
-                <select id="startTime2">
-                    {% for i in range(0, 24) %}
-                    <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
-                    {% endfor %}
-                </select>
-            </div>
-            ~
-            <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)">
-            <div id="selectEndTime2">
-                <select id="endTime2">
-                    {% for i in range(0, 24) %}
-                    <option id="{{i}}_2" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <input type="hidden" id="hidden2" value=""></input>
-            <button type="button" id="submit" onClick="doSubmit(2)">확인</button>
-        </form>
+        <canvas id="chartTwo"></canvas>
     </div>
-    <canvas id="chartTwo"></canvas>
 </article>
 
-<article class="three">
-    음수량
-    <div class="inputDate">
-        <div class="unitOfTime">
-            <div>
-                <input type="radio" name="unit3" id="day3" value="day" onchange="changeUnitOfTime(3)" checked>
-                <label for="day">일</label>
+<article id="three">
+    <div class="chartFrame">
+        <img id="chartImg" src="{{ url_for('static', path='/img/outline_bar_chart_white_24dp.png') }}">
+        <p>음수량</p>
+
+        <div class="inputDate">
+            <div class="unitOfTime">
+                <div>
+                    <input type="radio" name="unit3" id="day3" value="day" onchange="changeUnitOfTime(3)" checked>
+                    <label for="day">일</label>
+                </div>
+                <div>
+                    <input type="radio" name="unit3" id="hour3" value="hour" onchange="changeUnitOfTime(3)">
+                    <label for="hour">시간</label>
+                </div>
             </div>
-            <div>
-                <input type="radio" name="unit3" id="hour3" value="hour" onchange="changeUnitOfTime(3)">
-                <label for="hour">시간</label>
-            </div>
+            <form>
+                <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)">
+                <div id="selectStartTime3">
+                    <select id="startTime3">
+                        {% for i in range(0, 24) %}
+                        <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                ~
+                <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)">
+                <div id="selectEndTime3">
+                    <select id="endTime3">
+                        {% for i in range(0, 24) %}
+                        <option id="{{i}}_3" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" id="hidden3" value="">
+                <button type="button" id="submit" onClick="doSubmit(3)">확인</button>
+            </form>
         </div>
-        <form>
-            <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)">
-            <div id="selectStartTime3">
-                <select id="startTime3">
-                    {% for i in range(0, 24) %}
-                    <option value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
-                    {% endfor %}
-                </select>
-            </div>
-            ~
-            <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)">
-            <div id="selectEndTime3">
-                <select id="endTime3">
-                    {% for i in range(0, 24) %}
-                    <option id="{{i}}_3" value="{{i}}">&nbsp;{{i}}시&nbsp;</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <input type="hidden" id="hidden3" value="">
-            <button type="button" id="submit" onClick="doSubmit(3)">확인</button>
-        </form>
+        <canvas id="chartThree"></canvas>
     </div>
-    <canvas id="chartThree"></canvas>
 </article>
 <input type="hidden" id="hidden" value="">
 <input type="hidden" id="testDataset" value="{{ testDataset }}">
@@ -190,5 +224,5 @@
         }
     });
 </script>
-<script src="/static/graph.js"></script>
+<script src="{{ url_for('static', path='graph.js') }}"></script>
 {% endblock %}

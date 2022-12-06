@@ -2,15 +2,9 @@ article {
     margin-top: 30px;
     margin-bottom: 50px;
 }
-
 article div {
     text-align: center;
 }
-
-input {
-    font-size: 20px;
-}
-
 
 /* 방 선택 */
 #defaultCCTV label {
@@ -96,81 +90,18 @@ input {
     margin-top: 2px;
     position: absolute;
 }
-
-/* #cctvMenu:hover > #cctvListFrame {
-    display:block;
-} */
-
-/* 차트 프레임 */
-.chartFrame {
-    border-radius: 15px;
-    border: 1px solid #87878726;
-    box-shadow: 0 4px 5px 0 #00000026;
+#cctv {
     width: 95%;
     margin: 0 auto;
     margin-top: 10px;
 }
-#chartImg {
-    background-color: rgb(74, 146, 44);
-    margin: 10px 0px 0px 10px;
-    border-radius: 15px;
-    float: left;
+#map {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
 }
-
-
-/* 시간 단위 선택 */
-.unitOfTime {
-    width: 100%;
-}
-
-.unitOfTime div {
-    display: inline;
-}
-
-
-/* 기간 입력 */
-.inputDate {
-    margin-top: 15px;
-    width: 100%;
-}
-
-.inputDate form {
-    margin-top: 15px;
-    display: block;
-    width: 100%;
-}
-
-#selectStartTime {
-    display: none;
-}
-
-#selectEndTime {
-    display: none;
-}
-
-#selectStartTime2 {
-    display: none;
-}
-
-#selectEndTime2 {
-    display: none;
-}
-
-#selectStartTime3 {
-    display: none;
-}
-
-#selectEndTime3 {
-    display: none;
-}
-
-/* 데이터 종류 선택 */
-.dataType {
-    margin-top: 15px;
-    display: block;
-    width: 100%;
-}
-
-.dataType div {
-    display: inline;
+#mapCanvas {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 20px;
 }
