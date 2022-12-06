@@ -71,7 +71,7 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
                                                 and_(models.Manage.distance_hour != None),
                                                 ).all()
         
-        dataset = {}
+        dataset = {'data':{}}
         time_table = [x for x in range(int(starttime[0:2]), int(endtime[0:2])+1)]
         # print('선택 시간대 :', time_table)
         for data in manage:
@@ -85,14 +85,14 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
             logtrack_id = str(data.track_id)
             # print(data.time, "track_id",data.track_id, data.meal_hour, data.water_hour, data.distance_hour)
             
-            if logday not in dataset.keys():
-                dataset[logday] = {}
-            if logtrack_id not in dataset[logday].keys():
-                dataset[logday][logtrack_id] = {"meal":0, "water":0, "distance":0}
+            if logday not in dataset['data'].keys():
+                dataset['data'][logday] = {}
+            if logtrack_id not in dataset['data'][logday].keys():
+                dataset['data'][logday][logtrack_id] = {"meal":0, "water":0, "distance":0}
             
-            dataset[logday][logtrack_id]["meal"] += data.meal_hour
-            dataset[logday][logtrack_id]["water"] += data.water_hour
-            dataset[logday][logtrack_id]["distance"] += data.distance_hour
+            dataset['data'][logday][logtrack_id]["meal"] += data.meal_hour
+            dataset['data'][logday][logtrack_id]["water"] += data.water_hour
+            dataset['data'][logday][logtrack_id]["distance"] += data.distance_hour
         
         # print('manage 크기 : ',len(manage))
         
@@ -503,20 +503,20 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
 # # 	]
 # # }
 
-# # 일 검색 결과 
-# # {'data': 
-# #     {'2022-12-01': 
-# #         {'1': {'meal_hour': 574, 'water_hour': 0, 'distance_hour': 53733}, 
-# #          '2': {'meal_hour': 1452, 'water_hour': 0, 'distance_hour': 110926}, 
-# #          '3': {'meal_hour': 205, 'water_hour': 0, 'distance_hour': 71431}, 
-# #          '4': {'meal_hour': 1292, 'water_hour': 0, 'distance_hour': 113494}, 
-# #          '5': {'meal_hour': 2529, 'water_hour': 0, 'distance_hour': 136947}, 
-# #          '6': {'meal_hour': 2250, 'water_hour': 0, 'distance_hour': 145484}, 
-# #          '7': {'meal_hour': 2829, 'water_hour': 0, 'distance_hour': 113744}, 
-# #          '8': {'meal_hour': 804, 'water_hour': 0, 'distance_hour': 99488}
-# #         }
-# #     }
-# # }
+# 일 검색 결과 
+# {'data': 
+#     {'2022-12-01': 
+#         {'1': {'meal_hour': 574, 'water_hour': 0, 'distance_hour': 53733}, 
+#          '2': {'meal_hour': 1452, 'water_hour': 0, 'distance_hour': 110926}, 
+#          '3': {'meal_hour': 205, 'water_hour': 0, 'distance_hour': 71431}, 
+#          '4': {'meal_hour': 1292, 'water_hour': 0, 'distance_hour': 113494}, 
+#          '5': {'meal_hour': 2529, 'water_hour': 0, 'distance_hour': 136947}, 
+#          '6': {'meal_hour': 2250, 'water_hour': 0, 'distance_hour': 145484}, 
+#          '7': {'meal_hour': 2829, 'water_hour': 0, 'distance_hour': 113744}, 
+#          '8': {'meal_hour': 804, 'water_hour': 0, 'distance_hour': 99488}
+#         }
+#     }
+# }
 
 # # 시간검색
 # {   

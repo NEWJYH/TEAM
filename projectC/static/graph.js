@@ -3,10 +3,19 @@ function defaultOption() {
     const today = new Date();
     const lastWeek = new Date();
     lastWeek.setDate(today.getDate() - 7)
-
     // 오늘과 지난주를 기간 인풋에 넣을 수 있는 형태로 만듦
-    const forDefault = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    const forStartDefault = lastWeek.getFullYear() + '-' + (lastWeek.getMonth() + 1) + '-' + lastWeek.getDate()
+    let day = today.getDate()
+    day = day < 10 ? '0' + day : day;
+    let lastWeekDay = lastWeek.getDate()
+    lastWeekDay = lastWeekDay < 10 ? '0' + lastWeekDay : lastWeekDay
+
+    let month = today.getMonth() + 1
+    month = month < 10 ? '0' + month : month;
+    let lastWeekMonth = lastWeek.getMonth() + 1
+    lastWeekMonth = lastWeekMonth < 10 ? '0' + lastWeekMonth : lastWeekMonth
+
+    const forDefault = today.getFullYear() + '-' + month + '-' + day;
+    const forStartDefault = lastWeek.getFullYear() + '-' + lastWeekMonth + '-' + lastWeekDay;
     // 기간 인풋 기본값 설정
     document.getElementById('endDate').value = forDefault
     document.getElementById('endDate2').value = forDefault
@@ -38,7 +47,12 @@ input id='startDate' or 'startDate2'의 기본값 변경하는 함수
 */
 function changeUnitOfTime(i) {
     const today = new Date();
-    const forCheckTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+
+    let day = today.getDate()
+    day = day < 10 ? '0' + day : day;
+    let month = today.getMonth() + 1
+    month = month < 10 ? '0' + month : month;
+    const forCheckTime = today.getFullYear() + '-' + month + '-' + day;
 
     let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
     let startTimeArea = document.getElementById('selectStartTime');
@@ -81,7 +95,13 @@ function changeUnitOfTime(i) {
         timeToDayInput.setMonth(endInputDate.substr(5, 2) - 1)
         timeToDayInput.setDate(endInputDate.substr(8, 2))
         timeToDayInput.setDate(timeToDayInput.getDate() - 7)
-        startDateInput.value = timeToDayInput.getFullYear() + '-' + (timeToDayInput.getMonth() + 1) + '-' + timeToDayInput.getDate()
+
+        let day = timeToDayInput.getDate()
+        day = day < 10 ? '0' + day : day;
+        let month = timeToDayInput.getMonth() + 1
+        month = month < 10 ? '0' + month : month;
+
+        startDateInput.value = timeToDayInput.getFullYear() + '-' + month + '-' + day
     }
 
     if (endDateInput.value == forCheckTime) {
@@ -225,23 +245,14 @@ function createDataForChartUse(i, param2) {
         checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
     }
     let dataType = '';
-    if (checkUnitOfTime === 'hour') {
-        if (i == 1) {
-            dataType = 'meal_hour';
-        } else if (i == 2) {
-            dataType = 'distance_hour';
-        } else if (i == 3) {
-            dataType = 'water_hour';
-        }
-    } else {
-        if (i == 1) {
-            dataType = 'meal';
-        } else if (i == 2) {
-            dataType = 'distance';
-        } else if (i == 3) {
-            dataType = 'water';
-        }
+    if (i == 1) {
+        dataType = 'meal';
+    } else if (i == 2) {
+        dataType = 'distance';
+    } else if (i == 3) {
+        dataType = 'water';
     }
+
 
 
     let postDataValue = JSON.parse(param2)
@@ -259,16 +270,12 @@ function createDataForChartUse(i, param2) {
         let dailyData = dataByDate[key]
         // console.log(dailyData)
         let dailyDataKeys = Object.keys(dailyData);
-        dailyDataKeys.forEach((key) => {
-            let unitdata = dailyData[key];
-            let unitdataKeys = Object.keys(unitdata);
-            unitdataKeys.forEach((key) => {
-                count += 1;
-                // console.log(unitdata[key])
-                if (endCount < count) {
-                    endCount = count;
-                }
-            });
+        dailyDataKeys.forEach(() => {
+            count++;
+            // console.log(unitdata[key])
+            if (endCount < count) {
+                endCount = count;
+            }
         });
     });
     // console.log(endCount)
@@ -290,15 +297,9 @@ function createDataForChartUse(i, param2) {
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
             // console.log(dailyData[key])
-            let cowID = Object.keys(dailyData[key]);
-            cowID.forEach((id) => {
-                // console.log(dailyData[key][id])
-                let pushData = dailyData[key][id][dataType]
-                // console.log(pushData)
-                dataBeforeSendingToChart[count].push(pushData)
-                IDArray.push(id)
-                count += 1;
-            });
+            IDArray.push(key)
+            dataBeforeSendingToChart[count].push(dailyData[key][dataType])
+            count++;
         });
     });
     // console.log(dataBeforeSendingToChart[0])
@@ -361,10 +362,10 @@ function doSubmit(i) {
     const dateArray = addTimeToDate(i)
 
     // 방 번호
-    const roomNum = document.getElementById('CCTVNum').value;
+    const cctvNum = document.querySelector('input[name="cctvNum"]:checked').value;
 
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(roomNum) }
+    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(cctvNum) }
     // console.log(data)
     const postData = JSON.stringify(data);
 
@@ -381,9 +382,22 @@ function doSubmit(i) {
     // console.log(postData);
     sendAndReceiveData(i, postData, middleDate);
 }
+// doSubmit(1)
+// doSubmit(2)
+// doSubmit(3)
 
-/** CCTV 선택 변경 시 실행 함수. 선택사항들을 기본값으로 되돌린다. */
-function changeCCTVNum() {
+function changeVisible() {
+    let style = document.getElementById('cctvListFrame')
+    // console.log(window.getComputedStyle(style).display)
+    // console.log(confirmVisible)
+    if (window.getComputedStyle(style).display == 'none') {
+        document.getElementById('cctvListFrame').setAttribute('style', 'display: block;')
+    } else {
+        document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
+    }
+}
+
+function changeCCTV(i) {
     // defaultOption()
     // document.getElementById('selectStartTime').style.display = 'none';
     // document.getElementById('selectEndTime').style.display = 'none';
@@ -397,4 +411,7 @@ function changeCCTVNum() {
     // // doSubmit(1)
     // // doSubmit(2)
     // // doSubmit(3)
+    cctvNum = i + 1
+    document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
+    document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
 }
