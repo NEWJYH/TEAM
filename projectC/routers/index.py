@@ -79,7 +79,7 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
                                                 and_(models.Manage.distance_hour != None),
                                                 ).all()
         
-        dataset = {}
+        dataset = {'data':{}}
         time_table = [x for x in range(int(starttime[0:2]), int(endtime[0:2])+1)]
         print('선택 시간대 :', time_table)
         for data in manage:
@@ -93,14 +93,14 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
             logtrack_id = str(data.track_id)
             print(data.time, "track_id",data.track_id, data.meal_hour, data.water_hour, data.distance_hour)
             
-            if logday not in dataset.keys():
-                dataset[logday] = {}
-            if logtrack_id not in dataset[logday].keys():
-                dataset[logday][logtrack_id] = {"meal":0, "water":0, "distance":0}
+            if logday not in dataset['data'].keys():
+                dataset['data'][logday] = {}
+            if logtrack_id not in dataset['data'][logday].keys():
+                dataset['data'][logday][logtrack_id] = {"meal":0, "water":0, "distance":0}
             
-            dataset[logday][logtrack_id]["meal"] += data.meal_hour
-            dataset[logday][logtrack_id]["water"] += data.water_hour
-            dataset[logday][logtrack_id]["distance"] += data.distance_hour
+            dataset['data'][logday][logtrack_id]["meal"] += data.meal_hour
+            dataset['data'][logday][logtrack_id]["water"] += data.water_hour
+            dataset['data'][logday][logtrack_id]["distance"] += data.distance_hour
         
         print('manage 크기 : ',len(manage))
         
@@ -511,43 +511,43 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
 # # 	]
 # # }
 
-# # 일 검색 결과 
-# # {'data': 
-# #     {'2022-12-01': 
-# #         {'1': {'meal_hour': 574, 'water_hour': 0, 'distance_hour': 53733}, 
-# #          '2': {'meal_hour': 1452, 'water_hour': 0, 'distance_hour': 110926}, 
-# #          '3': {'meal_hour': 205, 'water_hour': 0, 'distance_hour': 71431}, 
-# #          '4': {'meal_hour': 1292, 'water_hour': 0, 'distance_hour': 113494}, 
-# #          '5': {'meal_hour': 2529, 'water_hour': 0, 'distance_hour': 136947}, 
-# #          '6': {'meal_hour': 2250, 'water_hour': 0, 'distance_hour': 145484}, 
-# #          '7': {'meal_hour': 2829, 'water_hour': 0, 'distance_hour': 113744}, 
-# #          '8': {'meal_hour': 804, 'water_hour': 0, 'distance_hour': 99488}
-# #         }
-# #     }
-# # }
+# 일 검색 결과 
+{'data': 
+    {'2022-12-01': 
+        {'1': {'meal_hour': 574, 'water_hour': 0, 'distance_hour': 53733}, 
+         '2': {'meal_hour': 1452, 'water_hour': 0, 'distance_hour': 110926}, 
+         '3': {'meal_hour': 205, 'water_hour': 0, 'distance_hour': 71431}, 
+         '4': {'meal_hour': 1292, 'water_hour': 0, 'distance_hour': 113494}, 
+         '5': {'meal_hour': 2529, 'water_hour': 0, 'distance_hour': 136947}, 
+         '6': {'meal_hour': 2250, 'water_hour': 0, 'distance_hour': 145484}, 
+         '7': {'meal_hour': 2829, 'water_hour': 0, 'distance_hour': 113744}, 
+         '8': {'meal_hour': 804, 'water_hour': 0, 'distance_hour': 99488}
+        }
+    }
+}
 
-# # 시간검색
-# {   
-#     '2022-12-01 14': 
-#         {
-#             '1': {'meal_hour': 574, 'water_hour': 0, 'distance_hour': 53733}, 
-#             '2': {'meal_hour': 1452, 'water_hour': 0, 'distance_hour': 110926}, 
-#             '3': {'meal_hour': 205, 'water_hour': 0, 'distance_hour': 71431}, 
-#             '4': {'meal_hour': 1292, 'water_hour': 0, 'distance_hour': 113494}, 
-#             '5': {'meal_hour': 2529, 'water_hour': 0, 'distance_hour': 136947}, 
-#             '6': {'meal_hour': 2250, 'water_hour': 0, 'distance_hour': 145484}, 
-#             '7': {'meal_hour': 2829, 'water_hour': 0, 'distance_hour': 113744}, 
-#             '8': {'meal_hour': 804, 'water_hour': 0, 'distance_hour': 99488}
-#             }, 
-#     '2022-12-01 15': 
-#         {
-#             '5': {'meal_hour': 2359, 'water_hour': 0, 'distance_hour': 152273}, 
-#             '6': {'meal_hour': 979, 'water_hour': 0, 'distance_hour': 108438}, 
-#             '3': {'meal_hour': 1646, 'water_hour': 0, 'distance_hour': 180881}, 
-#             '7': {'meal_hour': 2818, 'water_hour': 0, 'distance_hour': 228523}, 
-#             '8': {'meal_hour': 757, 'water_hour': 0, 'distance_hour': 177440}, 
-#             '1': {'meal_hour': 3007, 'water_hour': 0, 'distance_hour': 183995}, 
-#             '2': {'meal_hour': 2466, 'water_hour': 0, 'distance_hour': 158283}, 
-#             '4': {'meal_hour': 2208, 'water_hour': 0, 'distance_hour': 118695}
-#         }
-# }
+# 시간검색
+{   
+    '2022-12-01 14': 
+        {
+            '1': {'meal_hour': 574, 'water_hour': 0, 'distance_hour': 53733}, 
+            '2': {'meal_hour': 1452, 'water_hour': 0, 'distance_hour': 110926}, 
+            '3': {'meal_hour': 205, 'water_hour': 0, 'distance_hour': 71431}, 
+            '4': {'meal_hour': 1292, 'water_hour': 0, 'distance_hour': 113494}, 
+            '5': {'meal_hour': 2529, 'water_hour': 0, 'distance_hour': 136947}, 
+            '6': {'meal_hour': 2250, 'water_hour': 0, 'distance_hour': 145484}, 
+            '7': {'meal_hour': 2829, 'water_hour': 0, 'distance_hour': 113744}, 
+            '8': {'meal_hour': 804, 'water_hour': 0, 'distance_hour': 99488}
+            }, 
+    '2022-12-01 15': 
+        {
+            '5': {'meal_hour': 2359, 'water_hour': 0, 'distance_hour': 152273}, 
+            '6': {'meal_hour': 979, 'water_hour': 0, 'distance_hour': 108438}, 
+            '3': {'meal_hour': 1646, 'water_hour': 0, 'distance_hour': 180881}, 
+            '7': {'meal_hour': 2818, 'water_hour': 0, 'distance_hour': 228523}, 
+            '8': {'meal_hour': 757, 'water_hour': 0, 'distance_hour': 177440}, 
+            '1': {'meal_hour': 3007, 'water_hour': 0, 'distance_hour': 183995}, 
+            '2': {'meal_hour': 2466, 'water_hour': 0, 'distance_hour': 158283}, 
+            '4': {'meal_hour': 2208, 'water_hour': 0, 'distance_hour': 118695}
+        }
+}

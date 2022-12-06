@@ -273,13 +273,11 @@ function createDataForChartUse(i, param2) {
         dailyDataKeys.forEach((key) => {
             let unitdata = dailyData[key];
             let unitdataKeys = Object.keys(unitdata);
-            unitdataKeys.forEach((key) => {
-                count += 1;
-                // console.log(unitdata[key])
-                if (endCount < count) {
-                    endCount = count;
-                }
-            });
+            count++;
+            // console.log(unitdata[key])
+            if (endCount < count) {
+                endCount = count;
+            }
         });
     });
     // console.log(endCount)
@@ -301,15 +299,9 @@ function createDataForChartUse(i, param2) {
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
             // console.log(dailyData[key])
-            let cowID = Object.keys(dailyData[key]);
-            cowID.forEach((id) => {
-                // console.log(dailyData[key][id])
-                let pushData = dailyData[key][id][dataType]
-                // console.log(pushData)
-                dataBeforeSendingToChart[count].push(pushData)
-                IDArray.push(id)
-                count += 1;
-            });
+            IDArray.push(key)
+            dataBeforeSendingToChart[count].push(dailyData[key][dataType])
+            count++;
         });
     });
     // console.log(dataBeforeSendingToChart[0])
@@ -392,9 +384,9 @@ function doSubmit(i) {
     // console.log(postData);
     sendAndReceiveData(i, postData, middleDate);
 }
-doSubmit(1)
-doSubmit(2)
-doSubmit(3)
+// doSubmit(1)
+// doSubmit(2)
+// doSubmit(3)
 
 function changeVisible() {
     let style = document.getElementById('cctvListFrame')
