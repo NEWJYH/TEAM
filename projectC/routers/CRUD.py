@@ -35,31 +35,32 @@ router = APIRouter(
 #     return new_log
 
 # test injection
-# import pandas as pd
-# import time
-# # projectC\trash\data.csv
-# @router.post("/testpost")
-# def post_test_trackerLog(db:Session = Depends(database.get_db)):   
-#     df = pd.read_csv('trash\data.csv')
-#     for index in range(len(df)):
-#         request = df.loc[index, :].to_dict()
-#         test_log =  models.TrackerLog(
-#             time = request['time'],
-#             cctv_num = int(request['ch'][-1]),
-#             frame = request['frame'],
-#             track_id = request['cow_id'],
-#             xc = request['xc'],
-#             xy = request['xy'],
-#             distance = request['distance'],
-#             meal = request['meal'],
-#             water = request['water'])
-#         print(index)
-#         db.add(test_log)
-#         db.commit()
-#         db.refresh(test_log)
-#         if index == 0:
-#             time.sleep(1)
-#     return "success"
+import pandas as pd
+import time
+# projectC\trash\data.csv
+@router.post("/testpost")
+def post_test_trackerLog(db:Session = Depends(database.get_db)):   
+    df = pd.read_csv('trash\hour24_day3.csv')
+    for index in range(len(df)):
+        request = df.loc[index, :].to_dict()
+        test_log =  models.TrackerLog(
+            time = request['time'],
+            cctv_num = 3,
+            # cctv_num = int(request['ch'][-1]),
+            frame = request['frame'],
+            track_id = request['cow_id'],
+            xc = request['xc'],
+            xy = request['yc'],
+            distance = request['distance'],
+            meal = request['meal'],
+            water = request['water'])
+        print(index)
+        db.add(test_log)
+        db.commit()
+        db.refresh(test_log)
+        if index == 0:
+            time.sleep(1)
+    return "success"
 
 # ---------------------------------------------------------
 # 소정보 테이블 
