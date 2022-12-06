@@ -270,9 +270,7 @@ function createDataForChartUse(i, param2) {
         let dailyData = dataByDate[key]
         // console.log(dailyData)
         let dailyDataKeys = Object.keys(dailyData);
-        dailyDataKeys.forEach((key) => {
-            let unitdata = dailyData[key];
-            let unitdataKeys = Object.keys(unitdata);
+        dailyDataKeys.forEach(() => {
             count++;
             // console.log(unitdata[key])
             if (endCount < count) {
