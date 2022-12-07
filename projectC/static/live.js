@@ -34,12 +34,12 @@ function changeCCTVNum() {
 };
 
 const colorList = [
-    '#00ff66',  '#33ff33', '#0000ff', '#ffff33', 
+    '#00ff66', '#33ff33', '#0000ff', '#ffff33',
     '#cc0000', '#3333cc', '#3333ff', '#ffff00'
 ];
 
-const dataScale = [];
-let canvasScale = [];
+const dataScale = [1280, 720];
+let canvasScale = [640, 480];
 
 const canvas = document.getElementById('mapCanvas');
 /** @type {CanvasRenderingContext2D} */
@@ -47,8 +47,12 @@ const ctx = canvas.getContext("2d");
 
 function drawCow(x, y, key) {
     ctx.beginPath();
-    ctx.fillStyle = colorList[parseInt(key)-1];
-    ctx.arc(x, canvas.height - y, 7, 0, Math.PI * 2);
+    ctx.fillStyle = colorList[parseInt(key) - 1];
+    let x1 = x * (canvas.width / dataScale[0]);
+    // console.log(x1);
+    let y1 = y * canvas.height / dataScale[1];
+    // console.log(y1);
+    ctx.arc(x1, canvas.height - y1, 7, 0, Math.PI * 2);
     ctx.fill();
     ctx.closePath();
 }
@@ -77,8 +81,9 @@ function sendAndReceiveData() {
     xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
-            eachFrame = [];
+            // eachFrame = [];
             let minute = JSON.parse(JSON.parse(xhr.responseText));
+            console.log(minute)
             let minuteKeys = Object.keys(minute);
             minuteKeys.forEach(key => {
                 let second = minute[key]
@@ -90,7 +95,12 @@ function sendAndReceiveData() {
                 })
             })
             // console.log(eachFrame)
-            startUpdate()
+            let i = 1;
+            if (i == 1) {
+                startUpdate()
+                i = 2
+            }
+            data.sec += 60;
         };
     };
     postdata = JSON.stringify(data)
@@ -100,7 +110,7 @@ function sendAndReceiveData() {
 };
 
 sendAndReceiveData();
-setInterval(sendAndReceiveData, 20000);
+setInterval(sendAndReceiveData, 30000);
 
 const mapFunction = {
     isPause: false,
@@ -125,10 +135,9 @@ let count = 0;
 function updateMap() {
     if (!mapFunction.isPause) {
         drawMap(eachFrame[count])
-        // console.log(count)
+        console.log(count)
         count++;
-        if (count == 900) {
-            stopUpdate()
-        }
+        if (count + 1 in eachFrame) {
+        } else { stopUpdate() }
     }
 }
