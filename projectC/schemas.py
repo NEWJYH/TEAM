@@ -66,3 +66,10 @@ class Form(BaseModel):
     endday : str
     endtime : str
     cctvnum : int
+
+class MiniMap(BaseModel):
+    sec : int
+    frame : int
+    cow_id : int
+    xc : int
+    yc : int

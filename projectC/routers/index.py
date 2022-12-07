@@ -3,22 +3,14 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, or_
-
-
+from sqlalchemy import and_
 
 import models
 import database, schemas
 
-from datetime import date, timedelta
-import random
 import json
 
-
 import json
-
-from pydantic import BaseModel 
-
 
 router = APIRouter(
     prefix="/graph"
@@ -51,48 +43,30 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
         print('시간 검색')
         starttime = form.starttime
         endtime = form.endtime
-        print('검색시작 시간 : ', starttime)
-        print('검색 완료 시간 : ', endtime)
-    print('시작시간 : ', startday)
-    print('끝나는시간 : ', endday)
-    print('cctv :', cctvnum)
 
     # 시간 검색일 경우
     if starttime:
-        insertkeystart = ' '+ starttime[0:2]
-        insertkeyend = ' '+ endtime[0:2]
-        print(startday+insertkeystart)
-        print(endday+insertkeyend)
         startidx = db.query(models.Manage).filter(
                                                     and_(models.Manage.time.contains(startday)),
                                                     and_(models.Manage.distance_hour != None) 
                                                     ).first().idx
-
         endidx = db.query(models.Manage).filter(
                                                 and_(models.Manage.time.contains(endday)),
                                                 and_(models.Manage.distance_hour != None) 
                                                 ).order_by(models.Manage.idx.desc()).first().idx
-
         manage = db.query(models.Manage).filter(
                                                 and_(models.Manage.idx >= startidx),
                                                 and_(models.Manage.idx <= endidx), 
                                                 and_(models.Manage.distance_hour != None),
                                                 ).all()
-        
         dataset = {'data':{}}
         time_table = [x for x in range(int(starttime[0:2]), int(endtime[0:2])+1)]
-        print('선택 시간대 :', time_table)
         for data in manage:
-            # 일자 
             logday = str(data.time).split()[0] + ' ' + str(data.time).split()[1][0:2]
-            # 시간 
             logtime = str(data.time).split()[1]
-            print('logtime: ',logtime[:2])
             if int(logtime[:2]) not in time_table:
                 continue
             logtrack_id = str(data.track_id)
-            print(data.time, "track_id",data.track_id, data.meal_hour, data.water_hour, data.distance_hour)
-            
             if logday not in dataset['data'].keys():
                 dataset['data'][logday] = {}
             if logtrack_id not in dataset['data'][logday].keys():
@@ -101,24 +75,17 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
             dataset['data'][logday][logtrack_id]["meal"] += data.meal_hour
             dataset['data'][logday][logtrack_id]["water"] += data.water_hour
             dataset['data'][logday][logtrack_id]["distance"] += data.distance_hour
-        
-        print('manage 크기 : ',len(manage))
-        
-        print(dataset)
         return json.dumps(dataset)
-
     # 일 검색일 경우
     else:
         startidx = db.query(models.Manage).filter(
                                                     and_(models.Manage.time.contains(startday)),
                                                     and_(models.Manage.distance_hour != None) 
                                                     ).first().idx
-
         endidx = db.query(models.Manage).filter(
                                                 and_(models.Manage.time.contains(endday)),
                                                 and_(models.Manage.distance_hour != None) 
                                                 ).order_by(models.Manage.idx.desc()).first().idx
-
         manage = db.query(models.Manage).filter(
                                                 and_(models.Manage.idx >= startidx),
                                                 and_(models.Manage.idx <= endidx), 
@@ -135,7 +102,6 @@ def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
             dataset['data'][logday][logtrack_id]["meal"] += data.meal_hour
             dataset['data'][logday][logtrack_id]["water"] += data.water_hour
             dataset['data'][logday][logtrack_id]["distance"] += data.distance_hour
-    print(dataset)
     return json.dumps(dataset)
 
     # 시간 검색 경우

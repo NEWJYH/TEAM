@@ -34,22 +34,23 @@ router = APIRouter(
 #     db.refresh(new_log)
 #     return new_log
 
-# test injection
+# # test injection
 # import pandas as pd
 # import time
 # # projectC\trash\data.csv
-# @router.post("/testpost")
+# @router.post("/post_minimap")
 # def post_test_trackerLog(db:Session = Depends(database.get_db)):   
-#     df = pd.read_csv('trash\data.csv')
+#     df = pd.read_csv('trash\hour24_day3.csv')
 #     for index in range(len(df)):
 #         request = df.loc[index, :].to_dict()
 #         test_log =  models.TrackerLog(
 #             time = request['time'],
-#             cctv_num = int(request['ch'][-1]),
+#             cctv_num = 3,
+#             # cctv_num = int(request['ch'][-1]),
 #             frame = request['frame'],
 #             track_id = request['cow_id'],
 #             xc = request['xc'],
-#             xy = request['xy'],
+#             xy = request['yc'],
 #             distance = request['distance'],
 #             meal = request['meal'],
 #             water = request['water'])
@@ -121,3 +122,26 @@ def get_Manage(request:schemas.Option, db:Session=Depends(database.get_db)):
 def get_Manage( db:Session=Depends(database.get_db)):
     manage = db.query(models.Manage).all()
     return manage
+
+# test injection
+import pandas as pd
+import time
+@router.post("/post_minimap")
+def post_test_trackerLog(db:Session = Depends(database.get_db)):   
+    df = pd.read_csv('trash\minimap.csv')
+    for index in range(len(df)):
+        if index == 0:
+            time.sleep(1)
+        request = df.loc[index, :].to_dict()
+        minimap =  models.MiniMap(
+            frame = request['frame'],
+            cow_id = request['cow_id'],
+            xc = request['xc'],
+            yc = request['yc'],
+            sec = (int(request['frame']) // 15) + 1
+        )
+        print(index)
+        db.add(minimap)
+        db.commit()
+        db.refresh(minimap)
+    return "success"
