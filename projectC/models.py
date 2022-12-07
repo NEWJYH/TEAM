@@ -23,7 +23,7 @@ class TrackerLog(Base):
     # 중심 x좌표    
     xc = Column(Integer)
     # 중심 y좌표
-    xy = Column(Integer)
+    yc = Column(Integer)
     # 소이동 거리 1초
     distance = Column(Integer)
     # 식사여부 1초
@@ -43,7 +43,7 @@ class Cow(Base):
 
 # 소관리내역 테이블
 class Manage(Base):
-    __tablename__="manage1"
+    __tablename__="manage"
     # 순번
     idx = Column(Integer, primary_key=True, autoincrement=True)
     # 등록 시간 분단위
@@ -67,33 +67,19 @@ class Manage(Base):
 
 # trackerlog 순회를 위함 
 class Log(Base):
-    __tablename__="log1"
+    __tablename__="log"
     # 순번 
     idx = Column(Integer, primary_key=True, autoincrement=True)
     # trackerlog 마지막 idx
     track_idx = Column(Integer)
     manage_idx = Column(Integer)
 
-# # 트레킹 테이블 _완료
-# class DoneTrackerLog(Base):
-#     __tablename__="done_tracker_log"
-#     # 순번
-#     idx = Column(Integer, primary_key=True, autoincrement=True)
-#     # 등록시간 : -> 실시간 시간 기준으로 영상 시간기준
-#     time = Column(DateTime(timezone=True), default=datetime.now)
-#     # cctv_ch
-#     cctv_num = Column(Integer)
-#     # 디텍션영상프레임
-#     frame = Column(Integer)
-#     # 트레커아이디
-#     track_id = Column(Integer)
-#     # 중심 x좌표    
-#     xc = Column(Integer)
-#     # 중심 y좌표
-#     xy = Column(Integer)
-#     # 소이동 거리 1초
-#     distance = Column(Integer)
-#     # 식사여부 1초
-#     meal = Column(Boolean)
-#     # 음수여부 1초
-#     water = Column(Boolean)
+# minimap
+class MiniMap(Base):
+    __tablename__="minimap"
+    idx = Column(Integer, primary_key=True, autoincrement=True)
+    sec = Column(Integer)
+    frame = Column(Integer)
+    cow_id = Column(Integer)
+    xc = Column(Integer)
+    yc = Column(Integer)
