@@ -203,33 +203,35 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
         checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
     }
     const resDay = [];
+    const toCompare = [];
     let startDay = new Date(param1);
     let endDay = new Date(param2);
     if (checkUnitOfTime === 'hour') {
         while (startDay.getTime() <= endDay.getTime()) {
+            let year = startDay.getFullYear()
             let month = (startDay.getMonth() + 1);
             month = month < 10 ? '0' + month : month;
-
             let day = startDay.getDate();
             day = day < 10 ? '0' + day : day;
-
             let hour = startDay.getHours();
             hour = hour < 10 ? '0' + hour : hour;
-
             resDay.push(startDay.getHours() + '시');
+            toCompare.push(year + '-' + month + '-' + day + ' ' + hour);
             startDay.setHours(startDay.getHours() + 1);
         }
     } else {
         while (startDay.getTime() <= endDay.getTime()) {
+            let year = startDay.getFullYear()
             let month = (startDay.getMonth() + 1);
             month = month < 10 ? '0' + month : month;
             let day = startDay.getDate();
             day = day < 10 ? '0' + day : day;
             resDay.push(month + '-' + day);
+            toCompare.push(year + '-' + month + '-' + day);
             startDay.setDate(startDay.getDate() + 1);
         }
     }
-    return resDay;
+    return [resDay, toCompare];
 }
 
 /**
@@ -237,13 +239,7 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 소 마리수를 for문을 통해 가져온 뒤
 해당 수만큼 차트에 넣을 데이터를 차트용 데이터셋에 푸쉬
 */
-function createDataForChartUse(i, param2) {
-    let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
-    if (i == 1) { } else if (i == 2) {
-        checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
-    } else if (i == 3) {
-        checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
-    }
+function createDataForChartUse(i, param2, toCompare) {
     let dataType = '';
     if (i == 1) {
         dataType = 'meal';
@@ -252,8 +248,6 @@ function createDataForChartUse(i, param2) {
     } else if (i == 3) {
         dataType = 'water';
     }
-
-
 
     let postDataValue = JSON.parse(param2)
     // console.log(postDataValue)
@@ -270,7 +264,7 @@ function createDataForChartUse(i, param2) {
         let dailyData = dataByDate[key]
         // console.log(dailyData)
         let dailyDataKeys = Object.keys(dailyData);
-        dailyDataKeys.forEach(() => {
+        dailyDataKeys.forEach((key) => {
             count++;
             // console.log(unitdata[key])
             if (endCount < count) {
@@ -289,7 +283,26 @@ function createDataForChartUse(i, param2) {
 
     let IDArray = [];
 
-    // console.log(dataByDate)
+    toCompare.forEach(element => {
+        if (element in dataByDate) {
+            let dailyData = dataByDate[element]
+            for (i = 0; i < endCount; i++) {
+                if (i + 1 in dailyData) {
+                    if (!i + 1 in IDArray) {
+                        IDArray.push(i + 1)
+                    }
+                    dataBeforeSendingToChart[i].push(dailyData[i + 1][dataType])
+                } else {
+                    dataBeforeSendingToChart[i].push(null)
+                }
+            }
+        } else {
+            for (i = 0; i < endCount; i++) {
+                dataBeforeSendingToChart[i].push(null)
+            }
+        }
+    });
+
     // 날짜별로 되어있는 데이터를 소ID별로 분류해 임시 데이터 어레이에 푸쉬
     keys.forEach((key) => {
         let count = 0;
@@ -297,8 +310,11 @@ function createDataForChartUse(i, param2) {
         let dailyDataKeys = Object.keys(dailyData);
         dailyDataKeys.forEach((key) => {
             // console.log(dailyData[key])
+            // if (!key in IDArray) {
+            //     IDArray.push(key)
+            // }
             IDArray.push(key)
-            dataBeforeSendingToChart[count].push(dailyData[key][dataType])
+            dataBeforeSendingToChart[parseInt(key) - 1].push(dailyData[key][dataType])
             count++;
         });
     });
@@ -327,13 +343,13 @@ function createDataForChartUse(i, param2) {
 보낼 데이터를 입력으로 받고,
 해당 데이터를 보내서 받아온 데이터를 히든 태그의 value에 저장 
 */
-function sendAndReceiveData(i, postData, middleDate) {
+function sendAndReceiveData(i, postData, middleDate, toCompare) {
     xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             let data = JSON.parse(xhr.responseText);
             // 차트에 넣을 데이터
-            const chartData = createDataForChartUse(i, data);
+            const chartData = createDataForChartUse(i, data, toCompare);
 
             let chart = foodChart
             if (i == 1) { } else if (i == 2) {
@@ -379,8 +395,8 @@ function doSubmit(i) {
     const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
     // 데이터 전송
-    // console.log(postData);
-    sendAndReceiveData(i, postData, middleDate);
+    // console.log(middleDate[1]);
+    sendAndReceiveData(i, postData, middleDate[0], middleDate[1]);
 }
 // doSubmit(1)
 // doSubmit(2)
@@ -415,3 +431,13 @@ function changeCCTV(i) {
     document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
     document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
 }
+
+let style = document.getElementById('cctvListFrame')
+document.querySelector("body").addEventListener("click", function (e) {
+    // console.log(e.target.id)
+    if (e.target.id == e.currentTarget.querySelector("#checkVisible").id) {
+    } else {
+        // console.log("wrong")
+        document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
+    }
+})
