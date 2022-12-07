@@ -152,7 +152,6 @@ class BackgroundTasks(threading.Thread):
             for qo in manage:
                 # manage table min++ -> manage table hour
                 meal = qo.meal_min
-                print(qo.idx, meal)
                 water = qo.water_min
                 distance = qo.distance_min
                 cctvnum = qo.cctv_num

@@ -10,8 +10,6 @@ import database, schemas
 
 import json
 
-import json
-
 router = APIRouter(
     prefix="/graph"
 )
