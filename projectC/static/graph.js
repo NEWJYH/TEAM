@@ -331,6 +331,7 @@ function createDataForChartUse(i, param2, toCompare) {
                 data: dataBeforeSendingToChart[i],
                 label: IDArray[i] + '번 소',
                 borderColor: lineColor[i],
+                lineTension: 0,
                 fill: false
             }
         )
@@ -379,7 +380,7 @@ function doSubmit(i) {
 
     // 방 번호
     const cctvNum = document.querySelector('input[name="cctvNum"]:checked').value;
-
+    // console.log(cctvNum)
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
     const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(cctvNum) }
     // console.log(data)
