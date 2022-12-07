@@ -2,7 +2,7 @@
 # json converter
 
 from pydantic import BaseModel
-from datetime import date, timedelta, datetime
+from datetime import date, datetime
 
 class index_post(BaseModel):
     today : date
