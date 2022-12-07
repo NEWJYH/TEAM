@@ -42,9 +42,9 @@ const canvas = document.getElementById('mapCanvas');
 /** @type {CanvasRenderingContext2D} */
 const ctx = canvas.getContext("2d");
 
-function drawCow(x, y, colorCount) {
+function drawCow(x, y, key) {
     ctx.beginPath();
-    ctx.fillStyle = colorList[colorCount];
+    ctx.fillStyle = colorList[parseInt(key)-1];
     ctx.arc(x, canvas.height - y, 7, 0, Math.PI * 2);
     ctx.fill();
     ctx.closePath();
@@ -55,11 +55,9 @@ function drawMap(param) {
     // console.log(param)
     let ID = Object.keys(param);
     // console.log(ID)
-    let colorCount = 0;
     ID.forEach(key => {
         // console.log(param[key])
-        drawCow(param[key].x, param[key].y, colorCount)
-        colorCount++;
+        drawCow(param[key].x, param[key].y, key)
     })
 }
 

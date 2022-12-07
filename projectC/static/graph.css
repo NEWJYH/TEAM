@@ -60,7 +60,7 @@ input {
     margin: 0 auto;
     text-align: center;
     border-radius: 15px;
-    background-color: rgb(74, 146, 44);
+    background-color: #C65146;
 }
 
 #defaultCCTV {
@@ -109,11 +109,20 @@ input {
     width: 95%;
     margin: 0 auto;
     margin-top: 10px;
+    background-color: white;
 }
-#chartImg {
-    background-color: rgb(74, 146, 44);
+.chartImg {
+    background-color: #C65146;
     margin: 10px 0px 0px 10px;
     border-radius: 15px;
+    float: left;
+}
+.typeOfData {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #C65146;
+    margin: 20px 0px 0px 10px;
     float: left;
 }
 
