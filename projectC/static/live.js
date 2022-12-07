@@ -67,12 +67,8 @@ function drawMap(param) {
 // setInterval(drawMap, 1000);
 
 const data = {
-    formtype: 1,
-    startday: 'a',
-    starttime: 'b',
-    endday: 'c',
-    endtime: 'd',
-    cctvnum: 1
+    sec: 1,
+
 }
 
 let eachFrame = [];
