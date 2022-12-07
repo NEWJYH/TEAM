@@ -36,7 +36,10 @@ function changeCCTVNum() {
 const colorList = [
     '#00ff66',  '#33ff33', '#0000ff', '#ffff33', 
     '#cc0000', '#3333cc', '#3333ff', '#ffff00'
-]
+];
+
+const dataScale = [];
+let canvasScale = [];
 
 const canvas = document.getElementById('mapCanvas');
 /** @type {CanvasRenderingContext2D} */
@@ -101,7 +104,7 @@ function sendAndReceiveData() {
 };
 
 sendAndReceiveData();
-// setInterval(sendAndReceiveData, 1000);
+setInterval(sendAndReceiveData, 60000);
 
 const mapFunction = {
     isPause: false,
