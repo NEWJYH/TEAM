@@ -100,7 +100,7 @@ function sendAndReceiveData() {
 };
 
 sendAndReceiveData();
-setInterval(sendAndReceiveData, 60000);
+setInterval(sendAndReceiveData, 20000);
 
 const mapFunction = {
     isPause: false,

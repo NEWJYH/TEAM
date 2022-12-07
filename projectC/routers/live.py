@@ -37,11 +37,13 @@ async def stream_video(request:Request):
 
 @router.post('/post')
 async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)):
+    
     minimapobj = db.query(models.MiniMap).filter(
                                                 and_(models.MiniMap.sec >= form.sec),
                                                 and_(models.MiniMap.sec <= form.sec+59),
                                                 ).all()
     testdata = {}
+    
     for data in minimapobj:
         sec = str(data.sec)
         frame = str(data.frame)
@@ -53,6 +55,5 @@ async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)
         if frame not in testdata[sec].keys():
             testdata[sec][frame] = {}
         testdata[sec][frame][cow_id] = {"x":x, "y":y}
-
-    print(testdata)
+    
     return json.dumps(testdata)
