@@ -8,7 +8,7 @@ import models
 app = FastAPI()
 
 # DB
-models.Base.metadata.create_all(engine)
+# models.Base.metadata.create_all(engine)
 
 # Static 
 app.mount("/static", StaticFiles(directory="static") , name="static")
