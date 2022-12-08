@@ -22,7 +22,7 @@ templates = Jinja2Templates(directory="templates")
 @router.get("/")
 async def index(request:Request):
     # 보낼 request를 설정
-    return templates.TemplateResponse("live.j2", context={"request": request})
+    return templates.TemplateResponse("live.html", context={"request": request})
 
 
 @router.get("/stream_video")
