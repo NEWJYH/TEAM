@@ -34,8 +34,8 @@ function changeCCTVNum() {
 };
 
 const colorList = [
-    '#00ff66', '#33ff33', '#0000ff', '#ffff33',
-    '#cc0000', '#3333cc', '#3333ff', '#ffff00'
+    '#0000ff', '#3f7bf7', '#50bc7a', '#4b652b',
+    '#5a3434', '#753265', '#40278f', '#4c8530'
 ];
 
 const dataScale = [1280, 720];
@@ -104,7 +104,7 @@ function sendAndReceiveData() {
         };
     };
     postdata = JSON.stringify(data)
-    xhr.open("POST", "/live/post");
+    xhr.open("POST", "/live/post2");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(postdata);
 };

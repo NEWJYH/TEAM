@@ -343,7 +343,9 @@ function createDataForChartUse(i, param2, toCompare) {
                 data: dataBeforeSendingToChart[i],
                 label: IDArray[i] + '번 소',
                 borderColor: lineColor[i],
-                lineTension: 0,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0,
                 fill: false
             }
         )
