@@ -57,6 +57,8 @@ function changeUnitOfTime(i) {
     const forCheckTime = today.getFullYear() + '-' + month + '-' + day;
 
     let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
+    let startTimeDiv = document.getElementById('startTimeSpace');
+    let endTimeDiv = document.getElementById('endTimeSpace');
     let startTimeArea = document.getElementById('selectStartTime');
     let endTimeArea = document.getElementById('selectEndTime');
     let startDateInput = document.getElementById('startDate');
@@ -66,6 +68,8 @@ function changeUnitOfTime(i) {
 
     if (i == 1) { } else if (i == 2) {
         checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
+        startTimeDiv = document.getElementById('startTimeSpace_2');
+        endTimeDiv = document.getElementById('endTimeSpace_2');
         startTimeArea = document.getElementById('selectStartTime2');
         endTimeArea = document.getElementById('selectEndTime2');
         startDateInput = document.getElementById('startDate2');
@@ -74,6 +78,8 @@ function changeUnitOfTime(i) {
         twentyThree = document.getElementById('23_2');
     } else if (i == 3) {
         checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
+        startTimeDiv = document.getElementById('startTimeSpace_3');
+        endTimeDiv = document.getElementById('endTimeSpace_3');
         startTimeArea = document.getElementById('selectStartTime3');
         endTimeArea = document.getElementById('selectEndTime3');
         startDateInput = document.getElementById('startDate3');
@@ -82,13 +88,15 @@ function changeUnitOfTime(i) {
         twentyThree = document.getElementById('23_3');
     }
 
-
-
     if (checkUnitOfTime === 'hour') {
+        startTimeDiv.style.display = 'block';
+        endTimeDiv.style.display = 'block';
         startTimeArea.style.display = 'inline';
         endTimeArea.style.display = 'inline';
         startDateInput.value = endDateInput.value
     } else {
+        startTimeDiv.style.display = 'inline-block';
+        endTimeDiv.style.display = 'inline-block';
         startTimeArea.style.display = 'none';
         endTimeArea.style.display = 'none';
         const endInputDate = endDateInput.value

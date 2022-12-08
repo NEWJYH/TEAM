@@ -1,22 +1,22 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from database import engine
-from schedule import schedule
+# from database import engine
+# from schedule import schedule
 from routers import index, CRUD, live
-import models
+# import models
 
 app = FastAPI()
 
 # DB
-models.Base.metadata.create_all(engine)
+# models.Base.metadata.create_all(engine)
 
 # Static 
 app.mount("/static", StaticFiles(directory="static") , name="static")
 
 # Router
 app.include_router(index.router)
-app.include_router(CRUD.router)
+# app.include_router(CRUD.router)
 app.include_router(live.router)
 
 # t = schedule.BackgroundTasks()

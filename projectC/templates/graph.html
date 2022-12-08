@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <form class="dateInputForm">
-                            <div id="upInputOne" class="upInput">
+                            <div id="startTimeSpace" class="upInput">
                                 <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)" required
                                     pattern="\d{4}-\d{2}-\d{2}">
                                 <div id="selectStartTime">
@@ -117,7 +117,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="downInput">
+                            <div id="endTimeSpace" class="downInput">
                                 <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)"
                                     required pattern="\d{4}-\d{2}-\d{2}">
                                 <div id="selectEndTime">
@@ -176,65 +176,69 @@
                             </div>
                         </div>
                         <form>
-                            <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)" required
-                                pattern="\d{4}-\d{2}-\d{2}">
-                            <div id="selectStartTime2">
-                                <select id="startTime2">
-                                    <option value="0">&nbsp;0시&nbsp;</option>
-                                    <option value="1">&nbsp;1시&nbsp;</option>
-                                    <option value="2">&nbsp;2시&nbsp;</option>
-                                    <option value="3">&nbsp;3시&nbsp;</option>
-                                    <option value="4">&nbsp;4시&nbsp;</option>
-                                    <option value="5">&nbsp;5시&nbsp;</option>
-                                    <option value="6">&nbsp;6시&nbsp;</option>
-                                    <option value="7">&nbsp;7시&nbsp;</option>
-                                    <option value="8">&nbsp;8시&nbsp;</option>
-                                    <option value="9">&nbsp;9시&nbsp;</option>
-                                    <option value="10">&nbsp;10시&nbsp;</option>
-                                    <option value="11">&nbsp;11시&nbsp;</option>
-                                    <option value="12">&nbsp;12시&nbsp;</option>
-                                    <option value="13">&nbsp;13시&nbsp;</option>
-                                    <option value="14">&nbsp;14시&nbsp;</option>
-                                    <option value="15">&nbsp;15시&nbsp;</option>
-                                    <option value="16">&nbsp;16시&nbsp;</option>
-                                    <option value="17">&nbsp;17시&nbsp;</option>
-                                    <option value="18">&nbsp;18시&nbsp;</option>
-                                    <option value="19">&nbsp;19시&nbsp;</option>
-                                    <option value="20">&nbsp;20시&nbsp;</option>
-                                    <option value="21">&nbsp;21시&nbsp;</option>
-                                    <option value="22">&nbsp;22시&nbsp;</option>
-                                    <option value="23">&nbsp;23시&nbsp;</option>
-                                </select>
+                            <div id="startTimeSpace_2" class="upInput">
+                                <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)" required
+                                    pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectStartTime2">
+                                    <select id="startTime2">
+                                        <option value="0">&nbsp;0시&nbsp;</option>
+                                        <option value="1">&nbsp;1시&nbsp;</option>
+                                        <option value="2">&nbsp;2시&nbsp;</option>
+                                        <option value="3">&nbsp;3시&nbsp;</option>
+                                        <option value="4">&nbsp;4시&nbsp;</option>
+                                        <option value="5">&nbsp;5시&nbsp;</option>
+                                        <option value="6">&nbsp;6시&nbsp;</option>
+                                        <option value="7">&nbsp;7시&nbsp;</option>
+                                        <option value="8">&nbsp;8시&nbsp;</option>
+                                        <option value="9">&nbsp;9시&nbsp;</option>
+                                        <option value="10">&nbsp;10시&nbsp;</option>
+                                        <option value="11">&nbsp;11시&nbsp;</option>
+                                        <option value="12">&nbsp;12시&nbsp;</option>
+                                        <option value="13">&nbsp;13시&nbsp;</option>
+                                        <option value="14">&nbsp;14시&nbsp;</option>
+                                        <option value="15">&nbsp;15시&nbsp;</option>
+                                        <option value="16">&nbsp;16시&nbsp;</option>
+                                        <option value="17">&nbsp;17시&nbsp;</option>
+                                        <option value="18">&nbsp;18시&nbsp;</option>
+                                        <option value="19">&nbsp;19시&nbsp;</option>
+                                        <option value="20">&nbsp;20시&nbsp;</option>
+                                        <option value="21">&nbsp;21시&nbsp;</option>
+                                        <option value="22">&nbsp;22시&nbsp;</option>
+                                        <option value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
                             </div>
-                            <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)"
-                                required pattern="\d{4}-\d{2}-\d{2}">
-                            <div id="selectEndTime2">
-                                <select id="endTime2">
-                                    <option id="0_2" value="0">&nbsp;0시&nbsp;</option>
-                                    <option id="1_2" value="1">&nbsp;1시&nbsp;</option>
-                                    <option id="2_2" value="2">&nbsp;2시&nbsp;</option>
-                                    <option id="3_2" value="3">&nbsp;3시&nbsp;</option>
-                                    <option id="4_2" value="4">&nbsp;4시&nbsp;</option>
-                                    <option id="5_2" value="5">&nbsp;5시&nbsp;</option>
-                                    <option id="6_2" value="6">&nbsp;6시&nbsp;</option>
-                                    <option id="7_2" value="7">&nbsp;7시&nbsp;</option>
-                                    <option id="8_2" value="8">&nbsp;8시&nbsp;</option>
-                                    <option id="9_2" value="9">&nbsp;9시&nbsp;</option>
-                                    <option id="10_2" value="10">&nbsp;10시&nbsp;</option>
-                                    <option id="11_2" value="11">&nbsp;11시&nbsp;</option>
-                                    <option id="12_2" value="12">&nbsp;12시&nbsp;</option>
-                                    <option id="13_2" value="13">&nbsp;13시&nbsp;</option>
-                                    <option id="14_2" value="14">&nbsp;14시&nbsp;</option>
-                                    <option id="15_2" value="15">&nbsp;15시&nbsp;</option>
-                                    <option id="16_2" value="16">&nbsp;16시&nbsp;</option>
-                                    <option id="17_2" value="17">&nbsp;17시&nbsp;</option>
-                                    <option id="18_2" value="18">&nbsp;18시&nbsp;</option>
-                                    <option id="19_2" value="19">&nbsp;19시&nbsp;</option>
-                                    <option id="20_2" value="20">&nbsp;20시&nbsp;</option>
-                                    <option id="21_2" value="21">&nbsp;21시&nbsp;</option>
-                                    <option id="22_2" value="22">&nbsp;22시&nbsp;</option>
-                                    <option id="23_2" value="23">&nbsp;23시&nbsp;</option>
-                                </select>
+                            <div id="endTimeSpace_2" class="downInput">
+                                <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)"
+                                    required pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectEndTime2">
+                                    <select id="endTime2">
+                                        <option id="0_2" value="0">&nbsp;0시&nbsp;</option>
+                                        <option id="1_2" value="1">&nbsp;1시&nbsp;</option>
+                                        <option id="2_2" value="2">&nbsp;2시&nbsp;</option>
+                                        <option id="3_2" value="3">&nbsp;3시&nbsp;</option>
+                                        <option id="4_2" value="4">&nbsp;4시&nbsp;</option>
+                                        <option id="5_2" value="5">&nbsp;5시&nbsp;</option>
+                                        <option id="6_2" value="6">&nbsp;6시&nbsp;</option>
+                                        <option id="7_2" value="7">&nbsp;7시&nbsp;</option>
+                                        <option id="8_2" value="8">&nbsp;8시&nbsp;</option>
+                                        <option id="9_2" value="9">&nbsp;9시&nbsp;</option>
+                                        <option id="10_2" value="10">&nbsp;10시&nbsp;</option>
+                                        <option id="11_2" value="11">&nbsp;11시&nbsp;</option>
+                                        <option id="12_2" value="12">&nbsp;12시&nbsp;</option>
+                                        <option id="13_2" value="13">&nbsp;13시&nbsp;</option>
+                                        <option id="14_2" value="14">&nbsp;14시&nbsp;</option>
+                                        <option id="15_2" value="15">&nbsp;15시&nbsp;</option>
+                                        <option id="16_2" value="16">&nbsp;16시&nbsp;</option>
+                                        <option id="17_2" value="17">&nbsp;17시&nbsp;</option>
+                                        <option id="18_2" value="18">&nbsp;18시&nbsp;</option>
+                                        <option id="19_2" value="19">&nbsp;19시&nbsp;</option>
+                                        <option id="20_2" value="20">&nbsp;20시&nbsp;</option>
+                                        <option id="21_2" value="21">&nbsp;21시&nbsp;</option>
+                                        <option id="22_2" value="22">&nbsp;22시&nbsp;</option>
+                                        <option id="23_2" value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
                             </div>
                             <input type="hidden" id="hidden2" value=""></input>
                             <button type="button" id="submit" class="submitBtn" onClick="doSubmit(2)">
@@ -265,65 +269,69 @@
                             </div>
                         </div>
                         <form>
-                            <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)" required
-                                pattern="\d{4}-\d{2}-\d{2}">
-                            <div id="selectStartTime3">
-                                <select id="startTime3">
-                                    <option value="0">&nbsp;0시&nbsp;</option>
-                                    <option value="1">&nbsp;1시&nbsp;</option>
-                                    <option value="2">&nbsp;2시&nbsp;</option>
-                                    <option value="3">&nbsp;3시&nbsp;</option>
-                                    <option value="4">&nbsp;4시&nbsp;</option>
-                                    <option value="5">&nbsp;5시&nbsp;</option>
-                                    <option value="6">&nbsp;6시&nbsp;</option>
-                                    <option value="7">&nbsp;7시&nbsp;</option>
-                                    <option value="8">&nbsp;8시&nbsp;</option>
-                                    <option value="9">&nbsp;9시&nbsp;</option>
-                                    <option value="10">&nbsp;10시&nbsp;</option>
-                                    <option value="11">&nbsp;11시&nbsp;</option>
-                                    <option value="12">&nbsp;12시&nbsp;</option>
-                                    <option value="13">&nbsp;13시&nbsp;</option>
-                                    <option value="14">&nbsp;14시&nbsp;</option>
-                                    <option value="15">&nbsp;15시&nbsp;</option>
-                                    <option value="16">&nbsp;16시&nbsp;</option>
-                                    <option value="17">&nbsp;17시&nbsp;</option>
-                                    <option value="18">&nbsp;18시&nbsp;</option>
-                                    <option value="19">&nbsp;19시&nbsp;</option>
-                                    <option value="20">&nbsp;20시&nbsp;</option>
-                                    <option value="21">&nbsp;21시&nbsp;</option>
-                                    <option value="22">&nbsp;22시&nbsp;</option>
-                                    <option value="23">&nbsp;23시&nbsp;</option>
-                                </select>
+                            <div id="startTimeSpace_3" class="upInput">
+                                <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)" required
+                                    pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectStartTime3">
+                                    <select id="startTime3">
+                                        <option value="0">&nbsp;0시&nbsp;</option>
+                                        <option value="1">&nbsp;1시&nbsp;</option>
+                                        <option value="2">&nbsp;2시&nbsp;</option>
+                                        <option value="3">&nbsp;3시&nbsp;</option>
+                                        <option value="4">&nbsp;4시&nbsp;</option>
+                                        <option value="5">&nbsp;5시&nbsp;</option>
+                                        <option value="6">&nbsp;6시&nbsp;</option>
+                                        <option value="7">&nbsp;7시&nbsp;</option>
+                                        <option value="8">&nbsp;8시&nbsp;</option>
+                                        <option value="9">&nbsp;9시&nbsp;</option>
+                                        <option value="10">&nbsp;10시&nbsp;</option>
+                                        <option value="11">&nbsp;11시&nbsp;</option>
+                                        <option value="12">&nbsp;12시&nbsp;</option>
+                                        <option value="13">&nbsp;13시&nbsp;</option>
+                                        <option value="14">&nbsp;14시&nbsp;</option>
+                                        <option value="15">&nbsp;15시&nbsp;</option>
+                                        <option value="16">&nbsp;16시&nbsp;</option>
+                                        <option value="17">&nbsp;17시&nbsp;</option>
+                                        <option value="18">&nbsp;18시&nbsp;</option>
+                                        <option value="19">&nbsp;19시&nbsp;</option>
+                                        <option value="20">&nbsp;20시&nbsp;</option>
+                                        <option value="21">&nbsp;21시&nbsp;</option>
+                                        <option value="22">&nbsp;22시&nbsp;</option>
+                                        <option value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
                             </div>
-                            <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)"
-                                required pattern="\d{4}-\d{2}-\d{2}">
-                            <div id="selectEndTime3">
-                                <select id="endTime3">
-                                    <option id="0_3" value="0">&nbsp;0시&nbsp;</option>
-                                    <option id="1_3" value="1">&nbsp;1시&nbsp;</option>
-                                    <option id="2_3" value="2">&nbsp;2시&nbsp;</option>
-                                    <option id="3_3" value="3">&nbsp;3시&nbsp;</option>
-                                    <option id="4_3" value="4">&nbsp;4시&nbsp;</option>
-                                    <option id="5_3" value="5">&nbsp;5시&nbsp;</option>
-                                    <option id="6_3" value="6">&nbsp;6시&nbsp;</option>
-                                    <option id="7_3" value="7">&nbsp;7시&nbsp;</option>
-                                    <option id="8_3" value="8">&nbsp;8시&nbsp;</option>
-                                    <option id="9_3" value="9">&nbsp;9시&nbsp;</option>
-                                    <option id="10_3" value="10">&nbsp;10시&nbsp;</option>
-                                    <option id="11_3" value="11">&nbsp;11시&nbsp;</option>
-                                    <option id="12_3" value="12">&nbsp;12시&nbsp;</option>
-                                    <option id="13_3" value="13">&nbsp;13시&nbsp;</option>
-                                    <option id="14_3" value="14">&nbsp;14시&nbsp;</option>
-                                    <option id="15_3" value="15">&nbsp;15시&nbsp;</option>
-                                    <option id="16_3" value="16">&nbsp;16시&nbsp;</option>
-                                    <option id="17_3" value="17">&nbsp;17시&nbsp;</option>
-                                    <option id="18_3" value="18">&nbsp;18시&nbsp;</option>
-                                    <option id="19_3" value="19">&nbsp;19시&nbsp;</option>
-                                    <option id="20_3" value="20">&nbsp;20시&nbsp;</option>
-                                    <option id="21_3" value="21">&nbsp;21시&nbsp;</option>
-                                    <option id="22_3" value="22">&nbsp;22시&nbsp;</option>
-                                    <option id="23_3" value="23">&nbsp;23시&nbsp;</option>
-                                </select>
+                            <div id="endTimeSpace_3" class="downInput">
+                                <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)"
+                                    required pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectEndTime3">
+                                    <select id="endTime3">
+                                        <option id="0_3" value="0">&nbsp;0시&nbsp;</option>
+                                        <option id="1_3" value="1">&nbsp;1시&nbsp;</option>
+                                        <option id="2_3" value="2">&nbsp;2시&nbsp;</option>
+                                        <option id="3_3" value="3">&nbsp;3시&nbsp;</option>
+                                        <option id="4_3" value="4">&nbsp;4시&nbsp;</option>
+                                        <option id="5_3" value="5">&nbsp;5시&nbsp;</option>
+                                        <option id="6_3" value="6">&nbsp;6시&nbsp;</option>
+                                        <option id="7_3" value="7">&nbsp;7시&nbsp;</option>
+                                        <option id="8_3" value="8">&nbsp;8시&nbsp;</option>
+                                        <option id="9_3" value="9">&nbsp;9시&nbsp;</option>
+                                        <option id="10_3" value="10">&nbsp;10시&nbsp;</option>
+                                        <option id="11_3" value="11">&nbsp;11시&nbsp;</option>
+                                        <option id="12_3" value="12">&nbsp;12시&nbsp;</option>
+                                        <option id="13_3" value="13">&nbsp;13시&nbsp;</option>
+                                        <option id="14_3" value="14">&nbsp;14시&nbsp;</option>
+                                        <option id="15_3" value="15">&nbsp;15시&nbsp;</option>
+                                        <option id="16_3" value="16">&nbsp;16시&nbsp;</option>
+                                        <option id="17_3" value="17">&nbsp;17시&nbsp;</option>
+                                        <option id="18_3" value="18">&nbsp;18시&nbsp;</option>
+                                        <option id="19_3" value="19">&nbsp;19시&nbsp;</option>
+                                        <option id="20_3" value="20">&nbsp;20시&nbsp;</option>
+                                        <option id="21_3" value="21">&nbsp;21시&nbsp;</option>
+                                        <option id="22_3" value="22">&nbsp;22시&nbsp;</option>
+                                        <option id="23_3" value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
                             </div>
                             <input type="hidden" id="hidden3" value="">
                             <button type="button" id="submit" class="submitBtn" onClick="doSubmit(3)">
