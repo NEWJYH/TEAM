@@ -43,7 +43,6 @@ async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)
                                                 and_(models.MiniMap.sec <= form.sec+59),
                                                 ).all()
     testdata = {}
-    
     for data in minimapobj:
         sec = str(data.sec)
         frame = str(data.frame)
