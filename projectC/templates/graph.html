@@ -38,8 +38,8 @@
             <article id="one">
                 <div id="cctvMenu">
                     <div id="defaultCCTV">
-                        <label id="cctvLabel">
-                            <input type="checkbox" id="checkVisible" onchange="changeVisible()" style="display: none;">
+                        <label id="cctvLabel" onchange="changeVisible()">
+                            <input type="checkbox" id="checkVisible" style="display: none;">
                             <p id="defaultText">1번 CCTV</p>
                             <img id="arrow"
                                 src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
@@ -84,70 +84,78 @@
                                 <label for="hour">시간</label>
                             </div>
                         </div>
-                        <form>
-                            <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)">
-                            <div id="selectStartTime">
-                                <select id="startTime">
-                                    <option value="0">&nbsp;0시&nbsp;</option>
-                                    <option value="1">&nbsp;1시&nbsp;</option>
-                                    <option value="2">&nbsp;2시&nbsp;</option>
-                                    <option value="3">&nbsp;3시&nbsp;</option>
-                                    <option value="4">&nbsp;4시&nbsp;</option>
-                                    <option value="5">&nbsp;5시&nbsp;</option>
-                                    <option value="6">&nbsp;6시&nbsp;</option>
-                                    <option value="7">&nbsp;7시&nbsp;</option>
-                                    <option value="8">&nbsp;8시&nbsp;</option>
-                                    <option value="9">&nbsp;9시&nbsp;</option>
-                                    <option value="10">&nbsp;10시&nbsp;</option>
-                                    <option value="11">&nbsp;11시&nbsp;</option>
-                                    <option value="12">&nbsp;12시&nbsp;</option>
-                                    <option value="13">&nbsp;13시&nbsp;</option>
-                                    <option value="14">&nbsp;14시&nbsp;</option>
-                                    <option value="15">&nbsp;15시&nbsp;</option>
-                                    <option value="16">&nbsp;16시&nbsp;</option>
-                                    <option value="17">&nbsp;17시&nbsp;</option>
-                                    <option value="18">&nbsp;18시&nbsp;</option>
-                                    <option value="19">&nbsp;19시&nbsp;</option>
-                                    <option value="20">&nbsp;20시&nbsp;</option>
-                                    <option value="21">&nbsp;21시&nbsp;</option>
-                                    <option value="22">&nbsp;22시&nbsp;</option>
-                                    <option value="23">&nbsp;23시&nbsp;</option>
-                                </select>
+                        <form class="dateInputForm">
+                            <div id="upInputOne" class="upInput">
+                                <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)" required
+                                    pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectStartTime">
+                                    <select id="startTime">
+                                        <option value="0">&nbsp;0시&nbsp;</option>
+                                        <option value="1">&nbsp;1시&nbsp;</option>
+                                        <option value="2">&nbsp;2시&nbsp;</option>
+                                        <option value="3">&nbsp;3시&nbsp;</option>
+                                        <option value="4">&nbsp;4시&nbsp;</option>
+                                        <option value="5">&nbsp;5시&nbsp;</option>
+                                        <option value="6">&nbsp;6시&nbsp;</option>
+                                        <option value="7">&nbsp;7시&nbsp;</option>
+                                        <option value="8">&nbsp;8시&nbsp;</option>
+                                        <option value="9">&nbsp;9시&nbsp;</option>
+                                        <option value="10">&nbsp;10시&nbsp;</option>
+                                        <option value="11">&nbsp;11시&nbsp;</option>
+                                        <option value="12">&nbsp;12시&nbsp;</option>
+                                        <option value="13">&nbsp;13시&nbsp;</option>
+                                        <option value="14">&nbsp;14시&nbsp;</option>
+                                        <option value="15">&nbsp;15시&nbsp;</option>
+                                        <option value="16">&nbsp;16시&nbsp;</option>
+                                        <option value="17">&nbsp;17시&nbsp;</option>
+                                        <option value="18">&nbsp;18시&nbsp;</option>
+                                        <option value="19">&nbsp;19시&nbsp;</option>
+                                        <option value="20">&nbsp;20시&nbsp;</option>
+                                        <option value="21">&nbsp;21시&nbsp;</option>
+                                        <option value="22">&nbsp;22시&nbsp;</option>
+                                        <option value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
                             </div>
-                            ~
-                            <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)">
-                            <div id="selectEndTime">
-                                <select id="endTime">
-                                    <option id="0" value="0">&nbsp;0시&nbsp;</option>
-                                    <option id="1" value="1">&nbsp;1시&nbsp;</option>
-                                    <option id="2" value="2">&nbsp;2시&nbsp;</option>
-                                    <option id="3" value="3">&nbsp;3시&nbsp;</option>
-                                    <option id="4" value="4">&nbsp;4시&nbsp;</option>
-                                    <option id="5" value="5">&nbsp;5시&nbsp;</option>
-                                    <option id="6" value="6">&nbsp;6시&nbsp;</option>
-                                    <option id="7" value="7">&nbsp;7시&nbsp;</option>
-                                    <option id="8" value="8">&nbsp;8시&nbsp;</option>
-                                    <option id="9" value="9">&nbsp;9시&nbsp;</option>
-                                    <option id="10" value="10">&nbsp;10시&nbsp;</option>
-                                    <option id="11" value="11">&nbsp;11시&nbsp;</option>
-                                    <option id="12" value="12">&nbsp;12시&nbsp;</option>
-                                    <option id="13" value="13">&nbsp;13시&nbsp;</option>
-                                    <option id="14" value="14">&nbsp;14시&nbsp;</option>
-                                    <option id="15" value="15">&nbsp;15시&nbsp;</option>
-                                    <option id="16" value="16">&nbsp;16시&nbsp;</option>
-                                    <option id="17" value="17">&nbsp;17시&nbsp;</option>
-                                    <option id="18" value="18">&nbsp;18시&nbsp;</option>
-                                    <option id="19" value="19">&nbsp;19시&nbsp;</option>
-                                    <option id="20" value="20">&nbsp;20시&nbsp;</option>
-                                    <option id="21" value="21">&nbsp;21시&nbsp;</option>
-                                    <option id="22" value="22">&nbsp;22시&nbsp;</option>
-                                    <option id="23" value="23">&nbsp;23시&nbsp;</option>
-                                </select>
+                            <div class="downInput">
+                                <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)"
+                                    required pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectEndTime">
+                                    <select id="endTime">
+                                        <option id="0" value="0">&nbsp;0시&nbsp;</option>
+                                        <option id="1" value="1">&nbsp;1시&nbsp;</option>
+                                        <option id="2" value="2">&nbsp;2시&nbsp;</option>
+                                        <option id="3" value="3">&nbsp;3시&nbsp;</option>
+                                        <option id="4" value="4">&nbsp;4시&nbsp;</option>
+                                        <option id="5" value="5">&nbsp;5시&nbsp;</option>
+                                        <option id="6" value="6">&nbsp;6시&nbsp;</option>
+                                        <option id="7" value="7">&nbsp;7시&nbsp;</option>
+                                        <option id="8" value="8">&nbsp;8시&nbsp;</option>
+                                        <option id="9" value="9">&nbsp;9시&nbsp;</option>
+                                        <option id="10" value="10">&nbsp;10시&nbsp;</option>
+                                        <option id="11" value="11">&nbsp;11시&nbsp;</option>
+                                        <option id="12" value="12">&nbsp;12시&nbsp;</option>
+                                        <option id="13" value="13">&nbsp;13시&nbsp;</option>
+                                        <option id="14" value="14">&nbsp;14시&nbsp;</option>
+                                        <option id="15" value="15">&nbsp;15시&nbsp;</option>
+                                        <option id="16" value="16">&nbsp;16시&nbsp;</option>
+                                        <option id="17" value="17">&nbsp;17시&nbsp;</option>
+                                        <option id="18" value="18">&nbsp;18시&nbsp;</option>
+                                        <option id="19" value="19">&nbsp;19시&nbsp;</option>
+                                        <option id="20" value="20">&nbsp;20시&nbsp;</option>
+                                        <option id="21" value="21">&nbsp;21시&nbsp;</option>
+                                        <option id="22" value="22">&nbsp;22시&nbsp;</option>
+                                        <option id="23" value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
                             </div>
-                            <button type="button" id="submit" onClick="doSubmit(1)">확인</button>
+                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(1)">
+                                <img class="submitImg"
+                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                            </button>
                         </form>
                     </div>
-                    <canvas id="chartOne"></canvas>
+                    <canvas id="chartOne" height="250px"></canvas>
                 </div>
             </article>
 
@@ -168,7 +176,8 @@
                             </div>
                         </div>
                         <form>
-                            <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)">
+                            <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)" required
+                                pattern="\d{4}-\d{2}-\d{2}">
                             <div id="selectStartTime2">
                                 <select id="startTime2">
                                     <option value="0">&nbsp;0시&nbsp;</option>
@@ -197,8 +206,8 @@
                                     <option value="23">&nbsp;23시&nbsp;</option>
                                 </select>
                             </div>
-                            ~
-                            <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)">
+                            <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)"
+                                required pattern="\d{4}-\d{2}-\d{2}">
                             <div id="selectEndTime2">
                                 <select id="endTime2">
                                     <option id="0_2" value="0">&nbsp;0시&nbsp;</option>
@@ -228,10 +237,13 @@
                                 </select>
                             </div>
                             <input type="hidden" id="hidden2" value=""></input>
-                            <button type="button" id="submit" onClick="doSubmit(2)">확인</button>
+                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(2)">
+                                <img class="submitImg"
+                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                            </button>
                         </form>
                     </div>
-                    <canvas id="chartTwo"></canvas>
+                    <canvas id="chartTwo" height="250px"></canvas>
                 </div>
             </article>
 
@@ -253,7 +265,8 @@
                             </div>
                         </div>
                         <form>
-                            <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)">
+                            <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)" required
+                                pattern="\d{4}-\d{2}-\d{2}">
                             <div id="selectStartTime3">
                                 <select id="startTime3">
                                     <option value="0">&nbsp;0시&nbsp;</option>
@@ -282,8 +295,8 @@
                                     <option value="23">&nbsp;23시&nbsp;</option>
                                 </select>
                             </div>
-                            ~
-                            <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)">
+                            <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)"
+                                required pattern="\d{4}-\d{2}-\d{2}">
                             <div id="selectEndTime3">
                                 <select id="endTime3">
                                     <option id="0_3" value="0">&nbsp;0시&nbsp;</option>
@@ -313,10 +326,13 @@
                                 </select>
                             </div>
                             <input type="hidden" id="hidden3" value="">
-                            <button type="button" id="submit" onClick="doSubmit(3)">확인</button>
+                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(3)">
+                                <img class="submitImg"
+                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                            </button>
                         </form>
                     </div>
-                    <canvas id="chartThree"></canvas>
+                    <canvas id="chartThree" height="250px"></canvas>
                 </div>
             </article>
             <input type="hidden" id="hidden" value="">
