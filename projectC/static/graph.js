@@ -1,3 +1,5 @@
+let defaultStart = 0;
+
 /** input 태그 디폴트 설정하는 함수 */
 function defaultOption() {
     const today = new Date();
@@ -55,6 +57,8 @@ function changeUnitOfTime(i) {
     const forCheckTime = today.getFullYear() + '-' + month + '-' + day;
 
     let checkUnitOfTime = document.querySelector('input[name="unit"]:checked').value;
+    let startTimeDiv = document.getElementById('startTimeSpace');
+    let endTimeDiv = document.getElementById('endTimeSpace');
     let startTimeArea = document.getElementById('selectStartTime');
     let endTimeArea = document.getElementById('selectEndTime');
     let startDateInput = document.getElementById('startDate');
@@ -64,6 +68,8 @@ function changeUnitOfTime(i) {
 
     if (i == 1) { } else if (i == 2) {
         checkUnitOfTime = document.querySelector('input[name="unit2"]:checked').value;
+        startTimeDiv = document.getElementById('startTimeSpace_2');
+        endTimeDiv = document.getElementById('endTimeSpace_2');
         startTimeArea = document.getElementById('selectStartTime2');
         endTimeArea = document.getElementById('selectEndTime2');
         startDateInput = document.getElementById('startDate2');
@@ -72,6 +78,8 @@ function changeUnitOfTime(i) {
         twentyThree = document.getElementById('23_2');
     } else if (i == 3) {
         checkUnitOfTime = document.querySelector('input[name="unit3"]:checked').value;
+        startTimeDiv = document.getElementById('startTimeSpace_3');
+        endTimeDiv = document.getElementById('endTimeSpace_3');
         startTimeArea = document.getElementById('selectStartTime3');
         endTimeArea = document.getElementById('selectEndTime3');
         startDateInput = document.getElementById('startDate3');
@@ -80,13 +88,15 @@ function changeUnitOfTime(i) {
         twentyThree = document.getElementById('23_3');
     }
 
-
-
     if (checkUnitOfTime === 'hour') {
+        startTimeDiv.style.display = 'block';
+        endTimeDiv.style.display = 'block';
         startTimeArea.style.display = 'inline';
         endTimeArea.style.display = 'inline';
         startDateInput.value = endDateInput.value
     } else {
+        startTimeDiv.style.display = 'inline-block';
+        endTimeDiv.style.display = 'inline-block';
         startTimeArea.style.display = 'none';
         endTimeArea.style.display = 'none';
         const endInputDate = endDateInput.value
@@ -215,7 +225,7 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
             day = day < 10 ? '0' + day : day;
             let hour = startDay.getHours();
             hour = hour < 10 ? '0' + hour : hour;
-            resDay.push(startDay.getHours() + '시');
+            resDay.push(startDay.getHours());
             toCompare.push(year + '-' + month + '-' + day + ' ' + hour);
             startDay.setHours(startDay.getHours() + 1);
         }
@@ -350,7 +360,7 @@ function sendAndReceiveData(i, postData, middleDate, toCompare) {
         if (xhr.readyState == 4) {
             let data = JSON.parse(xhr.responseText);
             // 차트에 넣을 데이터
-            const chartData = createDataForChartUse(i, data, toCompare);
+            let chartData = createDataForChartUse(i, data, toCompare);
 
             let chart = foodChart
             if (i == 1) { } else if (i == 2) {
@@ -358,13 +368,30 @@ function sendAndReceiveData(i, postData, middleDate, toCompare) {
             } else if (i == 3) {
                 chart = waterChart
             }
+
+            if (defaultStart == 0) {
+                let chartData2 = createDataForChartUse(2, data, toCompare);
+                let chart2 = activeChart;
+                chart2.data.labels = middleDate
+                chart2.data.datasets = chartData2
+                chart2.update();
+                chart2.options.animation.duration = 1000
+                let chartData3 = createDataForChartUse(3, data, toCompare);
+                let chart3 = waterChart;
+                chart3.data.labels = middleDate
+                chart3.data.datasets = chartData3
+                chart3.update();
+                chart3.options.animation.duration = 1000
+                defaultStart++;
+            }
+
             // 차트 업데이트
             // x축 라벨
             chart.data.labels = middleDate
             // 데이터 셋
             chart.data.datasets = chartData
             chart.update();
-            chart.options.animation.duration = 1000 // 초기 호출 이후 차트 업데이트 시 애니메이션 적용
+            chart.options.animation.duration = 1000
         }
     };
     xhr.open("POST", "/graph/post");
@@ -403,42 +430,52 @@ function doSubmit(i) {
 // doSubmit(2)
 // doSubmit(3)
 
+let forCheck = 0;
 function changeVisible() {
     let style = document.getElementById('cctvListFrame')
     // console.log(window.getComputedStyle(style).display)
-    // console.log(confirmVisible)
-    if (window.getComputedStyle(style).display == 'none') {
+    // console.log(document.getElementById('checkVisible').checked)
+    // if (forCheck == 0) {
+    //     document.getElementById('cctvListFrame').style.display = 'block';
+    //     forCheck = 1;
+    // } else if (forCheck == 1) {
+    //     // console.log('왜 안됨?')
+    //     // changeCCTV('forCheck')
+    //     forCheck = 0;
+    // }
+    if (document.getElementById('checkVisible').checked == true) {
         document.getElementById('cctvListFrame').setAttribute('style', 'display: block;')
-    } else {
+    } else if (document.getElementById('checkVisible').checked == false) {
+        // console.log('왜 안됨?')
         document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
     }
+    // if (window.getComputedStyle(style).display == 'none') {
+    // } else {
+    //     document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
+    //     document.getElementById('checkVisible').checked == false
+    // }
 }
 
 function changeCCTV(i) {
-    // defaultOption()
-    // document.getElementById('selectStartTime').style.display = 'none';
-    // document.getElementById('selectEndTime').style.display = 'none';
-    // document.getElementById('selectStartTime2').style.display = 'none';
-    // document.getElementById('selectEndTime2').style.display = 'none';
-    // document.getElementById('selectStartTime3').style.display = 'none';
-    // document.getElementById('selectEndTime3').style.display = 'none';
-    // changeUnitOfTime(1)
-    // changeUnitOfTime(2)
-    // changeUnitOfTime(3)
-    // // doSubmit(1)
-    // // doSubmit(2)
-    // // doSubmit(3)
-    cctvNum = i + 1
-    document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
-    document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
+    if (i == 'forCheck') {
+    } else {
+        cctvNum = i + 1
+        document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
+    }
+
+    document.getElementById('cctvListFrame').style.display = 'none';
+    document.getElementById('checkVisible').checked = false
+    // forCheck = 0;
 }
 
 let style = document.getElementById('cctvListFrame')
 document.querySelector("body").addEventListener("click", function (e) {
     // console.log(e.target.id)
+    // console.log(forCheck)
     if (e.target.id == e.currentTarget.querySelector("#checkVisible").id) {
     } else {
         // console.log("wrong")
-        document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
+        document.getElementById('cctvListFrame').style.display = 'none';
+        document.getElementById('checkVisible').checked = false
     }
 })

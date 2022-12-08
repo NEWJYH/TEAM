@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ url_for('static', path='/favicon_io/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="{{ url_for('static', path='/favicon_io/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="{{ url_for('static', path='/favicon_io/favicon-16x16.png') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>소카우넷</title>
+
+    <link href="{{ url_for('static', path='layout.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', path='graph.css')}}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header id="intro">
+            <nav id="navigation">
+                <ul>
+                    <li class="one"><a href="/graph">SoCowNet</a></li>
+                    <li class="two"><a href="/graph">한우DB</a></li>
+                    <li class="three"><a href="/live">모니터링</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main role="main" id="main">
+            <article id="one">
+                <div id="cctvMenu">
+                    <div id="defaultCCTV">
+                        <label id="cctvLabel" onchange="changeVisible()">
+                            <input type="checkbox" id="checkVisible" style="display: none;">
+                            <p id="defaultText">1번 CCTV</p>
+                            <img id="arrow"
+                                src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
+                        </label>
+                    </div>
+                    <div id="cctvListFrame">
+                        <ul id="cctvList">
+                            <li id="cctv1">
+                                <label>
+                                    <input type="radio" name="cctvNum" id="cctvBtn1" value="1" onchange="changeCCTV(0)"
+                                        checked>
+                                    1번 CCTV
+                                </label>
+                            </li>
+                            <li id="cctv2">
+                                <label>
+                                    <input type="radio" name="cctvNum" id="cctvBtn2" onchange="changeCCTV(1)" value="2">
+                                    2번 CCTV
+                                </label>
+                            </li>
+                            <li id="cctv3">
+                                <label>
+                                    <input type="radio" name="cctvNum" id="cctvBtn3" onchange="changeCCTV(2)" value="3">
+                                    3번 CCTV
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="chartFrame">
+                    <img class="chartImg" src="{{ url_for('static', path='/img/outline_bar_chart_white_24dp.png') }}">
+                    <p class="typeOfData">식사량</p>
+                    <div class="inputDate">
+                        <div class="unitOfTime">
+                            <div>
+                                <input type="radio" name="unit" id="day" value="day" onchange="changeUnitOfTime(1)"
+                                    checked>
+                                <label for="day">일</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="unit" id="hour" value="hour" onchange="changeUnitOfTime(1)">
+                                <label for="hour">시간</label>
+                            </div>
+                        </div>
+                        <form class="dateInputForm">
+                            <div id="startTimeSpace" class="upInput">
+                                <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)" required
+                                    pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectStartTime">
+                                    <select id="startTime">
+                                        <option value="0">&nbsp;0시&nbsp;</option>
+                                        <option value="1">&nbsp;1시&nbsp;</option>
+                                        <option value="2">&nbsp;2시&nbsp;</option>
+                                        <option value="3">&nbsp;3시&nbsp;</option>
+                                        <option value="4">&nbsp;4시&nbsp;</option>
+                                        <option value="5">&nbsp;5시&nbsp;</option>
+                                        <option value="6">&nbsp;6시&nbsp;</option>
+                                        <option value="7">&nbsp;7시&nbsp;</option>
+                                        <option value="8">&nbsp;8시&nbsp;</option>
+                                        <option value="9">&nbsp;9시&nbsp;</option>
+                                        <option value="10">&nbsp;10시&nbsp;</option>
+                                        <option value="11">&nbsp;11시&nbsp;</option>
+                                        <option value="12">&nbsp;12시&nbsp;</option>
+                                        <option value="13">&nbsp;13시&nbsp;</option>
+                                        <option value="14">&nbsp;14시&nbsp;</option>
+                                        <option value="15">&nbsp;15시&nbsp;</option>
+                                        <option value="16">&nbsp;16시&nbsp;</option>
+                                        <option value="17">&nbsp;17시&nbsp;</option>
+                                        <option value="18">&nbsp;18시&nbsp;</option>
+                                        <option value="19">&nbsp;19시&nbsp;</option>
+                                        <option value="20">&nbsp;20시&nbsp;</option>
+                                        <option value="21">&nbsp;21시&nbsp;</option>
+                                        <option value="22">&nbsp;22시&nbsp;</option>
+                                        <option value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="endTimeSpace" class="downInput">
+                                <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)"
+                                    required pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectEndTime">
+                                    <select id="endTime">
+                                        <option id="0" value="0">&nbsp;0시&nbsp;</option>
+                                        <option id="1" value="1">&nbsp;1시&nbsp;</option>
+                                        <option id="2" value="2">&nbsp;2시&nbsp;</option>
+                                        <option id="3" value="3">&nbsp;3시&nbsp;</option>
+                                        <option id="4" value="4">&nbsp;4시&nbsp;</option>
+                                        <option id="5" value="5">&nbsp;5시&nbsp;</option>
+                                        <option id="6" value="6">&nbsp;6시&nbsp;</option>
+                                        <option id="7" value="7">&nbsp;7시&nbsp;</option>
+                                        <option id="8" value="8">&nbsp;8시&nbsp;</option>
+                                        <option id="9" value="9">&nbsp;9시&nbsp;</option>
+                                        <option id="10" value="10">&nbsp;10시&nbsp;</option>
+                                        <option id="11" value="11">&nbsp;11시&nbsp;</option>
+                                        <option id="12" value="12">&nbsp;12시&nbsp;</option>
+                                        <option id="13" value="13">&nbsp;13시&nbsp;</option>
+                                        <option id="14" value="14">&nbsp;14시&nbsp;</option>
+                                        <option id="15" value="15">&nbsp;15시&nbsp;</option>
+                                        <option id="16" value="16">&nbsp;16시&nbsp;</option>
+                                        <option id="17" value="17">&nbsp;17시&nbsp;</option>
+                                        <option id="18" value="18">&nbsp;18시&nbsp;</option>
+                                        <option id="19" value="19">&nbsp;19시&nbsp;</option>
+                                        <option id="20" value="20">&nbsp;20시&nbsp;</option>
+                                        <option id="21" value="21">&nbsp;21시&nbsp;</option>
+                                        <option id="22" value="22">&nbsp;22시&nbsp;</option>
+                                        <option id="23" value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(1)">
+                                <img class="submitImg"
+                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                            </button>
+                        </form>
+                    </div>
+                    <canvas id="chartOne" height="250px"></canvas>
+                </div>
+            </article>
+
+            <article id="two">
+                <div class="chartFrame">
+                    <img class="chartImg" src="{{ url_for('static', path='/img/outline_bar_chart_white_24dp.png') }}">
+                    <p class="typeOfData">활동량</p>
+                    <div class="inputDate">
+                        <div class="unitOfTime">
+                            <div>
+                                <input type="radio" name="unit2" id="day2" value="day" onchange="changeUnitOfTime(2)"
+                                    checked>
+                                <label for="day">일</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="unit2" id="hour2" value="hour" onchange="changeUnitOfTime(2)">
+                                <label for="hour">시간</label>
+                            </div>
+                        </div>
+                        <form>
+                            <div id="startTimeSpace_2" class="upInput">
+                                <input type="date" id="startDate2" value="" max="" onchange="limitEndDate(2)" required
+                                    pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectStartTime2">
+                                    <select id="startTime2">
+                                        <option value="0">&nbsp;0시&nbsp;</option>
+                                        <option value="1">&nbsp;1시&nbsp;</option>
+                                        <option value="2">&nbsp;2시&nbsp;</option>
+                                        <option value="3">&nbsp;3시&nbsp;</option>
+                                        <option value="4">&nbsp;4시&nbsp;</option>
+                                        <option value="5">&nbsp;5시&nbsp;</option>
+                                        <option value="6">&nbsp;6시&nbsp;</option>
+                                        <option value="7">&nbsp;7시&nbsp;</option>
+                                        <option value="8">&nbsp;8시&nbsp;</option>
+                                        <option value="9">&nbsp;9시&nbsp;</option>
+                                        <option value="10">&nbsp;10시&nbsp;</option>
+                                        <option value="11">&nbsp;11시&nbsp;</option>
+                                        <option value="12">&nbsp;12시&nbsp;</option>
+                                        <option value="13">&nbsp;13시&nbsp;</option>
+                                        <option value="14">&nbsp;14시&nbsp;</option>
+                                        <option value="15">&nbsp;15시&nbsp;</option>
+                                        <option value="16">&nbsp;16시&nbsp;</option>
+                                        <option value="17">&nbsp;17시&nbsp;</option>
+                                        <option value="18">&nbsp;18시&nbsp;</option>
+                                        <option value="19">&nbsp;19시&nbsp;</option>
+                                        <option value="20">&nbsp;20시&nbsp;</option>
+                                        <option value="21">&nbsp;21시&nbsp;</option>
+                                        <option value="22">&nbsp;22시&nbsp;</option>
+                                        <option value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="endTimeSpace_2" class="downInput">
+                                <input type="date" id="endDate2" value="" min="" max="" onchange="limitStartDate(2)"
+                                    required pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectEndTime2">
+                                    <select id="endTime2">
+                                        <option id="0_2" value="0">&nbsp;0시&nbsp;</option>
+                                        <option id="1_2" value="1">&nbsp;1시&nbsp;</option>
+                                        <option id="2_2" value="2">&nbsp;2시&nbsp;</option>
+                                        <option id="3_2" value="3">&nbsp;3시&nbsp;</option>
+                                        <option id="4_2" value="4">&nbsp;4시&nbsp;</option>
+                                        <option id="5_2" value="5">&nbsp;5시&nbsp;</option>
+                                        <option id="6_2" value="6">&nbsp;6시&nbsp;</option>
+                                        <option id="7_2" value="7">&nbsp;7시&nbsp;</option>
+                                        <option id="8_2" value="8">&nbsp;8시&nbsp;</option>
+                                        <option id="9_2" value="9">&nbsp;9시&nbsp;</option>
+                                        <option id="10_2" value="10">&nbsp;10시&nbsp;</option>
+                                        <option id="11_2" value="11">&nbsp;11시&nbsp;</option>
+                                        <option id="12_2" value="12">&nbsp;12시&nbsp;</option>
+                                        <option id="13_2" value="13">&nbsp;13시&nbsp;</option>
+                                        <option id="14_2" value="14">&nbsp;14시&nbsp;</option>
+                                        <option id="15_2" value="15">&nbsp;15시&nbsp;</option>
+                                        <option id="16_2" value="16">&nbsp;16시&nbsp;</option>
+                                        <option id="17_2" value="17">&nbsp;17시&nbsp;</option>
+                                        <option id="18_2" value="18">&nbsp;18시&nbsp;</option>
+                                        <option id="19_2" value="19">&nbsp;19시&nbsp;</option>
+                                        <option id="20_2" value="20">&nbsp;20시&nbsp;</option>
+                                        <option id="21_2" value="21">&nbsp;21시&nbsp;</option>
+                                        <option id="22_2" value="22">&nbsp;22시&nbsp;</option>
+                                        <option id="23_2" value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" id="hidden2" value=""></input>
+                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(2)">
+                                <img class="submitImg"
+                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                            </button>
+                        </form>
+                    </div>
+                    <canvas id="chartTwo" height="250px"></canvas>
+                </div>
+            </article>
+
+            <article id="three">
+                <div class="chartFrame">
+                    <img class="chartImg" src="{{ url_for('static', path='/img/outline_bar_chart_white_24dp.png') }}">
+                    <p class="typeOfData">음수량</p>
+
+                    <div class="inputDate">
+                        <div class="unitOfTime">
+                            <div>
+                                <input type="radio" name="unit3" id="day3" value="day" onchange="changeUnitOfTime(3)"
+                                    checked>
+                                <label for="day">일</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="unit3" id="hour3" value="hour" onchange="changeUnitOfTime(3)">
+                                <label for="hour">시간</label>
+                            </div>
+                        </div>
+                        <form>
+                            <div id="startTimeSpace_3" class="upInput">
+                                <input type="date" id="startDate3" value="" max="" onchange="limitEndDate(3)" required
+                                    pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectStartTime3">
+                                    <select id="startTime3">
+                                        <option value="0">&nbsp;0시&nbsp;</option>
+                                        <option value="1">&nbsp;1시&nbsp;</option>
+                                        <option value="2">&nbsp;2시&nbsp;</option>
+                                        <option value="3">&nbsp;3시&nbsp;</option>
+                                        <option value="4">&nbsp;4시&nbsp;</option>
+                                        <option value="5">&nbsp;5시&nbsp;</option>
+                                        <option value="6">&nbsp;6시&nbsp;</option>
+                                        <option value="7">&nbsp;7시&nbsp;</option>
+                                        <option value="8">&nbsp;8시&nbsp;</option>
+                                        <option value="9">&nbsp;9시&nbsp;</option>
+                                        <option value="10">&nbsp;10시&nbsp;</option>
+                                        <option value="11">&nbsp;11시&nbsp;</option>
+                                        <option value="12">&nbsp;12시&nbsp;</option>
+                                        <option value="13">&nbsp;13시&nbsp;</option>
+                                        <option value="14">&nbsp;14시&nbsp;</option>
+                                        <option value="15">&nbsp;15시&nbsp;</option>
+                                        <option value="16">&nbsp;16시&nbsp;</option>
+                                        <option value="17">&nbsp;17시&nbsp;</option>
+                                        <option value="18">&nbsp;18시&nbsp;</option>
+                                        <option value="19">&nbsp;19시&nbsp;</option>
+                                        <option value="20">&nbsp;20시&nbsp;</option>
+                                        <option value="21">&nbsp;21시&nbsp;</option>
+                                        <option value="22">&nbsp;22시&nbsp;</option>
+                                        <option value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="endTimeSpace_3" class="downInput">
+                                <input type="date" id="endDate3" value="" min="" max="" onchange="limitStartDate(3)"
+                                    required pattern="\d{4}-\d{2}-\d{2}">
+                                <div id="selectEndTime3">
+                                    <select id="endTime3">
+                                        <option id="0_3" value="0">&nbsp;0시&nbsp;</option>
+                                        <option id="1_3" value="1">&nbsp;1시&nbsp;</option>
+                                        <option id="2_3" value="2">&nbsp;2시&nbsp;</option>
+                                        <option id="3_3" value="3">&nbsp;3시&nbsp;</option>
+                                        <option id="4_3" value="4">&nbsp;4시&nbsp;</option>
+                                        <option id="5_3" value="5">&nbsp;5시&nbsp;</option>
+                                        <option id="6_3" value="6">&nbsp;6시&nbsp;</option>
+                                        <option id="7_3" value="7">&nbsp;7시&nbsp;</option>
+                                        <option id="8_3" value="8">&nbsp;8시&nbsp;</option>
+                                        <option id="9_3" value="9">&nbsp;9시&nbsp;</option>
+                                        <option id="10_3" value="10">&nbsp;10시&nbsp;</option>
+                                        <option id="11_3" value="11">&nbsp;11시&nbsp;</option>
+                                        <option id="12_3" value="12">&nbsp;12시&nbsp;</option>
+                                        <option id="13_3" value="13">&nbsp;13시&nbsp;</option>
+                                        <option id="14_3" value="14">&nbsp;14시&nbsp;</option>
+                                        <option id="15_3" value="15">&nbsp;15시&nbsp;</option>
+                                        <option id="16_3" value="16">&nbsp;16시&nbsp;</option>
+                                        <option id="17_3" value="17">&nbsp;17시&nbsp;</option>
+                                        <option id="18_3" value="18">&nbsp;18시&nbsp;</option>
+                                        <option id="19_3" value="19">&nbsp;19시&nbsp;</option>
+                                        <option id="20_3" value="20">&nbsp;20시&nbsp;</option>
+                                        <option id="21_3" value="21">&nbsp;21시&nbsp;</option>
+                                        <option id="22_3" value="22">&nbsp;22시&nbsp;</option>
+                                        <option id="23_3" value="23">&nbsp;23시&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" id="hidden3" value="">
+                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(3)">
+                                <img class="submitImg"
+                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                            </button>
+                        </form>
+                    </div>
+                    <canvas id="chartThree" height="250px"></canvas>
+                </div>
+            </article>
+            <input type="hidden" id="hidden" value="">
+            <input type="hidden" id="testDataset" value="{{ testDataset }}">
+        </main>
+        <footer></footer>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript">
+    /* 식사량 차트  */
+    let foodChart = new Chart(document.getElementById("chartOne"), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                },
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'rgba(12, 13, 13, 1)',
+                        fontSize: 10
+                    }
+                }]
+            },
+            animation: {
+                duration: 0
+            }
+        }
+    });
+    let activeChart = new Chart(document.getElementById("chartTwo"), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }
+            },
+            animation: {
+                duration: 0
+            }
+        }
+    });
+    let waterChart = new Chart(document.getElementById("chartThree"), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }
+            },
+            animation: {
+                duration: 0
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+<script src="{{ url_for('static', path='graph.js') }}"></script>
+
+</html>

@@ -101,8 +101,8 @@ article div {
     margin-top: 10px;
 }
 #mapCanvas {
-    width: 640px;
-    height: 480px;
+    width: 400px;
+    height: 225px;
     margin: 0 auto;
     margin-top: 20px;
 }

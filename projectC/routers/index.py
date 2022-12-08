@@ -26,7 +26,7 @@ async def get_test(request: Request):
     print('get 호출')
     context = {}
     context['request'] = request
-    return templates.TemplateResponse("graph.j2", context)
+    return templates.TemplateResponse("graph.html", context)
 
 # @router.post('/post')
 # async def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):

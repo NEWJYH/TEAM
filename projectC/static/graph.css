@@ -106,20 +106,22 @@ input {
     border-radius: 15px;
     border: 1px solid #87878726;
     box-shadow: 0 4px 5px 0 #00000026;
-    width: 95%;
+    width: 92%;
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 30px;
     background-color: white;
 }
+
 .chartImg {
     background-color: #C65146;
     margin: 10px 0px 0px 10px;
     border-radius: 15px;
     float: left;
 }
+
 .typeOfData {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     color: #C65146;
     margin: 20px 0px 0px 10px;
@@ -138,15 +140,69 @@ input {
 
 
 /* 기간 입력 */
+.upInput {
+    display: inline-block;
+}
+.downInput {
+    display: inline-block;
+}
+
 .inputDate {
     margin-top: 15px;
     width: 100%;
 }
 
 .inputDate form {
-    margin-top: 15px;
+    margin-top: 30px;
     display: block;
     width: 100%;
+}
+
+input[type="date"] {
+    width: 110px;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #87878726;
+    box-shadow: 0 4px 5px 0 #00000026;
+    /* background-color: whitesmoke; */
+    cursor: pointer;
+}
+
+/* input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+} */
+select {
+    font-family: "Noto Sansf KR", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+
+    color: #444;
+    background-color: #fff;
+    margin: 0;
+
+    border-radius: 10px;
+    border: 1px solid #87878726;
+    box-shadow: 0 4px 5px 0 #00000026;
+    /* background-color: whitesmoke; */
+    cursor: pointer;
+}
+
+select:hover {
+    border-color: #888;
+}
+
+select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
+}
+
+select:disabled {
+    opacity: 0.5;
 }
 
 #selectStartTime {
@@ -173,13 +229,35 @@ input {
     display: none;
 }
 
-/* 데이터 종류 선택 */
-.dataType {
-    margin-top: 15px;
-    display: block;
-    width: 100%;
+.submitBtn {
+    width: 30px;
+    height: 30px;
+    float: right;
+    margin: 3px 10px 10px 10px;
+    background-color: #C65146;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
 }
 
-.dataType div {
-    display: inline;
+.submitImg {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+
+#chartOne {
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+#chartTwo {
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+#chartThree {
+    margin-left: 5px;
+    margin-bottom: 5px;
 }
