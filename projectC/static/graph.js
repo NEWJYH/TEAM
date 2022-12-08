@@ -91,12 +91,14 @@ function changeUnitOfTime(i) {
     if (checkUnitOfTime === 'hour') {
         startTimeDiv.style.display = 'block';
         endTimeDiv.style.display = 'block';
+        endTimeDiv.style.margin = '6px 0px 0px 0px';
         startTimeArea.style.display = 'inline';
         endTimeArea.style.display = 'inline';
         startDateInput.value = endDateInput.value
     } else {
         startTimeDiv.style.display = 'inline-block';
         endTimeDiv.style.display = 'inline-block';
+        endTimeDiv.style.margin = '0px 0px 0px 6px';
         startTimeArea.style.display = 'none';
         endTimeArea.style.display = 'none';
         const endInputDate = endDateInput.value
