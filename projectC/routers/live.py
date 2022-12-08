@@ -25,17 +25,18 @@ async def index(request:Request):
     return templates.TemplateResponse("live.html", context={"request": request})
 
 
-@router.get("/stream_video")
-async def stream_video(request:Request):
-    # StringResponse함수를 return하고,
-    # 인자로 OpenCV에서 가져온 "바이트"이미지와 type을 명시
-    return StreamingResponse(get_stream_video(), media_type="multipart/x-mixed-replace; boundary=frame")
+# @router.get("/stream_video")
+# async def stream_video(request:Request):
+#     # StringResponse함수를 return하고,
+#     # 인자로 OpenCV에서 가져온 "바이트"이미지와 type을 명시
+#     return StreamingResponse(get_stream_video(), media_type="multipart/x-mixed-replace; boundary=frame")
 
 # @router.get("/stream_video2")
 # async def stream_video2(request:Request):
 #     return StreamingResponse(get_stream_video2(), media_type="multipart/x-mixed-replace; boundary=frame")
 
-@router.post('/post')
+# db접근될때
+@router.post('/post2')
 async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)):
     
     minimapobj = db.query(models.MiniMap).filter(
@@ -56,3 +57,31 @@ async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)
         testdata[sec][frame][cow_id] = {"x":x, "y":y}
     
     return json.dumps(testdata)
+
+# db접속 안될때
+@router.post('/post')
+async def get_test(form:schemas.MiniMapForm):
+    startsec = form.sec
+    limitsec = startsec + 59
+    import pandas as pd
+    path = 'static/mini.csv'
+    target = pd.read_csv(path)
+    start = target.index[target.sec == startsec].tolist()[0]
+    end = target.index[target.sec==limitsec].tolist()[-1]
+
+    data = {}
+    for index in range(start, end +1):
+        values = target.loc[index:].to_dict()
+        sec = str(values['sec'])
+        frame = str(values['frame'])
+        cow_id = str(values['cow_id'])
+        xc = values['xc']
+        yc = values['yc']
+        if sec not in data.keys():
+            data[sec] = {}
+        if frame not in data[sec].keys():
+            data[sec][frame] = {}
+        data[sec][frame][cow_id] = {"x":xc, "y":yc}
+    
+    print(data)
+    return json.dumps(data)
