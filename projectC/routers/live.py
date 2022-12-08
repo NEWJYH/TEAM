@@ -6,6 +6,7 @@ from fastapi import Request, Response
 from fastapi import Header
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
+from pathlib import Path
 
 import database, schemas, models
 
@@ -19,11 +20,30 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="templates")
 
+CHUNK_SIZE = 1024*1024
+video_path = Path("./static/video/detect/h264_v01.mp4")
+
 @router.get("/")
 async def index(request:Request):
     # 보낼 request를 설정
     return templates.TemplateResponse("live.html", context={"request": request})
 
+@router.get("/video")
+async def video_endpoint(range: str = Header(None)):
+    start, end = range.replace("bytes=", "").split("-")
+    # print(start)
+    # print(end)
+    start = int(start)
+    end = int(end) if end else start + CHUNK_SIZE
+    with open(video_path, "rb") as video:
+        video.seek(start)
+        data = video.read(end - start)
+        filesize = str(video_path.stat().st_size)
+        headers = {
+            'Content-Range': f'bytes {str(start)}-{str(end)}/{filesize}',
+            'Accept-Ranges': 'bytes'
+        }
+        return Response(data, status_code=206, headers=headers, media_type="video/mp4")
 
 @router.get("/stream_video")
 async def stream_video(request:Request):
@@ -31,9 +51,6 @@ async def stream_video(request:Request):
     # 인자로 OpenCV에서 가져온 "바이트"이미지와 type을 명시
     return StreamingResponse(get_stream_video(), media_type="multipart/x-mixed-replace; boundary=frame")
 
-# @router.get("/stream_video2")
-# async def stream_video2(request:Request):
-#     return StreamingResponse(get_stream_video2(), media_type="multipart/x-mixed-replace; boundary=frame")
 
 @router.post('/post')
 async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)):

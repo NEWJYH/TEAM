@@ -52,7 +52,7 @@ function drawCow(x, y, key) {
     // console.log(x1);
     let y1 = y * canvas.height / dataScale[1];
     // console.log(y1);
-    ctx.arc(x1, canvas.height - y1, 7, 0, Math.PI * 2);
+    ctx.arc(x1, y1, 7, 0, Math.PI * 2);
     ctx.fill();
     ctx.closePath();
 }
