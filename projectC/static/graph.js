@@ -449,19 +449,6 @@ function changeVisible() {
 }
 
 function changeCCTV(i) {
-    // defaultOption()
-    // document.getElementById('selectStartTime').style.display = 'none';
-    // document.getElementById('selectEndTime').style.display = 'none';
-    // document.getElementById('selectStartTime2').style.display = 'none';
-    // document.getElementById('selectEndTime2').style.display = 'none';
-    // document.getElementById('selectStartTime3').style.display = 'none';
-    // document.getElementById('selectEndTime3').style.display = 'none';
-    // changeUnitOfTime(1)
-    // changeUnitOfTime(2)
-    // changeUnitOfTime(3)
-    // // doSubmit(1)
-    // // doSubmit(2)
-    // // doSubmit(3)
     if (i == 'forCheck') {
     } else {
         cctvNum = i + 1
