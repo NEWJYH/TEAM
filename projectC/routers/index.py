@@ -28,6 +28,7 @@ async def get_test(request: Request):
     context['request'] = request
     return templates.TemplateResponse("graph.html", context)
 
+# db접근될때
 # @router.post('/post')
 # async def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
 #     formtype = form.formtype
@@ -110,7 +111,7 @@ async def get_test(request: Request):
 #     print(dataset)
 #     return json.dumps(dataset)
 
-
+# db 접근 안될때
 @router.post('/post')
 async def NoDB(form:schemas.Form):
     formtype = form.formtype
@@ -123,21 +124,6 @@ async def NoDB(form:schemas.Form):
     if formtype == 1:
         starttime = form.starttime
         endtime = form.endtime
-
-    # print('formtype', formtype)
-    # print('startday',startday)
-    # print('enddday', endday)
-    # print('cctvnum', cctvnum)
-    # print('starttime', starttime)
-    # print('endtime', endtime)
-    # formtype 1 # 시간일 경우 
-    # startday 2022-12-01
-    # enddday 2022-12-01
-    # cctvnum 1
-    # starttime 00:00
-    # endtime 23:00
-    
-
     import pandas as pd
     path = 'static/manage.csv'
     target = pd.read_csv(path)
