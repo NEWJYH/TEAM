@@ -365,7 +365,13 @@
                     time: {
                         unit: 'day'
                     }
-                }
+                },
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'rgba(12, 13, 13, 1)',
+                        fontSize: 10
+                    }
+                }]
             },
             animation: {
                 duration: 0
@@ -409,6 +415,15 @@
             },
             animation: {
                 duration: 0
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
             }
         }
     });

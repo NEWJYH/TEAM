@@ -1,15 +1,14 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-# from database import engine
-# from schedule import schedule
+from database import engine
 from routers import index, CRUD, live
-# import models
+import models
 
 app = FastAPI()
 
 # DB
-# models.Base.metadata.create_all(engine)
+models.Base.metadata.create_all(engine)
 
 # Static 
 app.mount("/static", StaticFiles(directory="static") , name="static")

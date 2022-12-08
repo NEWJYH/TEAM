@@ -225,7 +225,7 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
             day = day < 10 ? '0' + day : day;
             let hour = startDay.getHours();
             hour = hour < 10 ? '0' + hour : hour;
-            resDay.push(startDay.getHours() + '시');
+            resDay.push(startDay.getHours());
             toCompare.push(year + '-' + month + '-' + day + ' ' + hour);
             startDay.setHours(startDay.getHours() + 1);
         }

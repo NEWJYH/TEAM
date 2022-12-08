@@ -35,25 +35,25 @@ async def stream_video(request:Request):
 # async def stream_video2(request:Request):
 #     return StreamingResponse(get_stream_video2(), media_type="multipart/x-mixed-replace; boundary=frame")
 
-# @router.post('/post')
-# async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)):
+@router.post('/post')
+async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)):
     
-#     minimapobj = db.query(models.MiniMap).filter(
-#                                                 and_(models.MiniMap.sec >= form.sec),
-#                                                 and_(models.MiniMap.sec <= form.sec+59),
-#                                                 ).all()
-#     testdata = {}
+    minimapobj = db.query(models.MiniMap).filter(
+                                                and_(models.MiniMap.sec >= form.sec),
+                                                and_(models.MiniMap.sec <= form.sec+59),
+                                                ).all()
+    testdata = {}
     
-#     for data in minimapobj:
-#         sec = str(data.sec)
-#         frame = str(data.frame)
-#         cow_id = str(data.cow_id)
-#         x = str(data.xc)
-#         y = str(data.yc)
-#         if sec not in testdata.keys():
-#             testdata[sec] = {}
-#         if frame not in testdata[sec].keys():
-#             testdata[sec][frame] = {}
-#         testdata[sec][frame][cow_id] = {"x":x, "y":y}
+    for data in minimapobj:
+        sec = str(data.sec)
+        frame = str(data.frame)
+        cow_id = str(data.cow_id)
+        x = str(data.xc)
+        y = str(data.yc)
+        if sec not in testdata.keys():
+            testdata[sec] = {}
+        if frame not in testdata[sec].keys():
+            testdata[sec][frame] = {}
+        testdata[sec][frame][cow_id] = {"x":x, "y":y}
     
-#     return json.dumps(testdata)
+    return json.dumps(testdata)
