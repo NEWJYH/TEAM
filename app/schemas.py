@@ -70,4 +70,3 @@ class Form(BaseModel):
 class MiniMapForm(BaseModel):
     sec : int
 
-

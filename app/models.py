@@ -83,3 +83,12 @@ class MiniMap(Base):
     cow_id = Column(Integer)
     xc = Column(Integer)
     yc = Column(Integer)
+
+# graph
+class graph(Base):
+    __tablename__="graph"
+    idx = Column(Integer, primary_key=True, autoincrement=True)
+    time = Column(DateTime(timezone=True))
+    meal = Column(Integer)
+    water = Column(Integer)
+    distance = Column(Integer)
