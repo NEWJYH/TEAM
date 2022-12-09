@@ -34,8 +34,8 @@ function changeCCTVNum() {
 };
 
 const colorList = [
-    '#0000ff', '#3f7bf7', '#50bc7a', '#4b652b',
-    '#5a3434', '#753265', '#40278f', '#4c8530'
+    '#ff0000', '#f77b3f', '#7abc50', '#2b654b',
+    '#34345a', '#653275', '#8f2740', '#30854c'
 ];
 
 const dataScale = [1280, 720];
