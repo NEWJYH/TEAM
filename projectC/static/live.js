@@ -120,7 +120,7 @@ let start = '';
 function startUpdate() {
     // start = new Date()
     mapFunction.isPause = false;
-    mapFunction.draw = setInterval(updateMap, 66.66666666666667);
+    mapFunction.draw = setInterval(updateMap, 68.66666666666667);
 }
 
 function stopUpdate() {

@@ -20,30 +20,28 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="templates")
 
-CHUNK_SIZE = 1024*1024
-video_path = Path("./static/video/detect/h264_v01.mp4")
 
 @router.get("/")
 async def index(request:Request):
     # 보낼 request를 설정
     return templates.TemplateResponse("live.html", context={"request": request})
 
-@router.get("/video")
-async def video_endpoint(range: str = Header(None)):
-    start, end = range.replace("bytes=", "").split("-")
-    # print(start)
-    # print(end)
-    start = int(start)
-    end = int(end) if end else start + CHUNK_SIZE
-    with open(video_path, "rb") as video:
-        video.seek(start)
-        data = video.read(end - start)
-        filesize = str(video_path.stat().st_size)
-        headers = {
-            'Content-Range': f'bytes {str(start)}-{str(end)}/{filesize}',
-            'Accept-Ranges': 'bytes'
-        }
-        return Response(data, status_code=206, headers=headers, media_type="video/mp4")
+# @router.post("/video_endpoint")
+# async def video_endpoint(range: str = Header(None)):
+#     CHUNK_SIZE = 1024*1024
+#     video_path = Path("./static/video/detect/h264_v01.mp4")
+#     start, end = range.replace("bytes=", "").split("-")
+#     start = int(start)
+#     end = int(end) if end else start + CHUNK_SIZE
+#     with open(video_path, "rb") as video:
+#         video.seek(start)
+#         data = video.read(end - start)
+#         filesize = str(video_path.stat().st_size)
+#         headers = {
+#             'Content-Range': f'bytes {str(start)}-{str(end)}/{filesize}',
+#             'Accept-Ranges': 'bytes'
+#         }
+#         return Response(data, status_code=206, headers=headers, media_type="video/mp4")
 
 # @router.get("/stream_video")
 # async def stream_video(request:Request):
@@ -75,42 +73,10 @@ async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)
     
     return json.dumps(testdata)
 
-# db접속 안될때
-@router.post('/post')
-async def get_test(form:schemas.MiniMapForm):
-    import time
-    startsec = form.sec
-    limitsec = startsec + 59
-    import pandas as pd
-    path = 'static/mini.csv'
-    target = pd.read_csv(path)
-    start = target.index[target.sec == startsec].tolist()[0]
-    end = target.index[target.sec == limitsec].tolist()[-1]
-    # print("start _ end", start, end)
-    target = target.loc[start:end, :]
-    # print(len(target))
-    # print('호출됨')
-    testdata = {}
-    starttime = time.time()
-    for index in range(len(target)):
-        values = target.loc[index:].to_dict()
-        sec = str(values['sec'])
-        frame = str(values['frame'])
-        cow_id = str(values['cow_id'])
-        xc = str(values['xc'])
-        yc = str(values['yc'])
-        if sec not in testdata.keys():
-            testdata[sec] = {}
-        if frame not in testdata[sec].keys():
-            testdata[sec][frame] = {}
-        testdata[sec][frame][cow_id] = {"x":xc, "y":yc}
-    endtime = time.time()
-    print('time', endtime - starttime)
-
-    return json.dumps(testdata)
-
-
-# print('호출')
+# # db접속 안될때
+# @router.post('/post')
+# async def get_test(form:schemas.MiniMapForm):
+#     import time
 #     startsec = form.sec
 #     limitsec = startsec + 59
 #     import pandas as pd
@@ -118,21 +84,25 @@ async def get_test(form:schemas.MiniMapForm):
 #     target = pd.read_csv(path)
 #     start = target.index[target.sec == startsec].tolist()[0]
 #     end = target.index[target.sec == limitsec].tolist()[-1]
-    
-#     data = {}
-#     for index in range(start, end +1):
-#         print('여기')
+#     # print("start _ end", start, end)
+#     target = target.loc[start:end, :]
+#     # print(len(target))
+#     # print('호출됨')
+#     testdata = {}
+#     starttime = time.time()
+#     for index in range(len(target)):
 #         values = target.loc[index:].to_dict()
 #         sec = str(values['sec'])
 #         frame = str(values['frame'])
 #         cow_id = str(values['cow_id'])
-#         xc = values['xc']
-#         yc = values['yc']
-#         if sec not in data.keys():
-#             data[sec] = {}
-#         if frame not in data[sec].keys():
-#             data[sec][frame] = {}
-#         data[sec][frame][cow_id] = {"x":xc, "y":yc}
-    
-#     print(data)
-#     return json.dumps(data)
+#         xc = str(values['xc'])
+#         yc = str(values['yc'])
+#         if sec not in testdata.keys():
+#             testdata[sec] = {}
+#         if frame not in testdata[sec].keys():
+#             testdata[sec][frame] = {}
+#         testdata[sec][frame][cow_id] = {"x":xc, "y":yc}
+#     endtime = time.time()
+#     print('time', endtime - starttime)
+
+#     return json.dumps(testdata)
