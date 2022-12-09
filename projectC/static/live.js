@@ -34,8 +34,8 @@ function changeCCTVNum() {
 };
 
 const colorList = [
-    '#00ff66', '#33ff33', '#0000ff', '#ffff33',
-    '#cc0000', '#3333cc', '#3333ff', '#ffff00'
+    '#ff0000', '#f77b3f', '#7abc50', '#2b654b',
+    '#34345a', '#653275', '#8f2740', '#30854c'
 ];
 
 const dataScale = [1280, 720];
@@ -52,7 +52,7 @@ function drawCow(x, y, key) {
     // console.log(x1);
     let y1 = y * canvas.height / dataScale[1];
     // console.log(y1);
-    ctx.arc(x1, canvas.height - y1, 7, 0, Math.PI * 2);
+    ctx.arc(x1, y1, 7, 0, Math.PI * 2);
     ctx.fill();
     ctx.closePath();
 }
@@ -104,7 +104,7 @@ function sendAndReceiveData() {
         };
     };
     postdata = JSON.stringify(data)
-    xhr.open("POST", "/live/post");
+    xhr.open("POST", "/live/post2");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(postdata);
 };
