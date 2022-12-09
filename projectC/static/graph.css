@@ -145,6 +145,7 @@ input {
 }
 .downInput {
     display: inline-block;
+    margin: 0px 0px 0px 6px;
 }
 
 .inputDate {
@@ -232,7 +233,6 @@ select:disabled {
 .submitBtn {
     width: 30px;
     height: 30px;
-    float: right;
     margin: 3px 10px 10px 10px;
     background-color: #C65146;
     border-radius: 3px;

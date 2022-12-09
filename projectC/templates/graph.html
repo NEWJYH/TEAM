@@ -239,12 +239,12 @@
                                         <option id="23_2" value="23">&nbsp;23시&nbsp;</option>
                                     </select>
                                 </div>
+                                <button type="button" id="submit" class="submitBtn" onClick="doSubmit(2)">
+                                    <img class="submitImg"
+                                        src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                                </button>
                             </div>
                             <input type="hidden" id="hidden2" value=""></input>
-                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(2)">
-                                <img class="submitImg"
-                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
-                            </button>
                         </form>
                     </div>
                     <canvas id="chartTwo" height="250px"></canvas>
@@ -332,12 +332,12 @@
                                         <option id="23_3" value="23">&nbsp;23시&nbsp;</option>
                                     </select>
                                 </div>
+                                <button type="button" id="submit" class="submitBtn" onClick="doSubmit(3)">
+                                    <img class="submitImg"
+                                        src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
+                                </button>
                             </div>
                             <input type="hidden" id="hidden3" value="">
-                            <button type="button" id="submit" class="submitBtn" onClick="doSubmit(3)">
-                                <img class="submitImg"
-                                    src="{{ url_for('static', path='img/outline_search_white_24dp.png') }}">
-                            </button>
                         </form>
                     </div>
                     <canvas id="chartThree" height="250px"></canvas>
@@ -391,7 +391,13 @@
                     time: {
                         unit: 'day'
                     }
-                }
+                },
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'rgba(12, 13, 13, 1)',
+                        fontSize: 10
+                    }
+                }]
             },
             animation: {
                 duration: 0
@@ -411,7 +417,13 @@
                     time: {
                         unit: 'day'
                     }
-                }
+                },
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'rgba(12, 13, 13, 1)',
+                        fontSize: 10
+                    }
+                }]
             },
             animation: {
                 duration: 0
