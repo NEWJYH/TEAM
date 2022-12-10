@@ -1,10 +1,12 @@
 let defaultStart = 0;
+let defaultHiddenStat = [false, false, false, false, true, true, true, true];
 
 /** input 태그 디폴트 설정하는 함수 */
 function defaultOption() {
     const today = new Date();
+    today.setDate(3);
     const lastWeek = new Date();
-    lastWeek.setDate(today.getDate() - 7)
+    lastWeek.setDate(1);
     // 오늘과 지난주를 기간 인풋에 넣을 수 있는 형태로 만듦
     let day = today.getDate()
     day = day < 10 ? '0' + day : day;
@@ -105,8 +107,7 @@ function changeUnitOfTime(i) {
         const timeToDayInput = new Date();
         timeToDayInput.setFullYear(endInputDate.substr(0, 4))
         timeToDayInput.setMonth(endInputDate.substr(5, 2) - 1)
-        timeToDayInput.setDate(endInputDate.substr(8, 2))
-        timeToDayInput.setDate(timeToDayInput.getDate() - 7)
+        timeToDayInput.setDate(1)
 
         let day = timeToDayInput.getDate()
         day = day < 10 ? '0' + day : day;
@@ -253,13 +254,18 @@ function getDateRangeData(param1, param2, i) {  //param1은 시작일, param2는
 */
 function createDataForChartUse(i, param2, toCompare) {
     let dataType = '';
+    let chart = '';
     if (i == 1) {
         dataType = 'meal';
+        chart = foodChart
     } else if (i == 2) {
         dataType = 'distance';
+        chart = activeChart
     } else if (i == 3) {
         dataType = 'water';
+        chart = waterChart
     }
+
 
     let postDataValue = JSON.parse(param2)
     // console.log(postDataValue)
@@ -286,6 +292,20 @@ function createDataForChartUse(i, param2, toCompare) {
     });
     // console.log(endCount)
 
+    // hidden 여부 담을 배열
+    let hiddenArray = defaultHiddenStat;
+    let beforeHiddenArray = [];
+    // 현재 그래프의 hidden 여부 push
+    if (defaultStart != 0) {
+        hiddenArray = []
+        for (i = 0; i < endCount; i++) {
+            beforeHiddenArray.push(chart.data.datasets[i]['hidden'])
+            let metaKey = Object.keys(chart.data.datasets[i]['_meta'])
+            hiddenArray.push(chart.data.datasets[i]['_meta'][metaKey[0]]['hidden'])
+        }
+    }
+    // console.log(hiddenArray)
+    // console.log(beforeHiddenArray)
     // 데이터를 차트에 보내기 전에 임시로 담아놓을 데이터 어레이
     let dataBeforeSendingToChart = [];
     // 임시 데이터 어레이 안에 소 마리수 만큼의 어레이 생성 
@@ -330,7 +350,7 @@ function createDataForChartUse(i, param2, toCompare) {
             count++;
         });
     });
-    // console.log(dataBeforeSendingToChart[0])
+    // console.log(dataBeforeSendingToChart)
 
     // 선 색상
     const lineColor = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
@@ -338,17 +358,47 @@ function createDataForChartUse(i, param2, toCompare) {
     // 임시 데이터 어레이의 데이터를 차트에 보낼 형식으로 만든다
     let dataToSendToChart = [];
     for (i = 0; i < endCount; i++) {
-        dataToSendToChart.push(
-            {
-                data: dataBeforeSendingToChart[i],
-                label: IDArray[i] + '번 소',
-                borderColor: lineColor[i],
-                borderWidth: 2,
-                pointRadius: 0,
-                tension: 0,
-                fill: false
-            }
-        )
+        if (hiddenArray[i] == true) {
+            dataToSendToChart.push(
+                {
+                    data: dataBeforeSendingToChart[i],
+                    label: IDArray[i] + '번',
+                    borderColor: lineColor[i],
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0,
+                    fill: false,
+                    hidden: true
+                }
+            )
+        } else if (hiddenArray[i] == false) {
+            dataToSendToChart.push(
+                {
+                    data: dataBeforeSendingToChart[i],
+                    label: IDArray[i] + '번',
+                    borderColor: lineColor[i],
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0,
+                    fill: false,
+                    hidden: false
+                }
+            )
+        } else if (hiddenArray[i] == null) {
+            dataToSendToChart.push(
+                {
+                    data: dataBeforeSendingToChart[i],
+                    label: IDArray[i] + '번',
+                    borderColor: lineColor[i],
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0,
+                    fill: false,
+                    hidden: beforeHiddenArray[i]
+                }
+            )
+        }
+
     }
     // console.log(dataToSendToChart);
     return dataToSendToChart
@@ -363,6 +413,7 @@ function sendAndReceiveData(i, postData, middleDate, toCompare) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             let data = JSON.parse(xhr.responseText);
+            console.log(data);
             // 차트에 넣을 데이터
             let chartData = createDataForChartUse(i, data, toCompare);
 
@@ -414,7 +465,7 @@ function doSubmit(i) {
     // console.log(cctvNum)
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
     const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(cctvNum) }
-    // console.log(data)
+    console.log(data)
     const postData = JSON.stringify(data);
 
     // 중간 기간 계산 함수
@@ -430,7 +481,7 @@ function doSubmit(i) {
     // console.log(middleDate[1]);
     sendAndReceiveData(i, postData, middleDate[0], middleDate[1]);
 }
-// doSubmit(1)
+doSubmit(1)
 // doSubmit(2)
 // doSubmit(3)
 

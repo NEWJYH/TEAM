@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <link rel="apple-touch-icon" sizes="180x180"
         href="{{ url_for('static', path='/favicon_io/apple-touch-icon.png') }}">
@@ -69,11 +68,12 @@
                         </ul>
                     </div>
                 </div>
-                <div id="cctv">
-                    <video src="/static/video/detect/h264_v01.mp4" type="video/mp4" width="480" height="320" autoplay playsinline
-                        muted></video>
+                <div>
+                    <video src="{{ url_for('static', path='/video/map/h264_origin_v01.mp4') }}" type="video/mp4" width="320" height="240" autoplay playsinline muted></video>
                 </div>
-                
+                <div id="cctv">
+                    <video src="/static/video/detect/h264_v01.mp4" type="video/mp4" width="320" height="240" autoplay playsinline muted></video>
+                </div>
                 <div id="map">
                     <canvas id="mapCanvas" style="border: 2px solid black">
                     </canvas>

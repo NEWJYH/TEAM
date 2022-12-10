@@ -1,6 +1,6 @@
 /* Default */
 html {
-    background-color: #FFEEE4;
+    background-color: #f9f1ed;
 }
 * {
     margin: 0;
@@ -40,7 +40,7 @@ li {
 #intro {
     width: 100%;
     height: 80px;
-    background-color: #C65146;
+    background-color: #5E503F;
 }
 
 #intro nav {

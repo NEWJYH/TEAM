@@ -40,7 +40,7 @@
                     <div id="defaultCCTV">
                         <label id="cctvLabel" onchange="changeVisible()">
                             <input type="checkbox" id="checkVisible" style="display: none;">
-                            <p id="defaultText">1번 CCTV</p>
+                            <p id="defaultText">3번 CCTV</p>
                             <img id="arrow"
                                 src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
                         </label>
@@ -49,20 +49,22 @@
                         <ul id="cctvList">
                             <li id="cctv1">
                                 <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn1" value="1" onchange="changeCCTV(0)"
-                                        checked>
+                                    <input type="radio" name="cctvNum" id="cctvBtn1" onchange="changeCCTV(0)" value="1"
+                                    disabled>
                                     1번 CCTV
                                 </label>
                             </li>
                             <li id="cctv2">
                                 <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn2" onchange="changeCCTV(1)" value="2">
+                                    <input type="radio" name="cctvNum" id="cctvBtn2" onchange="changeCCTV(1)" value="2"
+                                    disabled>
                                     2번 CCTV
                                 </label>
                             </li>
                             <li id="cctv3">
                                 <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn3" onchange="changeCCTV(2)" value="3">
+                                    <input type="radio" name="cctvNum" id="cctvBtn3" onchange="changeCCTV(2)" value="3"
+                                    checked>
                                     3번 CCTV
                                 </label>
                             </li>
@@ -86,8 +88,7 @@
                         </div>
                         <form class="dateInputForm">
                             <div id="startTimeSpace" class="upInput">
-                                <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)" required
-                                    pattern="\d{4}-\d{2}-\d{2}">
+                                <input type="date" id="startDate" value="" max="" onchange="limitEndDate(1)" required>
                                 <div id="selectStartTime">
                                     <select id="startTime">
                                         <option value="0">&nbsp;0시&nbsp;</option>
@@ -118,8 +119,7 @@
                                 </div>
                             </div>
                             <div id="endTimeSpace" class="downInput">
-                                <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)"
-                                    required pattern="\d{4}-\d{2}-\d{2}">
+                                <input type="date" id="endDate" value="" min="" max="" onchange="limitStartDate(1)">
                                 <div id="selectEndTime">
                                     <select id="endTime">
                                         <option id="0" value="0">&nbsp;0시&nbsp;</option>

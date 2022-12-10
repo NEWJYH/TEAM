@@ -60,7 +60,7 @@ input {
     margin: 0 auto;
     text-align: center;
     border-radius: 15px;
-    background-color: #C65146;
+    background-color: #5E503F;
 }
 
 #defaultCCTV {
@@ -113,7 +113,7 @@ input {
 }
 
 .chartImg {
-    background-color: #C65146;
+    background-color: #C7AD92;
     margin: 10px 0px 0px 10px;
     border-radius: 15px;
     float: left;
@@ -123,7 +123,7 @@ input {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
     font-weight: bold;
-    color: #C65146;
+    color: #C7AD92;
     margin: 20px 0px 0px 10px;
     float: left;
 }
@@ -234,7 +234,7 @@ select:disabled {
     width: 30px;
     height: 30px;
     margin: 3px 10px 10px 10px;
-    background-color: #C65146;
+    background-color: #C7AD92;
     border-radius: 3px;
     border: none;
     cursor: pointer;
