@@ -1,88 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="{{ url_for('static', path='/favicon_io/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ url_for('static', path='/favicon_io/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ url_for('static', path='/favicon_io/favicon-16x16.png') }}">
+    <head>
+        <link rel="apple-touch-icon" sizes="180x180"
+            href="{{ url_for('static', path='/favicon_io/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32"
+            href="{{ url_for('static', path='/favicon_io/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16"
+            href="{{ url_for('static', path='/favicon_io/favicon-16x16.png') }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet">
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>소카우넷</title>
+        <title>소카우넷</title>
 
-    <link href="{{ url_for('static', path='layout.css')}}" rel="stylesheet">
-    <link href="{{ url_for('static', path='live.css')}}" rel="stylesheet">
-</head>
-
-<body>
-    <div class="container">
-        <header id="intro">
-            <nav id="navigation">
-                <ul>
-                    <li class="one"><a href="/graph">SoCowNet</a></li>
-                    <li class="two"><a href="/graph">한우DB</a></li>
-                    <li class="three"><a href="/live">모니터링</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main role="main" id="main">
-            <article class="cctvContent">
-                <div id="cctvMenu">
-                    <div id="defaultCCTV">
-                        <label id="cctvLabel">
-                            <input type="checkbox" id="checkVisible" onchange="changeVisible()" style="display: none;">
-                            <p id="defaultText">1번 CCTV</p>
-                            <img id="arrow"
-                                src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
-                        </label>
+        <link href="{{ url_for('static', path='layout.css')}}" rel="stylesheet">
+        <link href="{{ url_for('static', path='live.css')}}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <header id="intro">
+                <nav id="navigation">
+                    <ul>
+                        <li class="one"><a href="/graph">SoCowNet</a></li>
+                        <li class="two"><a href="/graph">한우DB</a></li>
+                        <li class="three"><a href="/live">모니터링</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <main role="main" id="main">
+                <article class="cctvContent">
+                    <div id="cctvMenu">
+                        <div id="defaultCCTV">
+                            <label id="cctvLabel">
+                                <input type="checkbox" id="checkVisible" onchange="changeVisible()" style="display: none;">
+                                <p id="defaultText">1번 CCTV</p>
+                                <img id="arrow"
+                                    src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
+                            </label>
+                        </div>
+                        <div id="cctvListFrame">
+                            <ul id="cctvList">
+                                <li id="cctv1">
+                                    <label><input type="radio" name="cctvNum" id="cctvBtn1" value="1" onchange="changeCCTV(0)" checked>1번 CCTV</label>
+                                </li>
+                                <li id="cctv2">
+                                    <label><input type="radio" name="cctvNum" id="cctvBtn2" onchange="changeCCTV(1)" value="2">2번 CCTV</label>
+                                </li>
+                                <li id="cctv3">
+                                    <label><input type="radio" name="cctvNum" id="cctvBtn3" onchange="changeCCTV(2)" value="3">3번 CCTV</label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div id="cctvListFrame">
-                        <ul id="cctvList">
-                            <li id="cctv1">
-                                <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn1" value="1" onchange="changeCCTV(0)"
-                                        checked>
-                                    1번 CCTV
-                                </label>
-                            </li>
-                            <li id="cctv2">
-                                <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn2" onchange="changeCCTV(1)" value="2">
-                                    2번 CCTV
-                                </label>
-                            </li>
-                            <li id="cctv3">
-                                <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn3" onchange="changeCCTV(2)" value="3">
-                                    3번 CCTV
-                                </label>
-                            </li>
-                        </ul>
+                    <div>
+                        <video src="{{ url_for('static', path='/video/map/h264_origin_v01.mp4') }}" type="video/mp4" width="320" height="240" autoplay playsinline muted></video>
                     </div>
-                </div>
-                <div>
-                    <video src="{{ url_for('static', path='/video/map/h264_origin_v01.mp4') }}" type="video/mp4" width="320" height="240" autoplay playsinline muted></video>
-                </div>
-                <div id="cctv">
-                    <video src="/static/video/detect/h264_v01.mp4" type="video/mp4" width="320" height="240" autoplay playsinline muted></video>
-                </div>
-                <div id="map">
-                    <canvas id="mapCanvas" style="border: 2px solid black">
-                    </canvas>
-                </div>
-            </article>
-        </main>
-        <footer></footer>
-    </div>
-</body>
+                    <div id="map">
+                        <canvas id="mapCanvas" style="border: 2px solid black"></canvas>
+                    </div>
+                </article>
+            </main>
+            <footer></footer>
+        </div>
+    </body>
 <script src="{{ url_for('static', path='live.js')}}"></script>
-
 </html>

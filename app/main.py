@@ -2,9 +2,10 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from database import engine
-from routers import index, live
 import models
 import os
+
+from routers import index, live, performance, perfect
 
 app = FastAPI()
 
@@ -19,3 +20,5 @@ app.mount("/static", StaticFiles(directory=st_abs_file_path), name="static")
 # Router
 app.include_router(index.router)
 app.include_router(live.router)
+app.include_router(performance.router)
+app.include_router(perfect.router)

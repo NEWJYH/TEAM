@@ -7,6 +7,7 @@ from sqlalchemy import and_
 import database, schemas, models
 
 import json
+import time
 
 router = APIRouter(
     prefix="/live"
@@ -22,7 +23,7 @@ async def index(request:Request):
 
 @router.post('/post2')
 async def get_test(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)):
-    
+    time.sleep(3)
     minimapobj = db.query(models.MiniMap).filter(
                                                 and_(models.MiniMap.sec >= form.sec),
                                                 and_(models.MiniMap.sec <= form.sec+59),
