@@ -50,7 +50,7 @@ async def get_test(request: Request):
 
 
 @router.post('/post2')
-async def get_test(form: schemas.Form, db:Session=Depends(database.get_db)):
+async def get_test(form: schemas.Form):
     formtype = form.formtype
     startday = form.startday
     endday = form.endday

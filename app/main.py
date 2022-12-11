@@ -7,7 +7,12 @@ import os
 
 from routers import index, live, performance, perfect
 
-app = FastAPI()
+
+app = FastAPI(
+    # openapi.json 숨기기
+    docs_url=None,
+    redoc_url=None        
+)
 
 # # DB
 models.Base.metadata.create_all(engine)
