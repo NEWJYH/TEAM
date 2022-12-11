@@ -14,7 +14,7 @@ app = FastAPI(
     redoc_url=None        
 )
 
-# # DB
+# DB
 models.Base.metadata.create_all(engine)
 
 # Static 
