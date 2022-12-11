@@ -1,7 +1,7 @@
 let defaultStart = 0;
 let defaultHiddenStat = [false, false, false, false, true, true, true, true];
 
-/** input 태그 디폴트 설정하는 함수 */
+/** 페이지 로드 시 input 값들을 설정하는 함수 */
 function defaultOption() {
     const today = new Date();
     today.setDate(3);
@@ -413,7 +413,7 @@ function sendAndReceiveData(i, postData, middleDate, toCompare) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             let data = JSON.parse(xhr.responseText);
-            console.log(data);
+            // console.log(data);
             // 차트에 넣을 데이터
             let chartData = createDataForChartUse(i, data, toCompare);
 
@@ -461,11 +461,11 @@ function doSubmit(i) {
     const dateArray = addTimeToDate(i)
 
     // 방 번호
-    const cctvNum = document.querySelector('input[name="cctvNum"]:checked').value;
+    // const cctvNum = document.querySelector('input[name="cctvNum"]:checked').value;
     // console.log(cctvNum)
     // JSON 형태의 보낼 데이터에 시작 날짜, 종료 날짜, 방 번호를 담는다
-    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: parseInt(cctvNum) }
-    console.log(data)
+    const data = { formtype: dateArray[0], startday: dateArray[1], starttime: dateArray[2], endday: dateArray[3], endtime: dateArray[4], cctvnum: 3 }
+    // console.log(data)
     const postData = JSON.stringify(data);
 
     // 중간 기간 계산 함수
@@ -478,58 +478,6 @@ function doSubmit(i) {
     const middleDate = getDateRangeData(startDateTime, endDateTime, i);
 
     // 데이터 전송
-    // console.log(middleDate[1]);
     sendAndReceiveData(i, postData, middleDate[0], middleDate[1]);
 }
 doSubmit(1)
-// doSubmit(2)
-// doSubmit(3)
-
-let forCheck = 0;
-function changeVisible() {
-    let style = document.getElementById('cctvListFrame')
-    // console.log(window.getComputedStyle(style).display)
-    // console.log(document.getElementById('checkVisible').checked)
-    // if (forCheck == 0) {
-    //     document.getElementById('cctvListFrame').style.display = 'block';
-    //     forCheck = 1;
-    // } else if (forCheck == 1) {
-    //     // console.log('왜 안됨?')
-    //     // changeCCTV('forCheck')
-    //     forCheck = 0;
-    // }
-    if (document.getElementById('checkVisible').checked == true) {
-        document.getElementById('cctvListFrame').setAttribute('style', 'display: block;')
-    } else if (document.getElementById('checkVisible').checked == false) {
-        // console.log('왜 안됨?')
-        document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
-    }
-    // if (window.getComputedStyle(style).display == 'none') {
-    // } else {
-    //     document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
-    //     document.getElementById('checkVisible').checked == false
-    // }
-}
-
-function changeCCTV(i) {
-    if (i == 'forCheck') {
-    } else {
-        cctvNum = i + 1
-        document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
-    }
-
-    document.getElementById('cctvListFrame').style.display = 'none';
-    document.getElementById('checkVisible').checked = false
-    // forCheck = 0;
-}
-
-document.querySelector("body").addEventListener("click", function (e) {
-    // console.log(e.target.id)
-    // console.log(forCheck)
-    if (e.target.id == e.currentTarget.querySelector("#checkVisible").id) {
-    } else {
-        // console.log("wrong")
-        document.getElementById('cctvListFrame').style.display = 'none';
-        document.getElementById('checkVisible').checked = false
-    }
-})

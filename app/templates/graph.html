@@ -36,41 +36,6 @@
         </header>
         <main role="main" id="main">
             <article id="one">
-                <div id="cctvMenu">
-                    <div id="defaultCCTV">
-                        <label id="cctvLabel" onchange="changeVisible()">
-                            <input type="checkbox" id="checkVisible" style="display: none;">
-                            <p id="defaultText">3번 CCTV</p>
-                            <img id="arrow"
-                                src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
-                        </label>
-                    </div>
-                    <div id="cctvListFrame">
-                        <ul id="cctvList">
-                            <li id="cctv1">
-                                <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn1" onchange="changeCCTV(0)" value="1"
-                                    disabled>
-                                    1번 CCTV
-                                </label>
-                            </li>
-                            <li id="cctv2">
-                                <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn2" onchange="changeCCTV(1)" value="2"
-                                    disabled>
-                                    2번 CCTV
-                                </label>
-                            </li>
-                            <li id="cctv3">
-                                <label>
-                                    <input type="radio" name="cctvNum" id="cctvBtn3" onchange="changeCCTV(2)" value="3"
-                                    checked>
-                                    3번 CCTV
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <div class="chartFrame">
                     <img class="chartImg" src="{{ url_for('static', path='/img/outline_bar_chart_white_24dp.png') }}">
                     <p class="typeOfData">식사량</p>

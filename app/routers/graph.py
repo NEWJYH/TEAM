@@ -10,6 +10,7 @@ router = APIRouter(
     prefix="/graph",
     tags=['graphs']
 )
+
 router.mount('/static', StaticFiles(directory='static'), name='static')
 
 @router.get("/", response_class=HTMLResponse)

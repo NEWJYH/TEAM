@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from sqlalchemy.orm import Session
@@ -16,7 +16,8 @@ def live_html(request:Request):
     return templates.TemplateResponse("live.html", context={"request": request})
 
 def live_minimap(form:schemas.MiniMapForm, db:Session=Depends(database.get_db)):
-    time.sleep(3)
+    if form.sec == 1:
+        time.sleep(10)
     minimapobj = db.query(models.MiniMap).filter(
                                                 and_(models.MiniMap.sec >= form.sec),
                                                 and_(models.MiniMap.sec <= form.sec+59),
