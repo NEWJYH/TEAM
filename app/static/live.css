@@ -54,7 +54,7 @@ article div {
     margin: 0 auto;
     text-align: center;
     border-radius: 15px;
-    background-color: rgb(74, 146, 44);
+    background-color: #5E503F;
 }
 
 #defaultCCTV {
@@ -90,6 +90,11 @@ article div {
     margin-top: 2px;
     position: absolute;
 }
+
+#cctvVideo {
+    margin-top: 15px;
+}
+
 #cctv {
     width: 95%;
     margin: 0 auto;

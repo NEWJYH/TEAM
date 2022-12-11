@@ -9,11 +9,22 @@ function changeVisible() {
     }
 }
 
-function changeCCTV(i) {
-    cctvNum = i + 1
-    document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
-    document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
-}
+document.querySelector("body").addEventListener("click", function (e) {
+    // console.log(e.target.id)
+    // console.log(forCheck)
+    if (e.target.id == e.currentTarget.querySelector("#checkVisible").id) {
+    } else {
+        // console.log("wrong")
+        document.getElementById('cctvListFrame').style.display = 'none';
+        document.getElementById('checkVisible').checked = false
+    }
+})
+
+// function changeCCTV(i) {
+//     cctvNum = i + 1
+//     document.getElementById('defaultText').innerText = cctvNum + '번 CCTV';
+//     document.getElementById('cctvListFrame').setAttribute('style', 'display: none;')
+// }
 
 let cctvChoice = ''; // cctv 선택값
 let cctvImg = ''; // 보여지는 cctv img 태그
@@ -21,17 +32,17 @@ let mapImg = ''; // 보여지는 map img 태그
 let cctvUrl = ''; // cctv src 경로
 let imgUrl = ''; // map src 경로
 
-function changeCCTVNum() {
-    cctvChoice = document.getElementById("CCTVNum").value
-    mapImg = document.getElementById('mapImg')
-    cctvImg = document.getElementById('cctvImg')
+// function changeCCTVNum() {
+//     cctvChoice = document.getElementById("CCTVNum").value
+//     mapImg = document.getElementById('mapImg')
+//     cctvImg = document.getElementById('cctvImg')
 
-    cctvUrl = '/cv_live/stream_video';
-    imgUrl = '/static/img/' + cctvChoice + '.png';
+//     cctvUrl = '/cv_live/stream_video';
+//     imgUrl = '/static/img/' + cctvChoice + '.png';
 
-    cctvImg.setAttribute('src', cctvUrl)
-    mapImg.setAttribute('src', imgUrl);
-};
+//     cctvImg.setAttribute('src', cctvUrl)
+//     mapImg.setAttribute('src', imgUrl);
+// };
 
 const colorList = [
     '#ff0000', '#f77b3f', '#7abc50', '#2b654b',

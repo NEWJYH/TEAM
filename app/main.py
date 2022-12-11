@@ -5,7 +5,7 @@ from database import engine
 import models
 import os
 
-from routers import index, live, performance, perfect
+from routers import graph, live, performance, perfect
 
 
 app = FastAPI(
@@ -23,7 +23,7 @@ st_abs_file_path = os.path.join(script_dir, "static/")
 app.mount("/static", StaticFiles(directory=st_abs_file_path), name="static")
 
 # Router
-app.include_router(index.router)
+app.include_router(graph.router)
 app.include_router(live.router)
 app.include_router(performance.router)
 app.include_router(perfect.router)

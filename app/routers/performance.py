@@ -13,6 +13,6 @@ async def performance(request:Request):
     # 보낼 request를 설정
     # 여기 변경하면됨 html
     # 영상 2개 들어갈 html임
-    return templates.TemplateResponse("live.html", context={"request": request})
+    return templates.TemplateResponse("performance.html", context={"request": request})
 
 

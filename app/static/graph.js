@@ -523,7 +523,6 @@ function changeCCTV(i) {
     // forCheck = 0;
 }
 
-let style = document.getElementById('cctvListFrame')
 document.querySelector("body").addEventListener("click", function (e) {
     // console.log(e.target.id)
     // console.log(forCheck)

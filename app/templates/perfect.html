@@ -38,7 +38,7 @@
                         <div id="defaultCCTV">
                             <label id="cctvLabel">
                                 <input type="checkbox" id="checkVisible" onchange="changeVisible()" style="display: none;">
-                                <p id="defaultText">1번 CCTV</p>
+                                <p id="defaultText">퍼펙트</p>
                                 <img id="arrow"
                                     src="{{ url_for('static', path='/img/outline_expand_more_white_24dp.png') }}">
                             </label>
@@ -59,9 +59,6 @@
                     </div>
                     <div id="cctvVideo">
                         <video src="{{ url_for('static', path='/video/detect/h264_v01.mp4') }}" type="video/mp4" width="320" height="240" autoplay playsinline muted></video>
-                    </div>
-                    <div id="map">
-                        <canvas id="mapCanvas" style="border: 2px solid black"></canvas>
                     </div>
                 </article>
             </main>

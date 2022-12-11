@@ -1,30 +1,17 @@
-from fastapi import APIRouter, Request
+from fastapi import Request
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-
 import schemas 
 import json
 
 from utils.calday import getMonthRage, getSplitYMD
 
-router = APIRouter(
-    prefix="/graph"
-)
-
-router.mount('/static', StaticFiles(directory='static'), name='static')
-
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/", response_class=HTMLResponse)
-async def get_test(request: Request):
-    context = {}
-    context['request'] = request
-    return templates.TemplateResponse("graph.html", context)
+def graph_html(request:Request):
+    return templates.TemplateResponse("graph.html", context={"request": request})
 
 # db 접근 안될때
-@router.post('/post')
-async def NoDB(form:schemas.Form):
+def graph_query(form:schemas.Form):
     formtype = form.formtype
     startday = form.startday
     endday = form.endday
