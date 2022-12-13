@@ -2,6 +2,7 @@ article {
     margin-top: 30px;
     margin-bottom: 50px;
 }
+
 article div {
     text-align: center;
 }
@@ -100,17 +101,29 @@ article div {
     margin: 0 auto;
     margin-top: 10px;
 }
+
 #map {
     width: 95%;
     margin: 0 auto;
     margin-top: 10px;
 }
+
 #mapCanvas {
     width: 320px;
     height: 240px;
     margin: 0 auto;
     margin-top: 20px;
 }
-#youtubevideo {
+
+#player {
     margin-top: 10px;
+    width: 331px;
+    height: 186px;
+}
+
+@media (max-width: 331px) {
+    #player {
+        width: 90%;
+        height: 186px;
+    }
 }

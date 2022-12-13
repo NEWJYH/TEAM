@@ -94,7 +94,7 @@ function sendAndReceiveData() {
         if (xhr.readyState == 4) {
             // eachFrame = [];
             let minute = JSON.parse(JSON.parse(xhr.responseText));
-            console.log(minute)
+            // console.log(minute)
             let minuteKeys = Object.keys(minute);
             minuteKeys.forEach(key => {
                 let second = minute[key]
@@ -146,7 +146,7 @@ let count = 0;
 function updateMap() {
     if (!mapFunction.isPause) {
         drawMap(eachFrame[count])
-        console.log(count)
+        // console.log(count)
         count++;
         if (count + 1 in eachFrame) {
         } else { stopUpdate() }

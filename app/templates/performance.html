@@ -59,14 +59,8 @@
                         </ul>
                     </div>
                 </div>
-                <div id="cctvVideo">
-                    <video src="{{ url_for('static', path='/video/detect/퍼포먼스용cctv영상.mp4') }}" type="video/mp4"
-                        width="320" height="240" autoplay playsinline muted></video>
-                </div>
-                <div id="map">
-                    <video src="{{ url_for('static', path='/video/map/퍼포먼스용미니맵영상.mp4') }}" type="video/mp4" width="320"
-                        height="240" autoplay playsinline muted></video>
-                </div>
+                <div id="player"></div>
+                <div id="player2"></div>
             </article>
         </main>
         <footer></footer>
@@ -94,6 +88,86 @@
             document.getElementById('checkVisible').checked = false
         }
     })
+    // 1번째 영상
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            videoId: 'GVOX07Q7s0U',
+            playerVars: {
+                'autoplay': 1,
+                'rel': 0,
+                'modestbranding': 1,
+                'playsinline': 1,
+                'showinfo': 1,
+                'rel': 0,
+                'controls': 1,
+                'loop': 1,
+                'mute': 1,
+                // 'origin': 'https://meeranblog24x7.blogspot.com/'
+            },
+            events: {
+                'onReady': onPlayerReady,
+                // 'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+    function onPlayerReady(event) {
+        player.playVideo();
+        player.mute();
+    } var done = false;
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 6000);
+            done = true;
+        }
+    }
+    function stopVideo() {
+        player.stopVideo();
+    }
+    // 2번째 영상
+    var tag2 = document.createElement('script');
+    tag2.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag2 = document.getElementsByTagName('script')[1];
+    firstScriptTag2.parentNode.insertBefore(tag2, firstScriptTag2);
+    var player2;
+    function onYouTubeIframeAPIReady2() {
+        player2 = new YT.Player('player', {
+            videoId: 'bm4XzsmuR6E',
+            playerVars: {
+                'autoplay': 1,
+                'rel': 0,
+                'modestbranding': 1,
+                'playsinline': 1,
+                'showinfo': 1,
+                'rel': 0,
+                'controls': 1,
+                'loop': 1,
+                'mute': 1,
+                // 'origin': 'https://meeranblog24x7.blogspot.com/'
+            },
+            events: {
+                'onReady': onPlayerReady2,
+                // 'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+    function onPlayerReady2(event) {
+        player2.playVideo();
+        player2.mute();
+    } var done2 = false;
+    function onPlayerStateChange2(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done2) {
+            setTimeout(stopVideo2, 6000);
+            done2 = true;
+        }
+    }
+    function stopVideo2() {
+        player2.stopVideo();
+    }
 </script>
 
 </html>

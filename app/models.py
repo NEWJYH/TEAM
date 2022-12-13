@@ -8,71 +8,36 @@ from datetime import datetime
 # from sqlalchemy.orm import relationship
 
 # 트레킹 테이블 _완료
-class TrackerLog(Base):
-    __tablename__="tracker_log"
-    # 순번
-    idx = Column(Integer, primary_key=True, autoincrement=True)
-    # 등록시간 : -> 실시간 시간 기준으로 영상 시간기준
-    time = Column(DateTime(timezone=True), default=datetime.now)
-    # cctv_ch
-    cctv_num = Column(Integer)
-    # 디텍션영상프레임
-    frame = Column(Integer)
-    # 트레커아이디
-    track_id = Column(Integer)
-    # 중심 x좌표    
-    xc = Column(Integer)
-    # 중심 y좌표
-    yc = Column(Integer)
-    # 소이동 거리 1초
-    distance = Column(Integer)
-    # 식사여부 1초
-    meal = Column(Boolean)
-    # 음수여부 1초
-    water = Column(Boolean)
+# class TrackerLog(Base):
+#     __tablename__="trackerlog_1"
+#     # 순번
+#     idx = Column(Integer, primary_key=True, autoincrement=True)
+#     # 등록시간 : -> 실시간 시간 기준으로 영상 시간기준
+#     time = Column(DateTime(timezone=True), default=datetime.now)
+#     xc = Column(Integer)
+#     yc = Column(Integer)
+#     # cctv_ch
+#     cctv_num = Column(Integer)
+#     # 트레커아이디
+#     cow_id = Column(Integer)
+#     # 거리
+#     distance = Column(Integer)
+#     # 식사여부 1초
+#     meal = Column(Boolean)
+#     # 음수여부 1초
+#     water = Column(Boolean)
 
-# 소정보
-class Cow(Base):
-    __tablename__="cow"
-    idx = Column(Integer, primary_key=True, autoincrement=True)
-    track_id = Column(Integer)
-    # cctv 번호
-    cctv_num = Column(Integer, default=3)
-    # 마지막 기록시간
-    time =  Column(DateTime(timezone=True), default=datetime.now)
+# # 소정보
+# class Cow(Base):
+#     __tablename__="cow_1"
+#     cow_id = Column(Integer, primary_key=True)
+#     # cctv 번호
+#     cctv_num = Column(Integer)
+#     # 마지막 기록시간
+#     time =  Column(DateTime(timezone=True), default=datetime.now)
+#     # 정보
+#     info = Column(String(100))
 
-# 소관리내역 테이블
-class Manage(Base):
-    __tablename__="manage"
-    # 순번
-    idx = Column(Integer, primary_key=True, autoincrement=True)
-    # 등록 시간 분단위
-    time =  Column(DateTime(timezone=True), default=datetime.now)
-    # cctv 번호 
-    cctv_num = Column(Integer)
-    # 소개체 번호
-    track_id = Column(Integer)
-    # 시간별 식사량
-    meal_min = Column(Integer)
-    # 시간별 음수량
-    water_min= Column(Integer)
-    # 시간별 이동시간
-    distance_min = Column(Integer)
-    # 시간별 식사량
-    meal_hour = Column(Integer)
-    # 시간별 음수량
-    water_hour= Column(Integer)
-    # 시간별 이동시간
-    distance_hour = Column(Integer)
-
-# trackerlog 순회를 위함 
-class Log(Base):
-    __tablename__="log"
-    # 순번 
-    idx = Column(Integer, primary_key=True, autoincrement=True)
-    # trackerlog 마지막 idx
-    track_idx = Column(Integer)
-    manage_idx = Column(Integer)
 
 # minimap
 class MiniMap(Base):
@@ -84,11 +49,11 @@ class MiniMap(Base):
     xc = Column(Integer)
     yc = Column(Integer)
 
-# graph
-class graph(Base):
-    __tablename__="graph"
-    idx = Column(Integer, primary_key=True, autoincrement=True)
-    time = Column(DateTime(timezone=True))
-    meal = Column(Integer)
-    water = Column(Integer)
-    distance = Column(Integer)
+
+# class MiniMap1(Base):
+#     __tablename__="minimap1"
+#     cow_id = Column(Integer, primary_key=True)
+#     time = Column(Integer)
+#     xc = Column(Integer)
+#     yc = Column(Integer)
+
