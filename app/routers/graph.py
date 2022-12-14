@@ -17,7 +17,7 @@ router.mount('/static', StaticFiles(directory='static'), name='static')
 async def graph_html(request: Request):
     return graph.graph_html(request)
 
-# db 접근 안될때
 @router.post('/post')
 async def graph_query(form:schemas.Form):
    return graph.graph_query(form)
+   

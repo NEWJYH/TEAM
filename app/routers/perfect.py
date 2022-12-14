@@ -10,7 +10,6 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/")
 async def performance(request:Request):
-    # 영상 한개 넣을것 cctv3개 합쳐진 좌표
     return templates.TemplateResponse("perfect.html", context={"request": request})
 
 
