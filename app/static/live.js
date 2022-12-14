@@ -131,7 +131,7 @@ let start = '';
 function startUpdate() {
     // start = new Date()
     mapFunction.isPause = false;
-    mapFunction.draw = setInterval(updateMap, 69.66666666666667);
+    mapFunction.draw = setInterval(updateMap, 78);
 }
 
 function stopUpdate() {

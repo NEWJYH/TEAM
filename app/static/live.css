@@ -116,6 +116,15 @@ article div {
 }
 
 #player {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 331px;
+    height: 186px;
+}
+#player2 {
+    display: block;
+    margin: 0 auto;
     margin-top: 10px;
     width: 331px;
     height: 186px;
@@ -123,6 +132,10 @@ article div {
 
 @media (max-width: 331px) {
     #player {
+        width: 90%;
+        height: 186px;
+    }
+    #player2 {
         width: 90%;
         height: 186px;
     }
